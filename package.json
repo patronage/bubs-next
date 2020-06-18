@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "bubs-next",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Patronage.org",
+  "license": "private",
+  "dependencies": {
+    "next": "9.4.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-helmet": "6.1.0"
+  }
+}
