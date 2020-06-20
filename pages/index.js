@@ -1,4 +1,4 @@
-import LayoutDefault from "../layouts/default.js";
+import LayoutDefault from "layouts/default.js";
 
 function main() {
   return (
