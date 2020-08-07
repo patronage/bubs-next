@@ -1,24 +1,24 @@
-import LayoutDefault from "layouts/default.js";
+import LayoutDefault from "components/layout";
 
-function main() {
+export default function main() {
   return (
     <LayoutDefault title="Homepage">
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <h3>Home Page</h3>
+      <section className="section-padded">
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <h3>Home Page</h3>
 
-            <br />
+              <br />
 
-            <p>
-              Create some folders in <code>pages/</code> to add more pages to
-              your site
-            </p>
+              <p>
+                Create some folders in <code>pages/</code> to add more pages to
+                your site
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </LayoutDefault>
   );
 }
-
-export default main;

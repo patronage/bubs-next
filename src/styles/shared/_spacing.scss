@@ -1,0 +1,24 @@
+// we try and use as much from bootstrap as we can
+// but add a few gloabl styles
+// https://v5.getbootstrap.com/docs/5.0/utilities/spacing/
+
+// applied as a defalt to full width flex sections
+.section-padded {
+  padding-top: $section-padding-mobile;
+  padding-bottom: $section-padding-mobile;
+
+  @include media-breakpoint-up(md) {
+    padding-top: $section-padding;
+    padding-bottom: $section-padding;
+  }
+}
+
+// remove gutters between columns
+.no-gutter {
+  margin-left: 0;
+  margin-right: 0;
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

@@ -1,5 +1,14 @@
-.borderBottom {
-  border-bottom: 3px solid #333333;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
+@import "styles/_scaffold";
+
+.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: $primary;
+  color: $white;
+}
+
+.logo {
+  font-size: 18px;
+  text-transform: uppercase;
+  margin: 0;
 }
