@@ -1,8 +1,8 @@
-import LayoutDefault from "components/layout";
+import Layout from "components/layout";
 
 export default function main() {
   return (
-    <LayoutDefault title="Homepage">
+    <Layout title="">
       <section className="section-padded">
         <div className="container">
           <div className="row">
@@ -19,6 +19,6 @@ export default function main() {
           </div>
         </div>
       </section>
-    </LayoutDefault>
+    </Layout>
   );
 }

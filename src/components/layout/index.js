@@ -1,19 +1,14 @@
-import { Helmet } from "react-helmet";
+import Meta from "components/meta";
 import Header from "components/header";
 import Footer from "components/footer";
 
-function LayoutDefault({ title, children }) {
+export default function Layout({ children, title, description, image }) {
   return (
     <>
-      <Helmet title={title} meta={[{ property: "og:title", content: title }]} />
-
+      <Meta title={title} description={description} image={image} />
       <Header />
-
       {children}
-
       <Footer />
     </>
   );
 }
-
-export default LayoutDefault;
