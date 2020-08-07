@@ -12,11 +12,11 @@
   "author": "Patronage.org",
   "license": "private",
   "dependencies": {
-    "next": "9.4.4",
+    "next": "9.5.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-helmet": "6.1.0",
-    "sass": "1.26.8"
+    "sass": "1.26.10"
   },
   "devDependencies": {
     "husky": "4.2.5",
