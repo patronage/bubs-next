@@ -15,8 +15,9 @@
 
 // remove gutters between columns
 .no-gutter {
-  margin-left: 0;
   margin-right: 0;
+  margin-left: 0;
+
   > [class*="col-"] {
     padding-right: 0;
     padding-left: 0;

@@ -1,0 +1,6 @@
+node_modules
+public
+.next
+.cache
+package.json
+*.json

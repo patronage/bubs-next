@@ -1,5 +1,12 @@
 // As much as possible, set type by customizing the default bootstrap variables in _variables.scss
 
+h1 {
+  font-weight: bold;
+
+  a {
+    text-decoration: none;
+  }
+}
 // Bottom margin only
 
 h1,
@@ -20,14 +27,6 @@ p {
   // last element shouldn't have margin to prevent doubling up
   &:last-child {
     margin-bottom: 0;
-  }
-}
-
-h1 {
-  font-weight: bold;
-
-  a {
-    text-decoration: none;
   }
 }
 

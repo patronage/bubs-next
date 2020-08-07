@@ -2,12 +2,13 @@
 
 .footer {
   border-top: 4px solid $primary;
-  font-family: $font-sans;
   background: $dark;
+  font-family: $font-sans;
 
   a {
     color: $primary;
     text-decoration: none;
+
     &:hover {
       text-decoration: underline;
     }
@@ -17,14 +18,15 @@
 .nav {
   li {
     margin-right: 0;
-    &:after {
-      content: "|";
+
+    &::after {
       padding-left: 0.5rem;
       color: $gray-300;
+      content: "|";
     }
 
     &:last-child {
-      &:after {
+      &::after {
         content: "";
       }
     }

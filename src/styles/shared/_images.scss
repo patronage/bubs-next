@@ -5,9 +5,9 @@ img {
 }
 
 // Undo for google maps
-#map_canvas img,
 .google-maps img,
-.no-max img {
+.no-max img,
+#map_canvas img {
   max-width: none;
 }
 
