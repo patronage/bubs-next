@@ -1,0 +1,15 @@
+@import "custom";
+
+// todo: use our version of bootstrap eventually
+@import "~bootstrap/scss/bootstrap";
+
+// modules
+
+// @import "./_slick.scss";
+// @import "./_slick-theme.scss";
+
+// globals we want to cascade
+@import "./shared/animation";
+@import "./shared/buttons";
+@import "./shared/images";
+@import "./shared/type";

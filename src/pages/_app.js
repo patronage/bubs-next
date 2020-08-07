@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 
-import "styles/styles.scss";
+import "styles/global.scss";
 
 // You can set sitewide <head> tags in the <Helmet> below
 function MyApp({ Component, pageProps }) {

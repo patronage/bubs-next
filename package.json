@@ -12,16 +12,18 @@
   "author": "Patronage.org",
   "license": "private",
   "dependencies": {
-    "next": "9.5.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-helmet": "6.1.0",
-    "sass": "1.26.10"
+    "bootstrap": "^5.0.0-alpha1",
+    "next": "^9.5.1",
+    "popper.js": "^1.16.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "sass": "^1.26.10"
   },
   "devDependencies": {
-    "husky": "4.2.5",
-    "prettier": "2.0.5",
-    "pretty-quick": "2.0.1"
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1"
   },
   "husky": {
     "hooks": {

@@ -1,0 +1,17 @@
+// Responsive image by default
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Undo for google maps
+#map_canvas img,
+.google-maps img,
+.no-max img {
+  max-width: none;
+}
+
+// fixes layout issues with tracking pixels
+iframe[width="0"][height="0"] {
+  display: none;
+}
