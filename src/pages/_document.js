@@ -32,7 +32,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto+Slab:wght@300&family=Source+Sans+Pro:wght@400;700&display=swap"
           />
         </Head>
-        <body {...this.helmetBodyAttrComponents}>
+        <body>
           <Main />
           <NextScript />
         </body>

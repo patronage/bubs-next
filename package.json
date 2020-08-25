@@ -19,7 +19,6 @@
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-helmet": "^6.1.0",
     "sass": "^1.26.10"
   },
   "devDependencies": {
