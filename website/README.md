@@ -18,7 +18,7 @@ Then you'll need to install/configure the [vercel cli](https://vercel.com/docs/c
 1. `npm install -g vercel
 2. `vercel login` to login
 
-After that, the first time you run a command, you'll need to pick a project. Make sure you're using the team account from the cli to do that.
+After that, the first time you run a command, you'll need to pick a project via `vercel link`. Make sure you're using the team account from the cli to do that.
 
 ### prettier/stylelint
 
