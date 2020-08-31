@@ -1,0 +1,93 @@
+{
+  "name": "patronage/bubs-next",
+  "type": "project",
+  "license": "MIT",
+  "description": "WordPress boilerplate for pairing with Next.js",
+  "homepage": "https://www.patronage.org",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org",
+      "only": [
+        "wpackagist-plugin/*",
+        "wpackagist-theme/*"
+      ]
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "advanced-custom-fields/advanced-custom-fields-pro",
+        "version": "5.9.0",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://connect.advancedcustomfields.com/index.php?a=download&p=pro&k={%PLUGIN_ACF_KEY}&t={%VERSION}"
+        },
+        "require": {
+          "composer/installers": "^1.8",
+          "ffraenz/private-composer-installer": "^4.0"
+        }
+      }
+    }
+  ],
+  "require": {
+    "php": ">=7.3",
+    "composer/installers": "^1.8",
+    "advanced-custom-fields/advanced-custom-fields-pro": "5.9.0",
+    "roots/soil": "3.9.0",
+    "roots/wordpress": "5.5",
+    "roots/wp-stage-switcher": "~2.0",
+    "wpackagist-plugin/bottom-admin-bar": "1.3",
+    "wpackagist-plugin/classic-editor": "1.6",
+    "wpackagist-plugin/debug-bar": "1.0.1",
+    "wpackagist-plugin/duplicate-post": "3.2.5",
+    "wpackagist-plugin/enable-media-replace": "3.4.2",
+    "wpackagist-plugin/filter-page-by-template": "1.4",
+    "wpackagist-plugin/google-apps-login": "3.4.2",
+    "wpackagist-plugin/gutenberg-ramp": "1.1.0",
+    "wpackagist-plugin/post-type-archive-links": "1.3.1",
+    "wpackagist-plugin/post-type-switcher": "3.2.0",
+    "wpackagist-plugin/query-monitor": "3.6.1",
+    "wpackagist-plugin/quick-pagepost-redirect-plugin": "5.2.0",
+    "wpackagist-plugin/term-management-tools": "1.1.4",
+    "wpackagist-plugin/transients-manager": "1.8.1",
+    "wpackagist-plugin/user-switching": "1.5.5",
+    "wpackagist-plugin/wordpress-seo": "14.8",
+    "wp-graphql/wp-graphql": "0.12.1",
+    "wp-graphql/wp-graphiql": "1.0.1",
+    "wp-graphql/wp-graphql-acf": "0.3.5",
+    "ashhitch/wp-graphql-yoast-seo": "^4.5",
+    "wpackagist-plugin/safe-svg": "^1.9"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "config": {
+      "vendor-dir": "wp-content/plugins/composer-libs"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "installer-paths": {
+      "composer/wp-content/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "composer/wp-content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "composer/wp-content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    },
+    "wordpress-install-dir": "composer/wp"
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"copy('.env.example', '.env');\""
+    ],
+    "post-install-cmd": [
+      "bash ./_init/init.sh"
+    ]
+  }
+}

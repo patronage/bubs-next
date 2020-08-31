@@ -1,0 +1,131 @@
+#### BUBS ONLY EXCLUSIONS
+# we just want to keep these out of bubs
+# remove when creating a project
+wp-content/plugins/*
+composer.lock
+
+#### JTS RULES
+
+# development-environment
+tmp/
+wp-content/themes/timber/dev/
+wp-config-local.php
+/wp-content/mu-plugins/local-plugins.php
+/gulpconfig.json
+
+*.sublime*
+.sass-cache
+node_modules
+/composer/
+/vendor/
+npm-debug.log
+yarn-error.log
+
+## no sql, except for our local scaffolding (nothing sensitive in there)
+_data/*
+!_data/local.sql
+!_data/empty.sql
+
+#### WordPress Core
+# comment out if you want to track wordpress in source
+/index.php
+/license.txt
+/readme.html
+/wp-activate.php
+/wp-blog-header.php
+/wp-comments-post.php
+/wp-cron.php
+/wp-links-opml.php
+/wp-load.php
+/wp-login.php
+/wp-mail.php
+/wp-settings.php
+/wp-signup.php
+/wp-trackback.php
+/xmlrpc.php
+wp-admin/
+wp-includes/
+
+# ignore everything in the "plugins" directory,
+# except the plugins you specify
+# wp-content/plugins/*
+#!wp-content/plugins/stop-emails/
+
+# ignore everything in the "themes" directory,
+# except the themes you specify
+wp-content/themes/*
+!wp-content/themes/headless/
+
+#### WPENGINE BELOW HERE
+
+*~
+.DS_Store
+.svn
+.cvs
+*.bak
+*.swp
+Thumbs.db
+
+# wpengine specific
+.smushit-status
+.gitattributes
+_wpeprivate
+wp-content/object-cache.php
+wp-content/mu-plugins/wpengine-common/
+wp-content/mu-plugins/mu-plugin.php
+wp-content/mu-plugins/slt-force-strong-passwords.php
+wp-content/mu-plugins/limit-login-attempts
+# wp-content/mu-*~
+.DS_Store
+.svn
+.cvs
+*.bak
+*.swp
+Thumbs.db
+
+# wordpress specific
+wp-config.php
+wp-content/uploads/
+wp-content/blogs.dir/
+wp-content/upgrade/*
+wp-content/backup-db/*
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+wp-content/cache/*
+wp-content/cache/supercache/*
+
+
+# large/disallowed file types
+# a CDN should be used for these
+*.hqx
+*.bin
+*.exe
+*.dll
+*.deb
+*.dmg
+*.iso
+*.img
+*.msi
+*.msp
+*.msm
+*.mid
+*.midi
+*.kar
+*.mp3
+*.ogg
+*.m4a
+*.ra
+*.3gpp
+*.3gp
+*.mp4
+*.mpeg
+*.mpg
+*.mov
+*.webm
+*.flv
+*.m4v
+*.mng
+*.asx
+*.asf
+*.wmv
+*.avi

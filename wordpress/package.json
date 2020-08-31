@@ -1,0 +1,17 @@
+{
+  "name": "site",
+  "version": "0.0.0",
+  "description": "node reqs to generate",
+  "license": "UNLICENSED",
+  "private": "true",
+  "repository": "",
+  "author": "",
+  "scripts": {
+    "acf": "chmod -R 777 wp-content/themes/headless/acf-json",
+    "db": "bash _build/db.sh",
+    "postmerge": "bash _build/hook-post-merge.sh"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3"
+  }
+}
