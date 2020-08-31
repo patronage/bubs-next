@@ -19,6 +19,7 @@
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.11.0",
     "sass": "^1.26.10"
   },
   "devDependencies": {
