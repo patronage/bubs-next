@@ -9,7 +9,8 @@
   "scripts": {
     "acf": "chmod -R 777 wp-content/themes/headless/acf-json",
     "db": "bash _build/db.sh",
-    "postmerge": "bash _build/hook-post-merge.sh"
+    "postmerge": "bash _build/hook-post-merge.sh",
+    "dev": "docker-compose up"
   },
   "devDependencies": {
     "husky": "^0.14.3"
