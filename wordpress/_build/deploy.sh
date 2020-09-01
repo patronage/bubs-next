@@ -25,6 +25,21 @@ function error_exit {
     exit 1
 }
 
+# Ref: https://stackoverflow.com/questions/8223906/how-to-check-if-remote-branch-exists-on-a-given-remote-repository
+# test if the branch is in the remote repository.
+# return 1 if its remote branch exists, or 0 if not.
+function is_in_remote() {
+    local remote=${1}
+    local branch=${2}
+    local existed_in_remote=$(git ls-remote --heads ${remote} ${branch})
+
+    if [[ -z ${existed_in_remote} ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
 # check environment to ensure we should proceed with build
 if [[ -n $(git status --porcelain) ]]; then
     error_exit "There are uncommited changes -- please commit before proceeding."
@@ -97,7 +112,7 @@ else
         git remote add production ${PRODUCTION_REMOTE}
         cd ..
         # check if master exists 
-        if [ git ls-remote production master ]; then
+        if is_in_remote "production" "master"; then
             echo "WP engine ready for deploy, proceeding"
             git push -u production `git subtree split --prefix wordpress deploy`:master --force
             echo "Returning to working branch."
@@ -111,7 +126,7 @@ else
             git init
             git add . && git commit -am "comment"
             git remote add production ${PRODUCTION_REMOTE}
-            git push -u production master
+            git push -f production master
             echo "Remote ready, cleaning up"
             cd ..
             rm -rf tmp
