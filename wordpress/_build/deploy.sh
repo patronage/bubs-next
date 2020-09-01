@@ -71,15 +71,18 @@ else
     for e in "${array[@]}"
     do
         printf "$e\n"
-        git add "$e" -f
+        git add -f "$e"
     done
+    echo "trying to add again just to confirm"
+    git add -f "wp-content/plugins"
+    git status
 
     echo "Removing files we don't want on the server"
     array=()
     get_array "_build/.deploy_exclude.txt"
     for e in "${array[@]}"
     do
-        git rm -r --ignore-unmatch "$e"
+        git rm -r --ignore-unmatch "$e" -f
     done
 
     echo "Committing build changes"
