@@ -2,10 +2,10 @@ This app is based on [Next.js](https://github.com/vercel/next.js)
 
 To get up and running locally:
 
-1. clone repo.
-2. run `yarn install` to get all deps.
-3. pull down env variables by running `vercel env pull` (see 'configuring vercel' if first time).
-4. run `vercel dev` to preview the site locally.
+1. Clone repo.
+2. In the /website directory, run `yarn install` to get all deps.
+3. In the root directory, pull down env variables by running `vercel env pull`. (See 'configuring vercel' if first time.)
+4. In the root directory, run `vercel dev` to preview the site locally.
 
 ### configuring vercel
 
@@ -15,8 +15,8 @@ If it's your first time getting setup, you'll need to first accept an invite to 
 
 Then you'll need to install/configure the [vercel cli](https://vercel.com/docs/cli):
 
-1. `npm install -g vercel
-2. `vercel login` to login
+1. In the root directory, run `npm install -g vercel`
+2. In the root directory, run `vercel login` to login
 
 After that, the first time you run a command, you'll need to pick a project via `vercel link`. Make sure you're using the team account from the cli to do that.
 
