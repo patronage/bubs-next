@@ -65,14 +65,14 @@ else
     git checkout -b deploy
     # gulp release || error_exit "Gulp release failed."
 
-    # echo "Adding built files that are normally .gitignored..."
-    # array=()
-    # get_array "_build/.deploy_include.txt"
-    # for e in "${array[@]}"
-    # do
-    #     printf "$e\n"
-    #     git add "$e" -f
-    # done
+    echo "Adding built files that are normally .gitignored..."
+    array=()
+    get_array "_build/.deploy_include.txt"
+    for e in "${array[@]}"
+    do
+        printf "$e\n"
+        git add "$e" -f
+    done
 
     echo "Removing files we don't want on the server"
     array=()
