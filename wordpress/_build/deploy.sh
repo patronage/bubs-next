@@ -96,10 +96,30 @@ else
         git remote rm production
         git remote add production ${PRODUCTION_REMOTE}
         cd ..
-        git push -u production `git subtree split --prefix wordpress deploy`:master --force
-        echo "Returning to working branch."
-        git stash
-        git checkout $branch
+        # check if master exists 
+        if [ git ls-remote production master ]; then
+            echo "WP engine ready for deploy, proceeding"
+            git push -u production `git subtree split --prefix wordpress deploy`:master --force
+            echo "Returning to working branch."
+            git stash
+            git checkout $branch
+        else
+            echo "First time, prepping remote"
+            mkdir tmp
+            cd tmp
+            echo 'Hello, world.' > tmp.txt
+            git init
+            git add . && git commit -am "comment"
+            git remote add production ${PRODUCTION_REMOTE}
+            git push -u production master
+            echo "Remote ready, cleaning up"
+            cd ..
+            rm -rf tmp
+            echo "Remote now ready, please try again."
+            echo "Returning to working branch."
+            git stash
+            git checkout $branch
+        fi
 
     else
         error_exit "No deploy conditions met."
