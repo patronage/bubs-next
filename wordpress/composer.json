@@ -52,7 +52,7 @@
     "wpackagist-plugin/term-management-tools": "1.1.4",
     "wpackagist-plugin/transients-manager": "1.8.1",
     "wpackagist-plugin/user-switching": "1.5.5",
-    "wpackagist-plugin/wordpress-seo": "14.8",
+    "wpackagist-plugin/wordpress-seo": "14.8.1",
     "wp-graphql/wp-graphql": "0.12.1",
     "wp-graphql/wp-graphiql": "1.0.1",
     "wp-graphql/wp-graphql-acf": "0.3.5",
