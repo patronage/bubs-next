@@ -41,7 +41,7 @@ include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
 include_once 'setup/helpers/cloudinary.php';
 include_once 'setup/helpers/menus.php';
-include_once 'setup/helpers/wpgraphql-acf-allowlist.php';
+// include_once 'setup/helpers/wpgraphql-acf-allowlist.php';
 
 // Wordpress Theme Support Config
 // REMOVAL OF THESE = POTIENTAL LOSS OF DATA
