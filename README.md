@@ -1,13 +1,11 @@
-This app is based on [Next.js](https://github.com/vercel/next.js)
+This is the starter Headless WordPress + [Next.js](https://github.com/vercel/next.js) used to build sites by [Patronage](https://www.patronage.org). We've previously built nearly a hunred sites using our original theme based bubs scaffolding, but are favoring headless WordPress now (link to case study to come).
 
-To get up and running locally:
+### To get up and running locally:
 
-1. clone repo.
-2. run `yarn install` to get all deps.
-3. pull down env variables by running `vercel env pull` (see 'configuring vercel' if first time).
-4. run `vercel dev` to preview the site locally.
+1. Setup Wordpress by going into the wordpress folder and running `composer install && yarn install`. Then you can use `yarn dev` as an alias to start docker.
+2. Setup Next by going into the wordpress folder and pulling down env variables by running `vercel env pull` (see 'configuring vercel' if first time). Then run `vercel dev` to preview the site locally.
 
-### configuring vercel
+### Configuring vercel
 
 Vercel is the host for the site. It integrates with github to create preview versions from pull requests, and to deploy on master.
 
@@ -20,7 +18,7 @@ Then you'll need to install/configure the [vercel cli](https://vercel.com/docs/c
 
 After that, the first time you run a command, you'll need to pick a project via `vercel link`. Make sure you're using the team account from the cli to do that.
 
-### prettier/stylelint
+### Prettier/stylelint
 
 We have prettier and styleling configured to format JS and SCSS respectively for consistency across developers.
 
@@ -29,13 +27,21 @@ Prettier will run via husky pre-commit, and there is a command line `yarn stylel
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
 
-### env for local overrides
+### Env for local overrides
 
 When you run `vercel env pull`, it'll save keys to a gitignored .env file. These are not neccessarily the production or preview environment keys, but once specifically saved for devs.
 
-Any variable can be optionally ovveridden in a `.env.local`. Here are a few you might use:
+Any variable can be optionally ovveridden in a `.env.local`. Here is an example you might use:
 
 ```sh
 ## Set a wordpress localhost path if you want to load from local
 #WORDPRESS_API_URL="http://www.bailouts.loc/graphql"
 ```
+
+### WordPress theme notes
+
+All plugins are managed via composer. The `headless` theme is configured to make some light adjustments to WordPress to support headless dev.
+
+In `themes/headless/functions.php` there is a `$headless_domain`variable that should be defined for each site. This variable is used to redirect the user whenever they try and access a page URL from WordPress admin.
+
+If this is your first time with docker, there are more instructions for getting that running in `wordpress/README.md`.
