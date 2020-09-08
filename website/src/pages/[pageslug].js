@@ -1,14 +1,9 @@
 import Layout from "components/layout";
 import { getPage, getAllPagesWithSlug } from "lib/wordpress";
-import { useRouter } from "next/router";
 import ErrorPage from "next/error";
-import Head from "next/head";
-import { FaSpinner } from "react-icons/fa";
 
 export default function Page({ post, preview }) {
-  const router = useRouter();
-
-  if (!router.isFallback && !post?.slug) {
+  if (!post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
 
@@ -22,13 +17,7 @@ export default function Page({ post, preview }) {
         <div className="container">
           <div className="row">
             <div className="col">
-              {router.isFallback ? (
-                <FaSpinner className="icon-spin" />
-              ) : (
-                <>
-                  <PostBody content={post.content} />
-                </>
-              )}
+              <PostBody content={post.content} />
             </div>
           </div>
         </div>
@@ -54,6 +43,6 @@ export async function getStaticPaths() {
 
   return {
     paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
-    fallback: true,
+    fallback: unstable_blocking,
   };
 }
