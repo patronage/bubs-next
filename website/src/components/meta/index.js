@@ -3,9 +3,7 @@ import { META_TITLE, META_OG_IMAGE_URL } from "lib/constants";
 
 export default function Meta({ title, description, image }) {
   let meta_title = title ? `${title} | ${META_TITLE}` : META_TITLE;
-  let meta_image = image
-    ? `${image} | ${META_OG_IMAGE_URL}`
-    : META_OG_IMAGE_URL;
+  let meta_image = image ? image : META_OG_IMAGE_URL;
 
   return (
     <Head>
@@ -18,7 +16,7 @@ export default function Meta({ title, description, image }) {
       <meta property="og:locale" content="en_US" />
       <meta property="og:title" content={title ? title : META_TITLE} />
       {description && <meta property="og:description" content={description} />}
-      <meta property="og:image" content={meta_image} />}
+      <meta property="og:image" content={meta_image} />
       <meta property="og:site_name" content={META_TITLE} />
       <meta property="og:image" content={meta_image} />
       <meta property="og:image:width" content="1200" />
