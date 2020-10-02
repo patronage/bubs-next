@@ -1,5 +1,7 @@
-# clear plugins to force new versions
-rm -rf ./wp-content/plugins/*
+# clear plugins to force new versions (excluding non-Wordpress plugin composer-libs/ )
+shopt -s extglob
+rm -rf ./wp-content/plugins/!(composer-libs)
+
 
 # clean composer before copying
 rm -rf ./composer/wp/wp-config-sample.php
