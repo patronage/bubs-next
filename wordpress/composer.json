@@ -88,6 +88,9 @@
     ],
     "post-install-cmd": [
       "bash ./_init/init.sh"
+    ],
+    "post-update-cmd": [
+      "bash ./_init/init.sh"
     ]
   }
 }
