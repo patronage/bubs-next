@@ -16,7 +16,7 @@
   "dependencies": {
     "bootstrap": "^5.0.0-alpha2",
     "classnames": "^2.2.6",
-    "next": "^9.5.3",
+    "next": "^9.5.4",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
