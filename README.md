@@ -2,8 +2,8 @@ This is the starter Headless WordPress + [Next.js](https://github.com/vercel/nex
 
 ### To get up and running locally:
 
-1. Setup Wordpress by going into the wordpress folder and running `composer install && yarn install`. Then you can use `yarn dev` as an alias to start docker.
-2. Setup Next by going into the wordpress folder and pulling down env variables by running `vercel env pull` (see 'configuring vercel' if first time). Then run `vercel dev` to preview the site locally.
+1. Setup Wordpress by going into the `wordpress` folder and running `composer install && yarn install`. Then you can use `yarn dev` as an alias to start docker.
+2. Setup Next by going into the `website` folder and pulling down env variables by running `vercel env pull` (see 'configuring vercel' if first time). Then run `vercel dev` to preview the site locally.
 
 ### Configuring vercel
 
@@ -20,7 +20,7 @@ After that, the first time you run a command, you'll need to pick a project via 
 
 ### Prettier/stylelint
 
-We have prettier and styleling configured to format JS and SCSS respectively for consistency across developers.
+We have prettier and stylelint configured to format JS and SCSS respectively for consistency across developers.
 
 Prettier will run via husky pre-commit, and there is a command line `yarn stylelint` to see SCSS warnings across the project. But it's best to configure your editor with the plugins so that they run in the background on save.
 
@@ -29,7 +29,7 @@ Prettier will run via husky pre-commit, and there is a command line `yarn stylel
 
 ### Env for local overrides
 
-When you run `vercel env pull`, it'll save keys to a gitignored .env file. These are not neccessarily the production or preview environment keys, but once specifically saved for devs.
+When you run `vercel env pull`, it'll save keys to a gitignored .env file. These are not neccessarily the production or preview environment keys, but ones specifically saved for devs.
 
 Any variable can be optionally ovveridden in a `.env.local`. Here is an example you might use:
 
@@ -42,6 +42,6 @@ Any variable can be optionally ovveridden in a `.env.local`. Here is an example 
 
 All plugins are managed via composer. The `headless` theme is configured to make some light adjustments to WordPress to support headless dev.
 
-In `themes/headless/functions.php` there is a `$headless_domain`variable that should be defined for each site. This variable is used to redirect the user whenever they try and access a page URL from WordPress admin.
+In `themes/headless/functions.php` there is a `$headless_domain` variable that should be defined for each site. This variable is used to redirect the user whenever they try and access a page URL from WordPress admin.
 
 If this is your first time with docker, there are more instructions for getting that running in `wordpress/README.md`.
