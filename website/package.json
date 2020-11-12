@@ -8,29 +8,32 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "stylelint": "npx stylelint '**/*.scss'"
+    "stylelint": "npx stylelint '**/*.scss'",
+    "analyze": "cross-env ANALYZE=true yarn build"
   },
   "author": "Patronage.org",
   "license": "private",
   "dependencies": {
-    "bootstrap": "^5.0.0-alpha1",
+    "bootstrap": "^5.0.0-alpha2",
     "classnames": "^2.2.6",
-    "next": "^9.5.1",
+    "next": "^9.5.4",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "sass": "^1.26.10"
+    "sass": "^1.26.11"
   },
   "devDependencies": {
-    "husky": "^4.2.5",
-    "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1",
-    "stylelint": "^13.6.1",
+    "@next/bundle-analyzer": "^9.5.3",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.0.2",
+    "stylelint": "^13.7.2",
     "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-prettier": "^1.1.2",
-    "stylelint-scss": "^3.18.0"
+    "stylelint-scss": "^3.18.0",
+    "cross-env": "^7.0.2"
   },
   "husky": {
     "hooks": {
