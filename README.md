@@ -1,4 +1,4 @@
-This is the starter Headless WordPress + [Next.js](https://github.com/vercel/next.js) used to build sites by [Patronage](https://www.patronage.org). We've previously built nearly a hunred sites using our original theme based bubs scaffolding, but are favoring headless WordPress now (link to case study to come).
+This is the starter Headless WordPress + [Next.js](https://github.com/vercel/next.js) used to build sites by [Patronage](https://www.patronage.org). We've previously built nearly a hundred sites using our original theme based bubs scaffolding, but are favoring headless WordPress now (link to case study to come).
 
 ### To get up and running locally:
 
