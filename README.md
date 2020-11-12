@@ -18,6 +18,8 @@ Then you'll need to install/configure the [vercel cli](https://vercel.com/docs/c
 
 After that, the first time you run a command, you'll need to pick a project via `vercel link`. Make sure you're using the team account from the cli to do that.
 
+We use a [monorepo](https://vercel.com/blog/monorepos) repo structure, so you'll want to run `vercel link` from the project root.
+
 ### Prettier/stylelint
 
 We have prettier and stylelint configured to format JS and SCSS respectively for consistency across developers.
