@@ -1,6 +1,7 @@
 import Layout from "components/layout";
 import { getPage, getAllPagesWithSlug } from "lib/wordpress";
 import ErrorPage from "next/error";
+import PostBody from "components/post/body";
 
 export default function Page({ post, preview }) {
   if (!post?.slug) {
@@ -43,6 +44,6 @@ export async function getStaticPaths() {
 
   return {
     paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
-    fallback: unstable_blocking,
+    fallback: "blocking",
   };
 }
