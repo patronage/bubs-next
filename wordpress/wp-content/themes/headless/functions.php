@@ -7,6 +7,7 @@
 // Load WP Config files
 //
 
+
 // Headless var
 if (defined('WP_HEADLESS_DOMAIN')) {
     $headless_domain = WP_HEADLESS_DOMAIN;
@@ -15,8 +16,7 @@ if (defined('WP_HEADLESS_DOMAIN')) {
 }
 
 // Theme Options
-function bubs_theme_options($wp_customize)
-{
+function bubs_theme_options($wp_customize) {
     include_once 'setup/theme-options/footer.php';
     include_once 'setup/theme-options/integrations.php';
     include_once 'setup/theme-options/social.php';
@@ -41,7 +41,7 @@ include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
 include_once 'setup/helpers/cloudinary.php';
 include_once 'setup/helpers/menus.php';
-// include_once 'setup/helpers/wpgraphql-acf-allowlist.php';
+include_once 'setup/helpers/wpgraphql.php';
 
 // Wordpress Theme Support Config
 // REMOVAL OF THESE = POTIENTAL LOSS OF DATA

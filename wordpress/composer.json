@@ -56,7 +56,8 @@
     "wp-graphql/wp-graphiql": "1.0.1",
     "wp-graphql/wp-graphql-acf": "0.4.0",
     "ashhitch/wp-graphql-yoast-seo": "^4.5",
-    "wpackagist-plugin/safe-svg": "^1.9"
+    "wpackagist-plugin/safe-svg": "^1.9",
+    "wp-graphql/wp-graphql-jwt-authentication": "^0.4.1"
   },
   "config": {
     "optimize-autoloader": true,

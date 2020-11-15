@@ -55,6 +55,7 @@ wp-includes/
 # except the themes you specify
 wp-content/themes/*
 !wp-content/themes/headless/
+wp-content/themes/headless/setup/helpers/wpgraphql-jwt.php
 
 #### WPENGINE BELOW HERE
 
