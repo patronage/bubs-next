@@ -127,10 +127,12 @@ export async function staticPropHelper(staticPropsContext, type = "post_type") {
       }
 
       // Get the zero-indexed paginator index (remember URL is indexed by 1)
+      console.log(staticPropsContext.params.slug);
       const page =
-        (staticPropsContext.params.slug
+        (staticPropsContext.params.slug &&
+        staticPropsContext.params.slug[paginatorIndex]
           ? Number(staticPropsContext.params.slug[paginatorIndex])
-          : paginatorIndex) - paginatorIndex;
+          : 1) - 1;
       const sliceStart = page * POSTS_PER_PAGE;
       const filteredPosts = allPosts.edges.slice(
         sliceStart,

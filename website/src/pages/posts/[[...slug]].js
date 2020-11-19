@@ -5,6 +5,7 @@ import { getPost, getAllPostsWithSlug } from "lib/wordpress";
 
 import Layout from "components/layout";
 import Paginator from "components/paginator";
+import PostArchive from "components/post-archive";
 
 function BlogPostPage({ post }) {
   return (
@@ -15,25 +16,10 @@ function BlogPostPage({ post }) {
   );
 }
 
-function BlogIndexPage({ posts, paginatorIndex, postsPerPage, totalPosts }) {
+function BlogIndexPage(props) {
   return (
     <Layout title="">
-      <h1>Posts</h1>
-      {posts.map((post, key) => {
-        return (
-          <div key={key}>
-            <h2>
-              <Link href={`/posts/${post.slug}`}>{post.title}</Link>
-            </h2>
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
-          </div>
-        );
-      })}
-      <Paginator
-        index={paginatorIndex}
-        postsPerPage={postsPerPage}
-        totalPosts={totalPosts}
-      />
+      <PostArchive {...props} />
     </Layout>
   );
 }
@@ -58,8 +44,6 @@ export async function getStaticProps(context) {
   // Generate props for Post Index page
   //
   const indexProps = await staticPropHelper(context, "post_type");
-
-  console.log("IndexProps", indexProps);
 
   if (indexProps) {
     return { props: indexProps };

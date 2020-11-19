@@ -1,8 +1,15 @@
 import { staticPropHelper, staticPathGenerator } from "lib/archive";
 
-const TaxonomyArchive = () => {
-  return <div>Category</div>;
-};
+import Layout from "components/layout";
+import PostArchive from "components/post-archive";
+
+function TaxIndex(props) {
+  return (
+    <Layout title="">
+      <PostArchive archiveTitle={`Tag Archive`} {...props} />
+    </Layout>
+  );
+}
 
 export async function getStaticProps(context) {
   const indexProps = await staticPropHelper(context, "tag");
@@ -27,4 +34,4 @@ export async function getStaticPaths() {
   };
 }
 
-export default TaxonomyArchive;
+export default TaxIndex;
