@@ -3,9 +3,7 @@ import { useRouter } from 'next/router';
 import { getPost, getAllPostsWithSlug } from "lib/wordpress";
 
 import Layout from "components/layout";
-
-//import LayoutPost from '../../layouts/post';
-//import LayoutArchive from '../../layouts/archive';
+import Paginator from 'components/paginator'
 
 const POSTS_PER_PAGE = 1;
 
@@ -18,7 +16,7 @@ function BlogPostPage({ post }) {
   );
 }
 
-function BlogIndexPage({ posts }) {
+function BlogIndexPage({ posts, paginatorIndex, postsPerPage, totalPosts }) {
   return (
     <Layout title="">
       <h1>Posts</h1>
@@ -30,6 +28,7 @@ function BlogIndexPage({ posts }) {
         </div>
         );
       })}
+      <Paginator index={ paginatorIndex } postsPerPage={ postsPerPage } totalPosts={ totalPosts } />
     </Layout>
   );
 }
@@ -83,7 +82,13 @@ export async function getStaticProps(context) {
     }
 
     return {
-      props: { posts }
+      props: { 
+        posts, 
+        // Paginator Helpers
+        paginatorIndex: page + 1, // 1-Indexed as this is strictly for display
+        postsPerPage: POSTS_PER_PAGE,
+        totalPosts: allPosts.edges.length,
+      }
     };
   }
 
