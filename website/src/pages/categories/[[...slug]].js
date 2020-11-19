@@ -1,56 +1,15 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { staticPathGenerator } from 'lib/archive';
-import { getPost, getAllPostsWithSlug } from 'lib/wordpress';
-
-import Layout from "components/layout";
-import Paginator from 'components/paginator'
 
 const POSTS_PER_PAGE = 1;
 
-function BlogPostPage({ post }) {
+const TaxonomyArchive = () => {
   return (
-    <Layout title={ post.title }>
-      <h1>{ post.title }</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
-    </Layout>
-  );
-}
-
-function BlogIndexPage({ posts, paginatorIndex, postsPerPage, totalPosts }) {
-  return (
-    <Layout title="">
-      <h1>Posts</h1>
-      {posts.map((post, key) => {
-        return (
-        <div key={key}>
-          <h2><Link href={`/posts/${ post.slug }`}>{post.title}</Link></h2>
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
-        </div>
-        );
-      })}
-      <Paginator index={ paginatorIndex } postsPerPage={ postsPerPage } totalPosts={ totalPosts } />
-    </Layout>
-  );
-}
-
-function Blog(props) {
-  const router = useRouter();
-  const { query } = router;
-
-  if (
-    query && (
-    Object.keys(query).length === 0 ||
-    (query.slug && query.slug[0] === 'page'))
-  ) {
-    return BlogIndexPage(props);
-  } else {
-    return BlogPostPage(props);
-  }
+    <div>Taxonomy</div>
+  )
 }
 
 export async function getStaticProps(context) {
-  //
+  /*//
   // Generate props for Post Index page
   //
   if (
@@ -108,16 +67,18 @@ export async function getStaticProps(context) {
     props: {
       notfound: true,
     },
-  };
+  };*/
+
+  return { props: {} }
 }
 
 export async function getStaticPaths() {
-  const paths = await staticPathGenerator('post_type');
-
+  const paths = await staticPathGenerator('category');
+  
   return {
     paths,
     fallback: false,
   };
 }
 
-export default Blog;
+export default TaxonomyArchive;

@@ -127,6 +127,38 @@ export async function getPosts(preview) {
   return data?.posts;
 }
 
+export async function getPostsByCategory( categorySlug ) {
+  const data = await fetchAPI(`
+    {
+      posts(first: 10000, where: {categoryName: "${categorySlug}"}) {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+  
+  return data?.posts;
+}
+
+export async function getPostsByTag( tagSlug ) {
+  const data = await fetchAPI(`
+    {
+      posts(first: 10000, where: {tag: "${tagSlug}"}) {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+  
+  return data?.posts;
+}
+
 export async function getHeroes() {
   const data = await fetchAPI(`
     query AllHeroes {
@@ -154,6 +186,38 @@ export async function getHeroes() {
   `);
 
   return data?.heroes;
+}
+
+export async function getCategories() {
+  const data = await fetchAPI(`
+    query AllCategories {
+      categories {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `)
+
+  return data.categories;
+}
+
+export async function getTags() {
+  const data = await fetchAPI(`
+    query AllTags {
+      tags {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  return data.tags;
 }
 
 export async function getPage(slug, preview, previewData) {
