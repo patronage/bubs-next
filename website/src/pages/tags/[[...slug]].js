@@ -5,7 +5,7 @@ const TaxonomyArchive = () => {
 };
 
 export async function getStaticProps(context) {
-  const indexProps = await staticPropHelper(context, "category");
+  const indexProps = await staticPropHelper(context, "tag");
 
   if (indexProps) {
     return { props: indexProps };
@@ -19,7 +19,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const paths = await staticPathGenerator("category");
+  const paths = await staticPathGenerator("tag");
 
   return {
     paths,

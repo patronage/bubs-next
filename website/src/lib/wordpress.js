@@ -127,7 +127,7 @@ export async function getPosts(preview) {
   return data?.posts;
 }
 
-export async function getPostsByCategory( categorySlug ) {
+export async function getPostsByCategory(categorySlug) {
   const data = await fetchAPI(`
     {
       posts(first: 10000, where: {categoryName: "${categorySlug}"}) {
@@ -139,11 +139,11 @@ export async function getPostsByCategory( categorySlug ) {
       }
     }
   `);
-  
+
   return data?.posts;
 }
 
-export async function getPostsByTag( tagSlug ) {
+export async function getPostsByTag(tagSlug) {
   const data = await fetchAPI(`
     {
       posts(first: 10000, where: {tag: "${tagSlug}"}) {
@@ -155,7 +155,7 @@ export async function getPostsByTag( tagSlug ) {
       }
     }
   `);
-  
+
   return data?.posts;
 }
 
@@ -199,7 +199,7 @@ export async function getCategories() {
         }
       }
     }
-  `)
+  `);
 
   return data.categories;
 }
