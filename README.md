@@ -1,4 +1,4 @@
-This is the starter Headless WordPress + [Next.js](https://github.com/vercel/next.js) used to build sites by [Patronage](https://www.patronage.org). We've previously built nearly a hundred sites using our original theme based bubs scaffolding, but are favoring headless WordPress now (link to case study to come).
+This is the starter Headless WordPress + [Next.js](https://github.com/vercel/next.js) used to build sites by [Patronage](https://www.patronage.org). We've previously built nearly a hundred sites using our original [Timber/twig based bubs scaffolding](https://github.com/patronage/bubs), but are favoring headless WordPress now (link to case study to come).
 
 ### To get up and running locally:
 
@@ -47,3 +47,5 @@ All plugins are managed via composer. The `headless` theme is configured to make
 In `themes/headless/functions.php` there is a `$headless_domain` variable that should be defined for each site. This variable is used to redirect the user whenever they try and access a page URL from WordPress admin.
 
 If this is your first time with docker, there are more instructions for getting that running in `wordpress/README.md`.
+
+### Notes on private projects
