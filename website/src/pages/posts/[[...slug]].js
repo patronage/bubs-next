@@ -1,24 +1,36 @@
 import Link from 'next/link';
-//import { parseISO, format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { getPost, getAllPostsWithSlug } from "lib/wordpress";
+
+import Layout from "components/layout";
 
 //import LayoutPost from '../../layouts/post';
 //import LayoutArchive from '../../layouts/archive';
 
 const POSTS_PER_PAGE = 1;
 
-function BlogPostPage(props) {
+function BlogPostPage({ post }) {
   return (
-    <div>
-      Post Page
-    </div>
+    <Layout title={ post.title }>
+      <h1>{ post.title }</h1>
+      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+    </Layout>
   );
 }
 
-function BlogIndexPage(props) {
+function BlogIndexPage({ posts }) {
   return (
-    <div>Index Page</div>
+    <Layout title="">
+      <h1>Posts</h1>
+      {posts.map((post, key) => {
+        return (
+        <div key={key}>
+          <h2><Link href={`/posts/${ post.slug }`}>{post.title}</Link></h2>
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        </div>
+        );
+      })}
+    </Layout>
   );
 }
 
@@ -38,49 +50,54 @@ function Blog(props) {
 }
 
 export async function getStaticProps(context) {
-  /*const fs = require('fs');
-  const marked = require('marked');
-  const matter = require('gray-matter');*/
-
+  //
+  // Generate props for Post Index page
+  //
   if (
+    // URL is /posts
     Object.keys(context.params).length === 0 ||
-    (context.params && context.params.slug && context.params.slug[0] === 'page')
-  ) {
+    // URL is /posts/page/*
+    ( context.params && context.params.slug && context.params.slug[0] === 'page' )          
+  ) {    
+    // 404 if the paginator ID is non-numeric
+    if ( context.params && context.params.slug && context.params.slug[1] && isNaN(Number(context.params.slug[1])) ) {
+      return {
+        props: {
+          notfound: true,
+        },
+      };
+    }
+
     const posts = [];
-    //const postFiles = fs.readdirSync('./_blog').reverse();
+    // Get the zero-indexed paginator index (remember URL is indexed by 1)
+    const page = ( context.params.slug ? Number(context.params.slug[1]) : 1 ) - 1;
+    const allPosts = await getAllPostsWithSlug();
+    const sliceStart = page * POSTS_PER_PAGE;
+    const filteredPosts = allPosts.edges.slice( sliceStart, sliceStart + POSTS_PER_PAGE );
 
-    // Generate Post Paths
-    // @TODO: support paginator
-    /*for (let i = 0; i < postFiles.length; i++) {
-      const slug = JEKYLL_FILENAME_REGEX.exec(postFiles[i])[2];
-      const date = parseISO(
-        JEKYLL_FILENAME_REGEX.exec(postFiles[i])[1]
-      ).toISOString();
-
-      const post = fs.readFileSync(`./_blog/${postFiles[i]}`, {
-        encoding: 'utf8',
-      });
-
-      const { data: frontmatter, content } = matter(post);
-
-      posts.push({
-        slug,
-        date,
-        frontmatter,
-        content: marked(content),
-      });
-    }*/
+    // Generate Post Paths    
+    for (let i = 0; i < filteredPosts.length; i++) {      
+      const slug = filteredPosts[i].node.slug;
+      const { postBy } = await getPost(slug);
+      posts.push(postBy);
+    }
 
     return {
-      props: { },
+      props: { posts }
     };
   }
 
+  //
+  // Generate props for Post Single Page
+  //
    try {
-    const post = getPost(context.params.slug[0]);
-    return { props: { post } };
+    const { postBy } = await getPost(context.params.slug[0]);
+    return { props: { post: postBy } };
   } catch (error) {}
 
+  //
+  // No condition was met for this catch-all route, send 404
+  //
   return {
     props: {
       notfound: true,
