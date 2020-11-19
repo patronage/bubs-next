@@ -229,7 +229,7 @@ export async function getPage(slug, preview, previewData) {
     : slug === postPreview.slug;
   const isDraft = isSamePost && postPreview?.status === "draft";
   const isRevision = isSamePost && postPreview?.status === "publish";
-  const uri = slug;
+  let uri = slug;
   const data = await fetchAPI(
     `
     fragment PageFields on Page {
