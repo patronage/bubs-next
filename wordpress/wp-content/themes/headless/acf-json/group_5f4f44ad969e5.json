@@ -87,6 +87,6 @@
     "active": true,
     "description": "",
     "show_in_graphql": 0,
-    "graphql_field_name": "shared section options",
-    "modified": 1605752496
+    "graphql_field_name": "sharedOptions",
+    "modified": 1605755376
 }

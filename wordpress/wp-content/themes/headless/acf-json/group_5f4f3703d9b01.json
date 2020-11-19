@@ -236,10 +236,15 @@
                 "param": "page_template",
                 "operator": "==",
                 "value": "template-flex.php"
+            },
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
             }
         ]
     ],
-    "menu_order": 0,
+    "menu_order": 1,
     "position": "acf_after_title",
     "style": "default",
     "label_placement": "top",
@@ -249,5 +254,7 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1599030761
+    "show_in_graphql": 1,
+    "graphql_field_name": "acfFlex",
+    "modified": 1605815281
 }

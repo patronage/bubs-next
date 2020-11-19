@@ -63,6 +63,15 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 
   const data = await getPage(slug, preview, previewData);
 
+  // console.log("data", data);
+
+  if (data.post.template.templateName == "Flex") {
+    console.log("is a flex template, load flex components");
+    console.log("flex data", data.post.acfFlex);
+  } else {
+    console.log("is a normal template, load basics");
+  }
+
   return {
     props: {
       preview,
