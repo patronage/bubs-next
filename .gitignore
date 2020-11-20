@@ -102,3 +102,4 @@ out
 .pnp.*
 
 .vercel
+.DS_Store
