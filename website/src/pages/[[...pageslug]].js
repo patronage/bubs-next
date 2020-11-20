@@ -1,9 +1,12 @@
-import Layout from "components/layout";
 import { getPage, getAllPagesWithSlug } from "lib/wordpress";
+
+import Layout from "components/layout";
 import ErrorPage from "next/error";
 import PostBody from "components/post/body";
 
-export default function Page({ post, preview, isHome }) {
+import Flex from 'components/flex';
+
+export default function Page({ post, preview, isHome, template, flexSections }) {
   // check if homepage
   // you can remove this if you've defined a homepage in wordpress
   if (isHome) {
@@ -24,6 +27,18 @@ export default function Page({ post, preview, isHome }) {
 
   if (!post?.slug) {
     return <ErrorPage statusCode={404} />;
+  }
+
+  if ( template === 'Flex' ) {
+    return (
+      <Layout
+        preview={preview}
+        title={post?.title}
+        image={post?.featuredImage?.sourceUrl}
+      >
+        <Flex sections={ flexSections } />
+      </Layout>
+    );
   }
 
   return (
@@ -57,6 +72,7 @@ export async function getStaticProps({ params, preview = false, previewData }) {
   }
 
   let slug = "/";
+
   if (params.pageslug?.length) {
     slug += params.pageslug.join("/");
   }
@@ -74,8 +90,10 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 
   return {
     props: {
-      preview,
+      preview,      
       post: data.pageBy,
+      flexSections: data.post.acfFlex?.flexContent,
+      template: data.post.template?.templateName,
     },
     revalidate: 10,
   };
