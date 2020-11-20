@@ -72,7 +72,7 @@ export async function getStaticProps({ params, preview = false, previewData }) {
   }
 
   let slug = "/";
-
+  
   if (params.pageslug?.length) {
     slug += params.pageslug.join("/");
   }

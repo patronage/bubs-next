@@ -127,6 +127,38 @@ export async function getPosts(preview) {
   return data?.posts;
 }
 
+export async function getPostsByCategory(categorySlug) {
+  const data = await fetchAPI(`
+    {
+      posts(first: 10000, where: {categoryName: "${categorySlug}"}) {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.posts;
+}
+
+export async function getPostsByTag(tagSlug) {
+  const data = await fetchAPI(`
+    {
+      posts(first: 10000, where: {tag: "${tagSlug}"}) {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.posts;
+}
+
 export async function getHeroes() {
   const data = await fetchAPI(`
     query AllHeroes {
@@ -154,6 +186,38 @@ export async function getHeroes() {
   `);
 
   return data?.heroes;
+}
+
+export async function getCategories() {
+  const data = await fetchAPI(`
+    query AllCategories {
+      categories {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  return data.categories;
+}
+
+export async function getTags() {
+  const data = await fetchAPI(`
+    query AllTags {
+      tags {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  return data.tags;
 }
 
 export async function getPage(slug, preview, previewData) {
@@ -247,6 +311,54 @@ export async function getPage(slug, preview, previewData) {
         ...PageFields
         ...FlexFields
         ...SEOFields
+        content
+      }
+    }
+    `,
+    {
+      variables: { uri },
+    }
+  );
+
+  // Draft posts may not have an slug
+  if (isDraft) data.post.slug = postPreview.id;
+  // Apply a revision (changes in a published post)
+  if (isRevision && data.post.revisions) {
+    const revision = data.post.revisions.edges[0]?.node;
+
+    if (revision) Object.assign(data.post, revision);
+    delete data.post.revisions;
+  }
+
+  data.post = data.pageBy;
+
+  return data;
+}
+
+export async function getPost(slug, preview, previewData) {
+  const postPreview = preview && previewData?.post;
+  // The slug may be the id of an unpublished post
+  const isId = Number.isInteger(Number(slug));
+  const isSamePost = isId
+    ? Number(slug) === postPreview.id
+    : slug === postPreview?.slug;
+  const isDraft = isSamePost && postPreview?.status === "draft";
+  const isRevision = isSamePost && postPreview?.status === "publish";
+  const uri = slug;
+  const data = await fetchAPI(
+    `
+    fragment PostFields on Post {
+      title
+      slug
+      featuredImage {
+        node {
+          sourceUrl
+        }
+      }
+    }
+    query PostBySlug($uri: String) {
+      postBy(uri: $uri) {
+        ...PostFields
         content
       }
     }

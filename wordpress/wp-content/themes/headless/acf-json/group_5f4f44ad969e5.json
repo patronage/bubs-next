@@ -15,12 +15,9 @@
                 "class": "",
                 "id": ""
             },
-            "show_in_graphql": 1,
             "choices": {
                 "light": "Light",
-                "dark": "Dark",
-                "primary": "Primary",
-                "secondary": "Secondary"
+                "dark": "Dark"
             },
             "default_value": false,
             "allow_null": 0,
@@ -86,7 +83,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_graphql": 0,
-    "graphql_field_name": "sharedOptions",
-    "modified": 1605755376
+    "modified": 1599030534
 }
