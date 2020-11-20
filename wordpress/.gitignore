@@ -70,6 +70,7 @@ Thumbs.db
 .smushit-status
 .gitattributes
 _wpeprivate
+wp-content/db.php
 wp-content/object-cache.php
 wp-content/mu-plugins/wpengine-common/
 wp-content/mu-plugins/mu-plugin.php

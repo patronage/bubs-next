@@ -25,6 +25,21 @@ function error_exit {
     exit 1
 }
 
+# Ref: https://stackoverflow.com/questions/8223906/how-to-check-if-remote-branch-exists-on-a-given-remote-repository
+# test if the branch is in the remote repository.
+# return 1 if its remote branch exists, or 0 if not.
+function is_in_remote() {
+    local remote=${1}
+    local branch=${2}
+    local existed_in_remote=$(git ls-remote --heads ${remote} ${branch})
+
+    if [[ -z ${existed_in_remote} ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
 # check environment to ensure we should proceed with build
 if [[ -n $(git status --porcelain) ]]; then
     error_exit "There are uncommited changes -- please commit before proceeding."
@@ -50,21 +65,24 @@ else
     git checkout -b deploy
     # gulp release || error_exit "Gulp release failed."
 
-    # echo "Adding built files that are normally .gitignored..."
-    # array=()
-    # get_array "_build/.deploy_include.txt"
-    # for e in "${array[@]}"
-    # do
-    #     printf "$e\n"
-    #     git add "$e" -f
-    # done
+    echo "Adding built files that are normally .gitignored..."
+    array=()
+    get_array "_build/.deploy_include.txt"
+    for e in "${array[@]}"
+    do
+        printf "$e\n"
+        git add -f "$e"
+    done
+    echo "trying to add again just to confirm"
+    git add -f "wp-content/plugins"
+    git status
 
     echo "Removing files we don't want on the server"
     array=()
     get_array "_build/.deploy_exclude.txt"
     for e in "${array[@]}"
     do
-        git rm -r --ignore-unmatch "$e"
+        git rm -r --ignore-unmatch "$e" -f
     done
 
     echo "Committing build changes"
@@ -96,10 +114,30 @@ else
         git remote rm production
         git remote add production ${PRODUCTION_REMOTE}
         cd ..
-        git push -u production `git subtree split --prefix wordpress deploy`:master --force
-        echo "Returning to working branch."
-        git stash
-        git checkout $branch
+        # check if master exists 
+        if is_in_remote "production" "master"; then
+            echo "WP engine ready for deploy, proceeding"
+            git push -u production `git subtree split --prefix wordpress deploy`:master --force
+            echo "Returning to working branch."
+            git stash
+            git checkout $branch
+        else
+            echo "First time, prepping remote"
+            mkdir tmp
+            cd tmp
+            echo 'Hello, world.' > tmp.txt
+            git init
+            git add . && git commit -am "comment"
+            git remote add production ${PRODUCTION_REMOTE}
+            git push -f production master
+            echo "Remote ready, cleaning up"
+            cd ..
+            rm -rf tmp
+            echo "Remote now ready, please try again."
+            echo "Returning to working branch."
+            git stash
+            git checkout $branch
+        fi
 
     else
         error_exit "No deploy conditions met."

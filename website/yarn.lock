@@ -2544,6 +2544,11 @@ data-uri-to-buffer@3.0.0:
   dependencies:
     buffer-from "^1.1.1"
 
+date-fns@^2.16.1:
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
+  integrity sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==
+
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -7081,6 +7086,11 @@ wide-align@^1.1.0:
   integrity sha512-QGkOQc8XL6Bt5PwnsExKBPuMKBxnGxWWW3fU55Xt4feHozMUhdUMaBCk290qpm/wG5u/RSKzwdAC4i51YigihA==
   dependencies:
     string-width "^1.0.2 || 2"
+
+widont@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/widont/-/widont-0.3.3.tgz#e20743942d02fd6c28ef4d3ff8ee1740146489be"
+  integrity sha512-D0VICcKECbHrlgBmbM/WFKrhMCkt3ys+MxBrm+jLEsXwqM3/b73Yakjlp+bvAAI5hhY5pkYlXAtEbf49rwxa2w==
 
 worker-farm@^1.7.0:
   version "1.7.0"
