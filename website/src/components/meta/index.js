@@ -72,9 +72,9 @@ export default function Meta({ title, description, image }) {
         key="meta_twitter_image"
       />
       {/* favicons */}
-      <link rel="icon" href="/cropped-favicon-32x32.png" sizes="32x32" />
-      <link rel="icon" href="/cropped-favicon-192x192.png" sizes="192x192" />
-      <link rel="apple-touch-icon" href="/cropped-favicon-180x180.png" />
+      {/* <link rel="icon" href="/cropped-favicon-32x32.png" sizes="32x32" /> */}
+      <link rel="icon" href="/apple-touch-icon.png" sizes="180x180" />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     </Head>
   );
 }

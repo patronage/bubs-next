@@ -16,11 +16,13 @@
   "dependencies": {
     "bootstrap": "^5.0.0-alpha3",
     "classnames": "^2.2.6",
+    "date-fns": "^2.16.1",
     "next": "^10.0.1",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "sass": "^1.26.10"
+    "sass": "^1.26.10",
+    "widont": "^0.3.3"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^10.0.1",

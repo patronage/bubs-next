@@ -20,14 +20,14 @@ Install Docker on your computer. [Here's a link to the Desktop Installer](https:
 
 ### 2. Checkout this repo and prepare local dependencies
 
-Run the following in your terminal
+From the /wordpress directory, run the following in your terminal:
 
 - `composer install`
 - `yarn`
 
 ### 3. Start Docker and development environment
 
-Run in Terminal
+From the /wordpress directory, run the following in your terminal:
 
 - `docker-compose up`
 
