@@ -71,22 +71,22 @@ else
     git commit -m "Committing build changes"
 
     ## travis deploy based on branch
-    if [ "$TRAVIS_BRANCH" = "master" ]; then
+    if [ "$TRAVIS_BRANCH" = "main" ]; then
         echo "Pushing to production..."
         git remote add production ${PRODUCTION_REMOTE}
-        git push -f production deploy:master
+        git push -f production deploy:main
 
     elif [ ! -z "$TRAVIS_BRANCH" ]; then
         echo "Pushing to staging..."
         git remote add staging ${STAGING_REMOTE}
-        git push -f staging deploy:master
+        git push -f staging deploy:main
 
     elif [ "$1" = "staging" ]; then
         echo "Pushing to staging..."
         git remote rm staging
         git remote add staging ${STAGING_REMOTE}
         cd ..
-        git push -u staging `git subtree split --prefix wordpress deploy`:master --force
+        git push -u staging `git subtree split --prefix wordpress deploy`:main --force
         echo "Returning to working branch."
         git stash
         git checkout $branch
@@ -96,7 +96,7 @@ else
         git remote rm production
         git remote add production ${PRODUCTION_REMOTE}
         cd ..
-        git push -u production `git subtree split --prefix wordpress deploy`:master --force
+        git push -u production `git subtree split --prefix wordpress deploy`:main --force
         echo "Returning to working branch."
         git stash
         git checkout $branch
