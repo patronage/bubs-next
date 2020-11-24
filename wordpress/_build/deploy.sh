@@ -106,10 +106,30 @@ else
         git remote rm staging
         git remote add staging ${STAGING_REMOTE}
         cd ..
-        git push -u staging `git subtree split --prefix wordpress deploy`:main --force
-        echo "Returning to working branch."
-        git stash
-        git checkout $branch
+        # check if main exists 
+        if is_in_remote "staging" "main"; then
+            echo "WP engine ready for deploy, proceeding"
+            git push -u staging `git subtree split --prefix wordpress deploy`:main --force
+            echo "Returning to working branch."
+            git stash
+            git checkout $branch
+        else
+            echo "First time, prepping remote"
+            mkdir tmp
+            cd tmp
+            echo 'Hello, world.' > tmp.txt
+            git init
+            git add . && git commit -am "comment"
+            git remote add staging ${STAGING_REMOTE}
+            git push -f staging main
+            echo "Remote ready, cleaning up"
+            cd ..
+            rm -rf tmp
+            echo "Remote now ready, please try again."
+            echo "Returning to working branch."
+            git stash
+            git checkout $branch
+        fi
 
     elif [ "$1" = "dev" ]; then
         echo "Pushing to dev..."
