@@ -1,8 +1,9 @@
 #!/bin/bash
 
 ## Per Project Variables -- CUSTOMIZE THESE FIRST
-STAGING_REMOTE="git@git.wpengine.com:production/bubsnexts.git"
 PRODUCTION_REMOTE="git@git.wpengine.com:production/bubsnext.git"
+STAGING_REMOTE="git@git.wpengine.com:production/bubsnexts.git"
+DEVELOPMENT_REMOTE="git@git.wpengine.com:production/bubsnextd.git"
 GIT_EMAIL="hello+bubs@patronage.org"
 GIT_NAME="Bubs Deploy"
 
@@ -39,6 +40,43 @@ function is_in_remote() {
         return 0
     fi
 }
+
+function wpe_deploy() {
+    local TARGET=${1}
+    local REMOTE=${2}
+    local BRANCH=${3}
+
+    echo "Pushing to ${TARGET}..."
+    git remote rm ${TARGET}
+    git remote add ${TARGET} ${REMOTE}
+    cd ..
+    
+    # check if master exists on remote
+    if is_in_remote ${TARGET} "master"; then
+        echo "WP engine ready for deploy, proceeding"
+        git push -u ${TARGET} `git subtree split --prefix wordpress deploy`:master --force
+        echo "Returning to working branch."
+        git stash
+        git checkout ${BRANCH}
+    else
+        echo "First time deploy, prepping remote with empty file"
+        mkdir tmp
+        cd tmp
+        echo 'Hello, world.' > tmp.txt
+        git init
+        git add . && git commit -am "comment"
+        git remote add ${TARGET} ${REMOTE}
+        git push -f ${TARGET} master
+        echo "Remote ready, cleaning up"
+        cd ..
+        rm -rf tmp
+        echo "Remote now ready, please try deploying again to populate."
+        echo "Returning to working branch."
+        git stash
+        git checkout  ${BRANCH}
+    fi
+}
+
 
 # check environment to ensure we should proceed with build
 if [[ -n $(git status --porcelain) ]]; then
@@ -89,58 +127,27 @@ else
     git commit -m "Committing build changes"
 
     ## travis deploy based on branch
-    if [ "$TRAVIS_BRANCH" = "master" ]; then
+    ## TODO: switch to github actions
+    if [ "$TRAVIS_BRANCH" = "main" ]; then
         echo "Pushing to production..."
         git remote add production ${PRODUCTION_REMOTE}
-        git push -f production deploy:master
+        git push -f production deploy:main
 
     elif [ ! -z "$TRAVIS_BRANCH" ]; then
         echo "Pushing to staging..."
         git remote add staging ${STAGING_REMOTE}
-        git push -f staging deploy:master
+        git push -f staging deploy:main
 
-    elif [ "$1" = "staging" ]; then
-        echo "Pushing to staging..."
-        git remote rm staging
-        git remote add staging ${STAGING_REMOTE}
-        cd ..
-        git push -u staging `git subtree split --prefix wordpress deploy`:master --force
-        echo "Returning to working branch."
-        git stash
-        git checkout $branch
+    elif [ "$1" = "staging" ] || [ "$1" = "stage" ]; then
+        wpe_deploy "staging" ${STAGING_REMOTE} $branch
 
-    elif [ "$1" = "production" ]; then
-        echo "Pushing to production..."
-        git remote rm production
-        git remote add production ${PRODUCTION_REMOTE}
-        cd ..
-        # check if master exists 
-        if is_in_remote "production" "master"; then
-            echo "WP engine ready for deploy, proceeding"
-            git push -u production `git subtree split --prefix wordpress deploy`:master --force
-            echo "Returning to working branch."
-            git stash
-            git checkout $branch
-        else
-            echo "First time, prepping remote"
-            mkdir tmp
-            cd tmp
-            echo 'Hello, world.' > tmp.txt
-            git init
-            git add . && git commit -am "comment"
-            git remote add production ${PRODUCTION_REMOTE}
-            git push -f production master
-            echo "Remote ready, cleaning up"
-            cd ..
-            rm -rf tmp
-            echo "Remote now ready, please try again."
-            echo "Returning to working branch."
-            git stash
-            git checkout $branch
-        fi
+    elif [ "$1" = "development" ] || [ "$1" = "dev" ]; then
+        wpe_deploy "development" ${DEVELOPMENT_REMOTE} $branch
 
+    elif [ "$1" = "production" ] || [ "$1" = "prod" ]; then
+        wpe_deploy "production" ${PRODUCTION_REMOTE} $branch
     else
-        error_exit "No deploy conditions met."
+        error_exit "No deploy conditions met. Specify a target (staging, development, production)"
     fi
 
     ## test for git response, and if error code, bail out of travis with an error code
