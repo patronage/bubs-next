@@ -33,18 +33,22 @@ const Flex = ({ sections }) => {
       backgroundDark = true;
     }
 
-    if (section.fieldGroupName.includes('Blockquote')) {
+    // Pass the flex index to the section so we can prioritize
+    // image loading for first sections, etc.
+    section.index === i;
+
+    if (section.fieldGroupName.includes("Blockquote")) {
       componentName = "blockquote";
       component = <FlexBlockquote {...section} />;
-    } else if (section.fieldGroupName.includes('WysiwygContent')) {
+    } else if (section.fieldGroupName.includes("WysiwygContent")) {
       componentName = "wysiwyg";
       component = <FlexWysiwyg {...section} />;
-    } else if (section.fieldGroupName.includes('Hero')) {
+    } else if (section.fieldGroupName.includes("Hero")) {
       componentName = "hero";
       component = <FlexHero {...section} />;
       paddingTop = false;
       paddingBottom = false;
-    } else if (section.fieldGroupName.includes('StatsCarousel')) {
+    } else if (section.fieldGroupName.includes("StatsCarousel")) {
       componentName = "carousel";
       component = <FlexCarousel {...section} />;
     }
