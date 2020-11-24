@@ -249,5 +249,7 @@
     ],
     "active": true,
     "description": "",
-    "modified": 1599030761
+    "show_in_graphql": 1,
+    "graphql_field_name": "acfFlex",
+    "modified": 1606237852
 }
