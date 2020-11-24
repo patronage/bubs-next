@@ -1,0 +1,23 @@
+@import "styles/_scaffold";
+
+.outer {
+  position: relative;
+  height: 10vh;
+  background: #fff;
+  box-shadow: 2px 2px 5px;
+  filter: contrast(7);
+
+  --mask: linear-gradient(red, #{rgba(#000, 0.45)});
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(#000, transparent) 0 0/ 1em 1em space;
+    content: "";
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+  }
+}

@@ -4,9 +4,15 @@ import Layout from "components/layout";
 import ErrorPage from "next/error";
 import PostBody from "components/post/body";
 
-import Flex from 'components/flex';
+import Flex from "components/flex/Flex";
 
-export default function Page({ post, preview, isHome, template, flexSections }) {
+export default function Page({
+  post,
+  preview,
+  isHome,
+  template,
+  flexSections,
+}) {
   // check if homepage
   // you can remove this if you've defined a homepage in wordpress
   if (isHome) {
@@ -29,14 +35,14 @@ export default function Page({ post, preview, isHome, template, flexSections }) 
     return <ErrorPage statusCode={404} />;
   }
 
-  if ( template === 'Flex' ) {
+  if (template === "Flex") {
     return (
       <Layout
         preview={preview}
         title={post?.title}
         image={post?.featuredImage?.sourceUrl}
       >
-        <Flex sections={ flexSections } />
+        <Flex sections={flexSections} />
       </Layout>
     );
   }
@@ -72,7 +78,7 @@ export async function getStaticProps({ params, preview = false, previewData }) {
   }
 
   let slug = "/";
-  
+
   if (params.pageslug?.length) {
     slug += params.pageslug.join("/");
   }
@@ -90,7 +96,7 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 
   return {
     props: {
-      preview,      
+      preview,
       post: data.pageBy,
       flexSections: data.post.acfFlex?.flexContent,
       template: data.post.template?.templateName,
