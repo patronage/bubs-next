@@ -6,9 +6,11 @@ module.exports = withBundleAnalyzer({
   images: {
     domains: [
       "localhost",
-      "bubs.patronage.org",
-      "bubs-next.vercel.app",
-      "bubs-next-git-12-next-image.patronage.vercel.app",
+      "res.cloudinary.com",
+      "bubsnext.wpengine.com",
+      "bubsnexts.wpengine.com",
+      "bubsnextd.wpengine.com",
+      "bubsnextd.wpengine.com",
     ],
   },
 });
