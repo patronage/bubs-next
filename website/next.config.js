@@ -4,13 +4,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 module.exports = withBundleAnalyzer({
   images: {
-    domains: [
-      "localhost",
-      "res.cloudinary.com",
-      "bubsnext.wpengine.com",
-      "bubsnexts.wpengine.com",
-      "bubsnextd.wpengine.com",
-      "bubsnextd.wpengine.com",
-    ],
+    loader: "cloudinary",
+    path: "https://res.cloudinary.com/patronage/image/fetch/",
   },
 });
