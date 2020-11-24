@@ -1,8 +1,9 @@
 #!/bin/bash
 
 ## Per Project Variables -- CUSTOMIZE THESE FIRST
-STAGING_REMOTE="git@git.wpengine.com:production/bubsnexts.git"
 PRODUCTION_REMOTE="git@git.wpengine.com:production/bubsnext.git"
+STAGING_REMOTE="git@git.wpengine.com:production/bubsnexts.git"
+DEV_REMOTE="git@git.wpengine.com:production/bubsnextd.git"
 GIT_EMAIL="hello+bubs@patronage.org"
 GIT_NAME="Bubs Deploy"
 
@@ -89,6 +90,7 @@ else
     git commit -m "Committing build changes"
 
     ## travis deploy based on branch
+    ## TODO: switch to github actions
     if [ "$TRAVIS_BRANCH" = "main" ]; then
         echo "Pushing to production..."
         git remote add production ${PRODUCTION_REMOTE}
@@ -105,6 +107,16 @@ else
         git remote add staging ${STAGING_REMOTE}
         cd ..
         git push -u staging `git subtree split --prefix wordpress deploy`:main --force
+        echo "Returning to working branch."
+        git stash
+        git checkout $branch
+
+    elif [ "$1" = "dev" ]; then
+        echo "Pushing to dev..."
+        git remote rm dev
+        git remote add dev ${DEV_REMOTE}
+        cd ..
+        git push -u dev `git subtree split --prefix wordpress deploy`:main --force
         echo "Returning to working branch."
         git stash
         git checkout $branch
