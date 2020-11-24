@@ -5,7 +5,7 @@ import FlexWysiwyg from "./FlexWysiwyg";
 import FlexCarousel from "./FlexCarousel";
 import FlexBlockquote from "./FlexBlockquote";
 
-import styles from "./Flex.module.scss";
+import styles from "./flex.module.scss";
 
 const Flex = ({ sections }) => {
   const renderedSections = [];
