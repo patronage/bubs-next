@@ -33,20 +33,20 @@ const Flex = ({ sections }) => {
       backgroundDark = true;
     }
 
-    if (typeof section.blockquote !== "undefined") {
+    if (section.fieldGroupName.includes('Blockquote')) {
       componentName = "blockquote";
-      component = <FlexBlockquote />;
-    } else if (typeof section.wysiwygContent !== "undefined") {
+      component = <FlexBlockquote {...section} />;
+    } else if (section.fieldGroupName.includes('WysiwygContent')) {
       componentName = "wysiwyg";
-      component = <FlexWysiwyg />;
-    } else if (typeof section.heroHeading !== "undefined") {
+      component = <FlexWysiwyg {...section} />;
+    } else if (section.fieldGroupName.includes('Hero')) {
       componentName = "hero";
-      component = <FlexHero />;
+      component = <FlexHero {...section} />;
       paddingTop = false;
       paddingBottom = false;
-    } else if (typeof section.statsCarousel !== "undefined") {
+    } else if (section.fieldGroupName.includes('StatsCarousel')) {
       componentName = "carousel";
-      component = <FlexCarousel />;
+      component = <FlexCarousel {...section} />;
     }
 
     const classNames = cx({
