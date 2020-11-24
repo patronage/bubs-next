@@ -12,7 +12,7 @@ You should have the following installed and ready in your development environmen
 - `Node.js`
 - `nvm`
 - `Yarn Package Manager`
-- `Sequel Pro` or a SQL GUI to import site database
+- `Sequel Ace` or a SQL GUI to import site database
 
 ### 1. Install Docker
 
