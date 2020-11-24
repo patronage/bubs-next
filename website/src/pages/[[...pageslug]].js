@@ -89,8 +89,8 @@ export async function getStaticProps({ params, preview = false, previewData }) {
     props: {
       preview,
       post: data.pageBy,
-      flexSections: data.post.acfFlex?.flexContent,
-      template: data.post.template?.templateName,
+      flexSections: data.post?.acfFlex?.flexContent || null,
+      template: data.post?.template?.templateName || null,
     },
     revalidate: 10,
   };
