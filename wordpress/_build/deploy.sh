@@ -50,7 +50,7 @@ function wpe_deploy() {
     git remote rm ${TARGET}
     git remote add ${TARGET} ${REMOTE}
     cd ..
-    echo "deploy complete..."
+    
     # check if master exists on remote
     if is_in_remote ${TARGET} "master"; then
         echo "WP engine ready for deploy, proceeding"
