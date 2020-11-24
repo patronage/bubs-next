@@ -13,17 +13,48 @@ $font-heading: "Roboto Condensed", sans-serif;
 $font-button: $font-sans;
 $font-thin: 300;
 
+//
 // colors
+//
+
 $white: #fff;
 $black: #000;
-$black-transparent: rgba($black, 0.7);
-$gray-dark: #4a4a4a;
-$gray-light: #e8e8e8;
 $blue: #00baee;
 $purple: #9145cd;
 $color-email: #138bfd;
 $color-facebook: #3b5998;
 $color-twitter: #55acee;
+// bootstrap theme colors
+// must restate defaults in order to merge in our custom
+$primary: $blue;
+$secondary: $purple;
+$dark: #212529;
+$light: #f8f9fa;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$body-color: #222; // $text-color
+
+// Theme Colors
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+);
+$custom-colors: (
+  "papayawhip": papayawhip,
+  "white": white,
+  "black": black,
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
 
 //
 // bootstrap variable overrides
@@ -38,16 +69,6 @@ $grid-gutter-width: 30px;
 $border-radius: 0;
 $border-radius-lg: 0;
 $border-radius-sm: 0;
-
-// bootstrap theme colors
-$primary: $blue;
-$secondary: $purple;
-$body-color: #222; // $text-color
-
-//main theme colors.  Example usage: background-color: theme-color('blue');
-$theme-colors: (
-  "papayawhip": papayawhip,
-);
 
 // customize grid
 // $container-max-widths: (

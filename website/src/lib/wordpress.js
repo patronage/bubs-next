@@ -235,15 +235,82 @@ export async function getPage(slug, preview, previewData) {
     fragment PageFields on Page {
       title
       slug
+      content
+      template {
+        templateName
+      }
       featuredImage {
         node {
           sourceUrl
         }
       }
     }
+    fragment SEOFields on Page {
+      seo {
+        canonical
+        metaDesc
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphImage {
+          sourceUrl
+        }
+        opengraphDescription
+        opengraphTitle
+        twitterDescription
+        title
+        twitterTitle
+        twitterImage {
+          sourceUrl
+        }
+      }
+    }
+    fragment FlexFields on Page {
+      acfFlex {
+        fieldGroupName
+        flexContent {
+          ... on Page_Acfflex_FlexContent_Blockquote {
+            backgroundColor
+            blockquote
+            fieldGroupName
+            quoteAttribution
+            sectionClasses
+            sectionSlug
+          }
+          ... on Page_Acfflex_FlexContent_Hero {
+            backgroundColor
+            fieldGroupName
+            heroHeading
+            heroSubheading
+            sectionClasses
+            sectionSlug
+          }
+          ... on Page_Acfflex_FlexContent_StatsCarousel {
+            backgroundColor
+            fieldGroupName
+            sectionClasses
+            sectionSlug
+            statsCarousel {
+              fieldGroupName
+              statDetails
+              statTopline
+            }
+          }
+          ... on Page_Acfflex_FlexContent_WysiwygContent {
+            backgroundColor
+            fieldGroupName
+            sectionClasses
+            sectionHeading
+            sectionSlug
+            wysiwygContent
+          }
+        }
+      }
+    }
     query PageBySlug($uri: String) {
       pageBy(uri: $uri) {
         ...PageFields
+        ...FlexFields
+        ...SEOFields
         content
       }
     }
