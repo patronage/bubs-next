@@ -7,7 +7,7 @@ const {
   getAllPostsWithSlug,
 } = require("./wordpress");
 
-const POSTS_PER_PAGE = 1;
+const POSTS_PER_PAGE = 2;
 
 /**
  * staticPathGenerator helps create staticially generatable page/URL structure for various Wordpress archives. It'll do the following:

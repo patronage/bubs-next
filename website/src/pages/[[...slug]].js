@@ -68,8 +68,8 @@ export default function Page({
 
 export async function getStaticProps({ params, preview = false, previewData }) {
   // if your homepage doesn't come from WP, you need this to custom render and not get a 404
-  // next doesn't let you have index.js and [[...pageslug.js]]
-  if (!params.pageslug?.length) {
+  // next doesn't let you have index.js and [[...slug.js]]
+  if (!params.slug?.length) {
     return {
       props: {
         isHome: true,
@@ -79,8 +79,8 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 
   let slug = "/";
 
-  if (params.pageslug?.length) {
-    slug += params.pageslug.join("/");
+  if (params.slug?.length) {
+    slug += params.slug.join("/");
   }
 
   const data = await getPage(slug, preview, previewData);

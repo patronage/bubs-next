@@ -2,10 +2,7 @@ import cx from "classnames";
 import slugify from "slugify";
 import FlexHero from "./FlexHero";
 import FlexWysiwyg from "./FlexWysiwyg";
-import FlexCarousel from "./FlexCarousel";
 import FlexBlockquote from "./FlexBlockquote";
-
-import styles from "./flex.module.scss";
 
 const Flex = ({ sections }) => {
   const renderedSections = [];
@@ -37,6 +34,12 @@ const Flex = ({ sections }) => {
     // image loading for first sections, etc.
     section.index === i;
 
+    // look for any passed in classes, pass along to child
+    section.customClasses = section.sectionClasses?.split(" ");
+
+    // uncomment if you need to debug graphql, but don't commit
+    // console.log(section);
+
     if (section.fieldGroupName.includes("Blockquote")) {
       componentName = "blockquote";
       component = <FlexBlockquote {...section} />;
@@ -48,20 +51,18 @@ const Flex = ({ sections }) => {
       component = <FlexHero {...section} />;
       paddingTop = false;
       paddingBottom = false;
-    } else if (section.fieldGroupName.includes("StatsCarousel")) {
-      componentName = "carousel";
-      component = <FlexCarousel {...section} />;
     }
 
     const classNames = cx({
-      [styles["flex-section"]]: true,
       [`flex-${componentName}`]: true,
       ["text-white"]: backgroundDark,
-      ["pt-3"]: paddingTop,
-      ["pb-3"]: paddingBottom,
+      "section-padded": paddingTop || paddingBottom,
+      ["pt-0"]: !paddingTop,
+      ["pb-0"]: !paddingBottom,
       [`bg-${section.backgroundColor}`]: true,
     });
 
+    // add slug ID if passed in
     let slug = "";
     if (section.sectionSlug) {
       slug = slugify(section.sectionSlug, { lower: true });
