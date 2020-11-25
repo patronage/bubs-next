@@ -3,24 +3,27 @@ import { useRouter } from "next/router";
 import { staticPropHelper, staticPathGenerator } from "lib/archive";
 import { getPost, getAllPostsWithSlug } from "lib/wordpress";
 
-import Layout from "components/layout";
-import Paginator from "components/paginator";
-import PostArchive from "components/post-archive";
+import LayoutDefault from "components/layouts/LayoutDefault";
+import PostArchive from "components/post/PostArchive";
 
 function BlogPostPage({ post }) {
   return (
-    <Layout title={post.title}>
+    <LayoutDefault title={post.title}>
       <h1>{post.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
-    </Layout>
+    </LayoutDefault>
   );
 }
 
 function BlogIndexPage(props) {
   return (
-    <Layout title="">
-      <PostArchive {...props} />
-    </Layout>
+    <LayoutDefault title="">
+      <section class="pt-3 pb-3">
+        <div class="container">
+          <PostArchive {...props} />
+        </div>
+      </section>
+    </LayoutDefault>
   );
 }
 
