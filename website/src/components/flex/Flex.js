@@ -38,7 +38,7 @@ const Flex = ({ sections }) => {
     section.customClasses = section.sectionClasses?.split(" ");
 
     // uncomment if you need to debug graphql, but don't commit
-    console.log(section);
+    // console.log(section);
 
     if (section.fieldGroupName.includes("Blockquote")) {
       componentName = "blockquote";
