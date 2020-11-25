@@ -2,7 +2,7 @@ import Meta from "components/meta";
 import Header from "components/header";
 import Footer from "components/footer";
 
-export default function Layout({ children, title, description, image }) {
+export default function LayoutDefault({ children, title, description, image }) {
   return (
     <>
       <Meta title={title} description={description} image={image} />

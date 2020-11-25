@@ -1,6 +1,6 @@
 import Link from "next/link";
 import cx from "classnames";
-import styles from "./footer.module.scss";
+import styles from "./Footer.module.scss";
 
 export default function Footer() {
   return (

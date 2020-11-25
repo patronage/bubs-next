@@ -1,13 +1,13 @@
 import { staticPropHelper, staticPathGenerator } from "lib/archive";
 
-import Layout from "components/layout";
-import PostArchive from "components/post-archive";
+import LayoutDefault from "components/layouts/LayoutDefault";
+import PostArchive from "components/post/PostArchive";
 
 function TaxIndex(props) {
   return (
-    <Layout title="">
+    <LayoutDefault title="">
       <PostArchive archiveTitle={`Tag Archive`} {...props} />
-    </Layout>
+    </LayoutDefault>
   );
 }
 

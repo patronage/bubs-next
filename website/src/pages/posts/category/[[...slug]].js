@@ -1,13 +1,13 @@
 import { staticPropHelper, staticPathGenerator } from "lib/archive";
 
-import Layout from "components/layout";
-import PostArchive from "components/post-archive";
+import LayoutDefault from "components/layouts/LayoutDefault";
+import PostArchive from "components/post/PostArchive";
 
 function CategoryIndex(props) {
   return (
-    <Layout title="">
+    <LayoutDefault title="">
       <PostArchive archiveTitle={`Category Archive`} {...props} />
-    </Layout>
+    </LayoutDefault>
   );
 }
 
