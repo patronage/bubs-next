@@ -103,6 +103,10 @@ export async function getPosts(preview) {
             featuredImage {
               node {
                 sourceUrl
+                mediaDetails {
+                  height
+                  width
+                }
               }
             }
             author {
@@ -177,6 +181,10 @@ export async function getHeroes() {
                 link
                 sourceUrl(size: LARGE)
                 altText
+                mediaDetails {
+                  height
+                  width
+                }
               }
             }
           }
@@ -242,6 +250,10 @@ export async function getPage(slug, preview, previewData) {
       featuredImage {
         node {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
       }
     }
@@ -253,6 +265,10 @@ export async function getPage(slug, preview, previewData) {
         metaRobotsNoindex
         opengraphImage {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
         opengraphDescription
         opengraphTitle
@@ -261,6 +277,10 @@ export async function getPage(slug, preview, previewData) {
         twitterTitle
         twitterImage {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
       }
     }
@@ -281,6 +301,13 @@ export async function getPage(slug, preview, previewData) {
             fieldGroupName
             heroHeading
             heroSubheading
+            heroImage {
+              sourceUrl
+              mediaDetails {
+                height
+                width
+              }
+            }
             sectionClasses
             sectionSlug
           }
@@ -353,6 +380,10 @@ export async function getPost(slug, preview, previewData) {
       featuredImage {
         node {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
       }
     }
@@ -398,6 +429,10 @@ export async function getHome(preview, previewData) {
       featuredImage {
         node {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
       }
       seo {
@@ -406,6 +441,10 @@ export async function getHome(preview, previewData) {
         metaRobotsNoindex
         opengraphImage {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
         opengraphDescription
         opengraphTitle
@@ -414,6 +453,10 @@ export async function getHome(preview, previewData) {
         twitterTitle
         twitterImage {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
       }
       content_area {
@@ -434,6 +477,10 @@ export async function getHome(preview, previewData) {
         issueArea {
           icon {
             sourceUrl
+            mediaDetails {
+              height
+              width
+            }
           }
           title
           content
@@ -446,6 +493,10 @@ export async function getHome(preview, previewData) {
         btns {
           actionIcon {
             sourceUrl
+            mediaDetails {
+              height
+              width
+            }
           }
           actionTitle
           link {
@@ -487,6 +538,10 @@ export async function getHome(preview, previewData) {
             eventLabel
             eventThumbnail {
               sourceUrl
+              mediaDetails {
+                height
+                width
+              }
             }
             eventType {
               name
@@ -548,6 +603,10 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       featuredImage {
         node {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
       }
       author {

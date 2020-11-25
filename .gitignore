@@ -1,6 +1,6 @@
 .DS_Store
-.vercel
 .env
+.vercel
 
 # local env files
 .env.local
