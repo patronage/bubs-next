@@ -1,8 +1,8 @@
 import { getPage, getAllPagesWithSlug } from "lib/wordpress";
 
-import Layout from "components/layout";
+import LayoutDefault from "components/layouts/LayoutDefault";
 import ErrorPage from "next/error";
-import PostBody from "components/post/body";
+import PostBody from "components/post/PostBody";
 
 import Flex from "components/flex/Flex";
 
@@ -17,7 +17,7 @@ export default function Page({
   // you can remove this if you've defined a homepage in wordpress
   if (isHome) {
     return (
-      <Layout title="">
+      <LayoutDefault title="">
         <section className="section-padded">
           <div className="container">
             <div className="row">
@@ -27,7 +27,7 @@ export default function Page({
             </div>
           </div>
         </section>
-      </Layout>
+      </LayoutDefault>
     );
   }
 
@@ -37,18 +37,18 @@ export default function Page({
 
   if (template === "Flex") {
     return (
-      <Layout
+      <LayoutDefault
         preview={preview}
         title={post?.title}
         image={post?.featuredImage?.sourceUrl}
       >
         <Flex sections={flexSections} />
-      </Layout>
+      </LayoutDefault>
     );
   }
 
   return (
-    <Layout
+    <LayoutDefault
       preview={preview}
       title={post?.title}
       image={post?.featuredImage?.sourceUrl}
@@ -62,7 +62,7 @@ export default function Page({
           </div>
         </div>
       </section>
-    </Layout>
+    </LayoutDefault>
   );
 }
 
