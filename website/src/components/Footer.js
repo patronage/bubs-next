@@ -15,6 +15,16 @@ export default function Footer() {
                 </Link>
               </li>
               <li className="list-inline-item">
+                <Link href="/posts">
+                  <a>Posts</a>
+                </Link>
+              </li>
+              <li className="list-inline-item">
+                <Link href="/flex-demo">
+                  <a>Flex Demo</a>
+                </Link>
+              </li>
+              <li className="list-inline-item">
                 <Link href="/privacy">
                   <a>Privacy Policy</a>
                 </Link>

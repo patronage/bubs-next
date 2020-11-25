@@ -56,7 +56,7 @@ export async function getStaticProps(context) {
   // Generate props for Post Single Page
   //
   try {
-    const { postBy } = await getPost(context.params.slug[0]);
+    const { postBy } = await getPost(context.params.postslug[0]);
     return { props: { post: postBy } };
   } catch (error) {}
 
