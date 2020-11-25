@@ -1,10 +1,13 @@
 //
 // set our own variables and override bootstrap ones here.
+// if you need to referene any bootstrap ones, copy from here:
+// https://github.com/twbs/bootstrap/blob/v5.0.0-beta1/scss/_variables.scss
 //
 
-// layout
-$section-padding: 50px;
-$section-padding-mobile: 30px;
+// spacing
+$spacer: 1rem;
+$section-padding: $spacer * 3;
+$section-padding-mobile: $spacer * 1.5;
 
 // type
 $font-sans: "Source Sans Pro", sans-serif;

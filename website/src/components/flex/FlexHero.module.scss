@@ -2,12 +2,12 @@
 
 .outer {
   position: relative;
-  height: 10vh;
+  height: 60vh;
   background: #fff;
   box-shadow: 2px 2px 5px;
-  filter: contrast(7);
+  //filter: contrast(7);
 
-  --mask: linear-gradient(red, #{rgba(#000, 0.45)});
+  //--mask: linear-gradient(red, #{rgba(#000, 0.45)});
 
   &::before {
     position: absolute;
@@ -15,9 +15,19 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background: radial-gradient(#000, transparent) 0 0/ 1em 1em space;
+    //background: radial-gradient(#000, transparent) 0 0/ 1em 1em space;
     content: "";
     -webkit-mask: var(--mask);
     mask: var(--mask);
+  }
+}
+
+.hero-image {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+
+  img {
+    transform: translateY(-50%);
   }
 }

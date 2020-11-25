@@ -1,8 +1,8 @@
 import { getPage, getAllPagesWithSlug } from "lib/wordpress";
 
-import Layout from "components/layout";
+import LayoutDefault from "components/layouts/LayoutDefault";
 import ErrorPage from "next/error";
-import PostBody from "components/post/body";
+import PostBody from "components/post/PostBody";
 
 import Flex from "components/flex/Flex";
 
@@ -17,7 +17,7 @@ export default function Page({
   // you can remove this if you've defined a homepage in wordpress
   if (isHome) {
     return (
-      <Layout title="">
+      <LayoutDefault title="">
         <section className="section-padded">
           <div className="container">
             <div className="row">
@@ -27,7 +27,7 @@ export default function Page({
             </div>
           </div>
         </section>
-      </Layout>
+      </LayoutDefault>
     );
   }
 
@@ -37,18 +37,18 @@ export default function Page({
 
   if (template === "Flex") {
     return (
-      <Layout
+      <LayoutDefault
         preview={preview}
         title={post?.title}
         image={post?.featuredImage?.sourceUrl}
       >
         <Flex sections={flexSections} />
-      </Layout>
+      </LayoutDefault>
     );
   }
 
   return (
-    <Layout
+    <LayoutDefault
       preview={preview}
       title={post?.title}
       image={post?.featuredImage?.sourceUrl}
@@ -62,14 +62,14 @@ export default function Page({
           </div>
         </div>
       </section>
-    </Layout>
+    </LayoutDefault>
   );
 }
 
 export async function getStaticProps({ params, preview = false, previewData }) {
   // if your homepage doesn't come from WP, you need this to custom render and not get a 404
-  // next doesn't let you have index.js and [[...pageslug.js]]
-  if (!params.pageslug?.length) {
+  // next doesn't let you have index.js and [[...slug.js]]
+  if (!params.slug?.length) {
     return {
       props: {
         isHome: true,
@@ -79,20 +79,11 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 
   let slug = "/";
 
-  if (params.pageslug?.length) {
-    slug += params.pageslug.join("/");
+  if (params.slug?.length) {
+    slug += params.slug.join("/");
   }
 
   const data = await getPage(slug, preview, previewData);
-
-  // console.log("data", data);
-
-  /*if (data.post?.template?.templateName == "Flex") {
-    console.log("is a flex template, load flex components");
-    console.log("flex data", data.post.acfFlex);
-  } else {
-    console.log("is a normal template, load basics");
-  }*/
 
   return {
     props: {
