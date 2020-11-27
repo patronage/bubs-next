@@ -1,6 +1,6 @@
-import Meta from "components/meta";
-import Header from "components/header";
-import Footer from "components/footer";
+import Meta from "components/Meta";
+import Header from "components/Header";
+import Footer from "components/Footer";
 
 export default function LayoutDefault({ children, title, description, image }) {
   return (
