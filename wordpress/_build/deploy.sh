@@ -64,7 +64,7 @@ function wpe_deploy() {
         cd tmp
         echo 'Hello, world.' > tmp.txt
         git init
-        git add . && git commit -am "comment"
+        git add . && git commit --no-verify -am "comment"
         git remote add ${TARGET} ${REMOTE}
         git push -f ${TARGET} master
         echo "Remote ready, cleaning up"
@@ -124,7 +124,7 @@ else
     done
 
     echo "Committing build changes"
-    git commit -m "Committing build changes"
+    git commit --no-verify -m "Committing build changes"
 
     ## travis deploy based on branch
     ## TODO: switch to github actions
