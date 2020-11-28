@@ -8,9 +8,9 @@ import PostArchive from "components/post/PostArchive";
 
 function BlogPostPage({ post }) {
   return (
-    <LayoutDefault title={post.title}>
-      <h1>{post.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+    <LayoutDefault title={post?.title}>
+      <h1>{post?.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: post?.content }} />
     </LayoutDefault>
   );
 }

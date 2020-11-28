@@ -311,17 +311,6 @@ export async function getPage(slug, preview, previewData) {
             sectionClasses
             sectionSlug
           }
-          ... on Page_Acfflex_FlexContent_StatsCarousel {
-            backgroundColor
-            fieldGroupName
-            sectionClasses
-            sectionSlug
-            statsCarousel {
-              fieldGroupName
-              statDetails
-              statTopline
-            }
-          }
           ... on Page_Acfflex_FlexContent_WysiwygContent {
             backgroundColor
             fieldGroupName
