@@ -1,14 +1,5 @@
 <?php
 //
-// enable graphql debug in local dev
-//
-if (defined('WP_ENV')) {
-    if ( WP_ENV == 'development'){
-        define('GRAPHQL_DEBUG', true);
-    }
-}
-
-//
 // enable graphql secret key for draft page preview
 //
 

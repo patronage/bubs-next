@@ -1,5 +1,5 @@
 #### Public project exceptions
-# if your project is private, you can uncomment these if you want to keep
+# if your project is private, you can comment these if you want to keep
 # your deps in version control (reccomended)
 wp-content/plugins/*
 composer.lock
