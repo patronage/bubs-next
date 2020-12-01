@@ -2,8 +2,7 @@
   "env": {
     "browser": true,
     "es6": true,
-    "node": true,
-    "jest/globals": true
+    "node": true
   },
   "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
   "parser": "babel-eslint",
@@ -23,7 +22,7 @@
     "google": true,
     "gtag": true
   },
-  "plugins": ["prettier", "jest", "react"],
+  "plugins": ["prettier", "react"],
   "rules": {
     "no-console": 0,
     "indent": [
