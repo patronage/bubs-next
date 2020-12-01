@@ -36,7 +36,6 @@
     "advanced-custom-fields/advanced-custom-fields-pro": "5.9.3",
     "roots/soil": "4.0.4",
     "roots/wordpress": "5.5.3",
-    "roots/wp-stage-switcher": "~2.0",
     "wpackagist-plugin/classic-editor": "1.6",
     "wpackagist-plugin/debug-bar": "1.1.2",
     "wpackagist-plugin/duplicate-post": "3.2.6",
@@ -53,7 +52,6 @@
     "wpackagist-plugin/user-switching": "1.5.6",
     "wpackagist-plugin/wordpress-seo": "15.3",
     "wp-graphql/wp-graphql": "1.0",
-    "wp-graphql/wp-graphiql": "1.0.1",
     "wp-graphql/wp-graphql-acf": "0.4.0",
     "ashhitch/wp-graphql-yoast-seo": "^4.5",
     "wpackagist-plugin/safe-svg": "^1.9"
