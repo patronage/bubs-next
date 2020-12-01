@@ -41,7 +41,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged",
-      "post-merge": "./githooks/post-merge"
+      "post-merge": "./.githooks/post-merge.sh"
     }
   }
 }
