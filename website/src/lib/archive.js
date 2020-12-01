@@ -5,7 +5,7 @@ const {
   getPostsByTag,
   getPostsByCategory,
   getAllPostsWithSlug,
-} = require("./wordpress");
+} = require('./wordpress');
 
 const POSTS_PER_PAGE = 2;
 
@@ -19,18 +19,18 @@ const POSTS_PER_PAGE = 2;
  * @param {string} type What does this taxonomy represent? post_type, category, or tag
  *
  */
-export async function staticPathGenerator(type = "post_type") {
+export async function staticPathGenerator(type = 'post_type') {
   try {
     const paths = [];
 
-    if (type === "category" || type === "tag") {
+    if (type === 'category' || type === 'tag') {
       // Taxonomy Archive
       let allTaxonomyResults;
 
       // This could support custom taxonomies or authors if needed
-      if (type === "category") {
+      if (type === 'category') {
         allTaxonomyResults = await getCategories();
-      } else if (type === "tag") {
+      } else if (type === 'tag') {
         allTaxonomyResults = await getTags();
       }
 
@@ -43,17 +43,21 @@ export async function staticPathGenerator(type = "post_type") {
         let allPosts;
 
         // This could support custom taxonomies or authors if needed
-        if (type === "category") {
+        if (type === 'category') {
           allPosts = await getPostsByCategory(slug);
-        } else if (type === "tag") {
+        } else if (type === 'tag') {
           allPosts = await getPostsByTag(slug);
         }
 
         const posts = allPosts.edges;
 
         // Generate Pagination Paths
-        for (let i = 1; i <= Math.ceil(posts.length / POSTS_PER_PAGE); i++) {
-          paths.push({ params: { slug: [slug, "page", String(i)] } });
+        for (
+          let i = 1;
+          i <= Math.ceil(posts.length / POSTS_PER_PAGE);
+          i++
+        ) {
+          paths.push({ params: { slug: [slug, 'page', String(i)] } });
         }
       }
     } else {
@@ -63,8 +67,12 @@ export async function staticPathGenerator(type = "post_type") {
       const posts = allPosts.edges;
 
       // Generate Pagination Paths
-      for (let i = 1; i <= Math.ceil(posts.length / POSTS_PER_PAGE); i++) {
-        paths.push({ params: { slug: ["page", String(i)] } });
+      for (
+        let i = 1;
+        i <= Math.ceil(posts.length / POSTS_PER_PAGE);
+        i++
+      ) {
+        paths.push({ params: { slug: ['page', String(i)] } });
       }
 
       // Generate Post Paths
@@ -83,23 +91,27 @@ export async function staticPathGenerator(type = "post_type") {
   }
 }
 
-export async function staticPropHelper(staticPropsContext, type = "post_type") {
+export async function staticPropHelper(
+  staticPropsContext,
+  type = 'post_type',
+) {
   try {
     let taxonomyIndex = 0;
     let paginatorIndex = 1;
 
-    if (type !== "post_type") {
+    if (type !== 'post_type') {
       taxonomyIndex = 1;
       paginatorIndex = 2;
     }
 
     if (
       // URL is /posts or /%taxonomySlug%/
-      Object.keys(staticPropsContext.params).length === taxonomyIndex ||
+      Object.keys(staticPropsContext.params).length ===
+        taxonomyIndex ||
       // URL is /posts/page/* or /%taxonomySlug%/page/*
       (staticPropsContext.params &&
         staticPropsContext.params.slug &&
-        staticPropsContext.params.slug[taxonomyIndex] === "page")
+        staticPropsContext.params.slug[taxonomyIndex] === 'page')
     ) {
       // 404 if the paginator ID is non-numeric
       if (
@@ -118,10 +130,14 @@ export async function staticPropHelper(staticPropsContext, type = "post_type") {
       let allPosts;
       const posts = [];
 
-      if (type === "category") {
-        allPosts = await getPostsByCategory(staticPropsContext.params.slug[0]);
-      } else if (type === "tag") {
-        allPosts = await getPostsByTag(staticPropsContext.params.slug[0]);
+      if (type === 'category') {
+        allPosts = await getPostsByCategory(
+          staticPropsContext.params.slug[0],
+        );
+      } else if (type === 'tag') {
+        allPosts = await getPostsByTag(
+          staticPropsContext.params.slug[0],
+        );
       } else {
         allPosts = await getAllPostsWithSlug();
       }
@@ -136,7 +152,7 @@ export async function staticPropHelper(staticPropsContext, type = "post_type") {
       const sliceStart = page * POSTS_PER_PAGE;
       const filteredPosts = allPosts.edges.slice(
         sliceStart,
-        sliceStart + POSTS_PER_PAGE
+        sliceStart + POSTS_PER_PAGE,
       );
 
       // Generate Post Paths

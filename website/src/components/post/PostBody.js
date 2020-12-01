@@ -1,4 +1,4 @@
-import styles from "./PostBody.module.scss";
+import styles from './PostBody.module.scss';
 
 export default function PostBody({ content }) {
   return (

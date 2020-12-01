@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { parseISO, format } from "date-fns";
-import * as widont from "widont";
+import Link from 'next/link';
+import { parseISO, format } from 'date-fns';
+import * as widont from 'widont';
 
 export function PostHeader({
   title,
@@ -17,25 +17,29 @@ export function PostHeader({
   // remove uncategorized from categories
 
   return (
-    <div className={styles["post-header"]}>
+    <div className={styles['post-header']}>
       {(date || author || categories) && (
         <div className={styles.meta}>
           <time dateTime={dateISO} className="date">
-            {format(dateISO, "MMMM d, y")}
+            {format(dateISO, 'MMMM d, y')}
           </time>
           {/* todo: linkable categories */}
           {categories?.edges.length > 0 ? (
             categories?.edges.map(
               (category, index) =>
-                category.node.name != "Uncategorized" && (
+                category.node.name != 'Uncategorized' && (
                   <React.Fragment key={index}>
                     <span className={styles.divider}>/</span>
-                    <span className="category">{category.node.name}</span>
+                    <span className="category">
+                      {category.node.name}
+                    </span>
                   </React.Fragment>
-                )
+                ),
             )
           ) : (
-            <span className="category">{categories?.edges.node.name}</span>
+            <span className="category">
+              {categories?.edges.node.name}
+            </span>
           )}
         </div>
       )}

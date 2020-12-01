@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { parseISO, format } from "date-fns";
-import * as widont from "widont";
+import Link from 'next/link';
+import { parseISO, format } from 'date-fns';
+import * as widont from 'widont';
 
 export function PostContainer({ children }) {
   return (

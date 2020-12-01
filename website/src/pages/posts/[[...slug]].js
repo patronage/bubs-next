@@ -1,10 +1,10 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { staticPropHelper, staticPathGenerator } from "lib/archive";
-import { getPost, getAllPostsWithSlug } from "lib/wordpress";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { staticPropHelper, staticPathGenerator } from 'lib/archive';
+import { getPost, getAllPostsWithSlug } from 'lib/wordpress';
 
-import LayoutDefault from "components/layouts/LayoutDefault";
-import PostArchive from "components/post/PostArchive";
+import LayoutDefault from 'components/layouts/LayoutDefault';
+import PostArchive from 'components/post/PostArchive';
 
 function BlogPostPage({ post }) {
   return (
@@ -18,8 +18,8 @@ function BlogPostPage({ post }) {
 function BlogIndexPage(props) {
   return (
     <LayoutDefault title="">
-      <section class="pt-3 pb-3">
-        <div class="container">
+      <section className="pt-3 pb-3">
+        <div className="container">
           <PostArchive {...props} />
         </div>
       </section>
@@ -34,7 +34,7 @@ function Blog(props) {
   if (
     query &&
     (Object.keys(query).length === 0 ||
-      (query.slug && query.slug[0] === "page"))
+      (query.slug && query.slug[0] === 'page'))
   ) {
     return BlogIndexPage(props);
   } else {
@@ -46,7 +46,7 @@ export async function getStaticProps(context) {
   //
   // Generate props for Post Index page
   //
-  const indexProps = await staticPropHelper(context, "post_type");
+  const indexProps = await staticPropHelper(context, 'post_type');
 
   if (indexProps) {
     return { props: indexProps };
@@ -71,7 +71,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const paths = await staticPathGenerator("post_type");
+  const paths = await staticPathGenerator('post_type');
 
   return {
     paths,

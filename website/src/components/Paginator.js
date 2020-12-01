@@ -1,5 +1,5 @@
-import Link from "next/link";
-import styles from "./Paginator.module.scss";
+import Link from 'next/link';
+import styles from './Paginator.module.scss';
 
 const Paginator = ({ index, postsPerPage, totalPosts }) => {
   const pages = [];
