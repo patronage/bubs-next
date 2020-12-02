@@ -1,6 +1,4 @@
-import Link from 'next/link';
-import { parseISO, format } from 'date-fns';
-import * as widont from 'widont';
+import styles from './PostFooter.module.scss';
 
 export function PostFooter({ date, author, categories, tags }) {
   return (

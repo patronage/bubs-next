@@ -58,7 +58,9 @@ export async function getStaticProps(context) {
   try {
     const { postBy } = await getPost(context.params.postslug[0]);
     return { props: { post: postBy } };
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
   //
   // No condition was met for this catch-all route, send 404

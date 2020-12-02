@@ -11,7 +11,6 @@ const Flex = ({ sections }) => {
     let component, componentName;
     let paddingBottom = true;
     let paddingTop = true;
-    let darkBG = false;
     const section = sections[i];
     const nextSection = sections[i + 1];
 

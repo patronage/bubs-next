@@ -577,6 +577,7 @@ export async function getPostAndMorePosts(
     : slug === postPreview.slug;
   const isDraft = isSamePost && postPreview?.status === 'draft';
   const isRevision = isSamePost && postPreview?.status === 'publish';
+  /*eslint-disable */
   const data = await fetchAPI(
     `
     fragment AuthorFields on User {
@@ -664,6 +665,7 @@ export async function getPostAndMorePosts(
       },
     },
   );
+  /*eslint-enable */
 
   // Draft posts may not have an slug
   if (isDraft) data.post.slug = postPreview.id;
