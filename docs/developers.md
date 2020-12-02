@@ -1,39 +1,36 @@
 # Linting
 
-To ensure consistent formatting across developres, we include congifurations for Prettier (code formatting), ESLint (JS), and StyleLint (SCSS) to apply consistent styles.
+To ensure consistent formatting across developres, we include congifurations for Prettier (code formatting), ESLint (JS), and StyleLint (SCSS) to apply consistent code style.
 
-Inside of the `website` folder, you can run `yarn eslint` to list issues, or `yarn eslint:fix` to automatically fix what is possible.
+## Via CLI
 
-Similarly to lint stylesheets, you can run `yarn stylelint` or `yarn stylelint:fix`.
+Inside of the `website` folder, you can run `yarn eslint` to list issues, or `yarn eslint:fix` to automatically fix what is possible. Similarly to lint stylesheets, you can run `yarn stylelint` or `yarn stylelint:fix`.
 
-To lint as you go, we reccomend configuring your editor to use this config and apply fixes on save, and display warnings. For VSCode, you can do that by installing the eslint, prettier and stylelint plugins.
+These commands will be run as a pre-commit hook using [Husky](https://github.com/typicode/husky/) + [lint-staged](https://github.com/okonet/lint-staged#configuration).
 
-To ensure we're using our project specified configuration, you'll want to open settings via `Preferences: Open Settings (JSON)`, and add the following rules:
+## Via Editor
 
-```json
-// Global default is to use built-in prettier
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  // For our JS and SCSS Files, we want project defined versions
-  "[javascript]": {
-    "editor.formatOnSave": false
-  },
-  "[scss]": {
-    "editor.formatOnSave": false
-  },
-  "files.associations": {
-    "*.js": "javascript",
-    "*.scss": "scss"
-  },
-  // Turn on auto-fixing for project defined linters.
-  "editor.codeActionsOnSave": {
-    // For ESLint
-    "source.fixAll.eslint": true,
-    // For TSLint
-    "source.fixAll.tslint": true,
-    // For Stylelint
-    "source.fixAll.stylelint": true
-  }
+To lint as you go, we reccomend configuring your editor to use this config and apply fixes on save, and display warnings. For VSCode, you can do that by installing the [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [StyleLint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) plugins.
+
+In our project we have a project level [.vscode](../website/.vscode) configuration that reccomends and configures these plugins for you. You can also optionally take that configuration, and save it to your own global vscode by opening `Preferences: Open Settings (JSON)`, and adding those rules:
+
+For other editors, you'll want to use their versions of these plugins, making sure they are configured to use the project level congigurations.
+
+## Confirming it's working
+
+Paste and save this into a `.js` file. ESLint should fix formatting, and also make suggestions in the Problems panel.
+
+```
+function sayHello(name) {
+  alert("Hello " + name);
+}
+
+name = "Douglas Crockford";
+sayHello(name);
 ```
 
-In addittion to these editor configurations, we have a githook installed via husky to run prettier on changed files via [pretty-quick](https://github.com/azz/pretty-quick).
+Paste and save this into a `.scss` file. StyleLint should fix formatting, and also make suggestions in the Problems panel.
+
+```
+a { & b { /* nesting depth 1 */ & .foo { /* nesting depth 2 */ @media print { /* nesting depth 3 */ & .baz { /* nesting depth 4 */color: pink;}}}}}.
+```
