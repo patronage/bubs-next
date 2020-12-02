@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
 import { parseISO, format } from 'date-fns';
+import Link from 'next/link';
+import React from 'react';
 import * as widont from 'widont';
 import styles from './PostFooter.module.scss';
 

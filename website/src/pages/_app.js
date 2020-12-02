@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import Router from 'next/router';
-import 'styles/global.scss';
 import * as gtag from 'lib/gtag';
+import Router from 'next/router';
+import { useEffect } from 'react';
+import 'styles/global.scss';
 
 export function reportWebVitals({ id, name, label, value }) {
   let vitalEvent = {

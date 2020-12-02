@@ -1,5 +1,5 @@
-import styles from './FlexBlockquote.module.scss';
 import cx from 'classnames';
+import styles from './FlexBlockquote.module.scss';
 
 const FlexBlockquote = (props) => {
   return (

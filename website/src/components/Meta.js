@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import { META_TITLE, META_OG_IMAGE_URL } from 'lib/constants';
+import Head from 'next/head';
 
 export default function Meta({ title, description, image }) {
   let meta_title = title ? `${title} | ${META_TITLE}` : META_TITLE;

@@ -1,7 +1,6 @@
-import { staticPropHelper, staticPathGenerator } from 'lib/archive';
-
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostArchive from 'components/post/PostArchive';
+import { staticPropHelper, staticPathGenerator } from 'lib/archive';
 
 function TaxIndex(props) {
   return (

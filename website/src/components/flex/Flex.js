@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import slugify from 'slugify';
+import FlexBlockquote from './FlexBlockquote';
 import FlexHero from './FlexHero';
 import FlexWysiwyg from './FlexWysiwyg';
-import FlexBlockquote from './FlexBlockquote';
 
 const Flex = ({ sections }) => {
   const renderedSections = [];

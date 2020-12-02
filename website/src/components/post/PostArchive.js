@@ -1,6 +1,5 @@
-import Link from 'next/link';
-
 import Paginator from 'components/Paginator';
+import Link from 'next/link';
 
 const PostArchive = ({
   archiveTitle,

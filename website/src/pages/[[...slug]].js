@@ -1,10 +1,9 @@
+import Flex from 'components/flex/Flex';
+import LayoutDefault from 'components/layouts/LayoutDefault';
+import PostBody from 'components/post/PostBody';
 import { getPage, getAllPagesWithSlug } from 'lib/wordpress';
 
-import LayoutDefault from 'components/layouts/LayoutDefault';
 import ErrorPage from 'next/error';
-import PostBody from 'components/post/PostBody';
-
-import Flex from 'components/flex/Flex';
 
 export default function Page({
   post,

@@ -1,10 +1,9 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { staticPropHelper, staticPathGenerator } from 'lib/archive';
-import { getPost, getAllPostsWithSlug } from 'lib/wordpress';
-
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostArchive from 'components/post/PostArchive';
+
+import { staticPropHelper, staticPathGenerator } from 'lib/archive';
+import { getPost } from 'lib/wordpress';
+import { useRouter } from 'next/router';
 
 function BlogPostPage({ post }) {
   return (
