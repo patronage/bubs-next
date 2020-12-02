@@ -9,8 +9,9 @@
     "build": "next build",
     "start": "next start",
     "stylelint": "npx stylelint '**/*.scss'",
-    "eslint": "npx eslint '**/*.js'",
-    "eslint:fix": "npx eslint '**/*.js' --fix",
+    "stylelint:fix": "npx stylelint '**/*.scss' --fix",
+    "eslint": "npx eslint '**/*.{js,jsx,ts}'",
+    "eslint:fix": "npx eslint '**/*.{js,jsx,ts}' --fix",
     "analyze": "cross-env ANALYZE=true yarn build"
   },
   "author": "Patronage.org",
