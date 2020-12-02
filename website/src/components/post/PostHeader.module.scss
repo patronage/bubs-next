@@ -1,4 +1,4 @@
-@import "styles/_scaffold.scss";
+@import 'styles/_scaffold.scss';
 
 .post-header {
   h1 {
@@ -17,6 +17,10 @@
   h2 {
     a {
       text-decoration: none;
+    }
+
+    p {
+      text-emphasis: none;
     }
   }
 }

@@ -1,4 +1,4 @@
-@import "styles/_scaffold";
+@import 'styles/_scaffold';
 
 .footer {
   border-top: 4px solid $primary;
@@ -22,12 +22,12 @@
     &::after {
       padding-left: 0.5rem;
       color: $gray-300;
-      content: "|";
+      content: '|';
     }
 
     &:last-child {
       &::after {
-        content: "";
+        content: '';
       }
     }
   }
