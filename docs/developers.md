@@ -35,3 +35,5 @@ To ensure we're using our project specified configuration, you'll want to open s
     "source.fixAll.stylelint": true
   }
 ```
+
+In addittion to these editor configurations, we have a githook installed via husky to run prettier on changed files via [pretty-quick](https://github.com/azz/pretty-quick).
