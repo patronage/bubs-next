@@ -50,14 +50,12 @@
   },
   "husky": {
     "hooks": {
-      "precommit": "lint-staged",
+      "pre-commit": "lint-staged",
       "post-merge": "./.githooks/post-merge.sh"
     }
   },
   "lint-staged": {
-    "*": [
-      "yarn eslint:fix",
-      "yarn stylelint:fix"
-    ]
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{css,scss}": "stylelint --fix"
   }
 }
