@@ -1,5 +1,5 @@
-import styles from "./FlexBlockquote.module.scss";
-import cx from "classnames";
+import cx from 'classnames';
+import styles from './FlexBlockquote.module.scss';
 
 const FlexBlockquote = (props) => {
   return (
@@ -9,7 +9,9 @@ const FlexBlockquote = (props) => {
           <h2 className={styles.quote}>{props.blockquote}</h2>
         )}
         {props.quoteAttribution && (
-          <p className={styles.attribute}>&mdash; {props.quoteAttribution}</p>
+          <p className={styles.attribute}>
+            &mdash; {props.quoteAttribution}
+          </p>
         )}
       </div>
     </div>

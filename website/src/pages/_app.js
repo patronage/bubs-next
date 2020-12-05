@@ -1,13 +1,14 @@
-import { useEffect } from "react";
-import Router from "next/router";
-import "styles/global.scss";
-import * as gtag from "lib/gtag";
+import * as gtag from 'lib/gtag';
+import Router from 'next/router';
+import { useEffect } from 'react';
+import 'styles/global.scss';
 
 export function reportWebVitals({ id, name, label, value }) {
   let vitalEvent = {
-    category: label === "web-vital" ? "Web Vitals" : "Next.js custom metric",
+    category:
+      label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
     action: name,
-    value: Math.round(name === "CLS" ? value * 1000 : value), // values must be integers
+    value: Math.round(name === 'CLS' ? value * 1000 : value), // values must be integers
     label: id, // id unique to current page load
     nonInteraction: true, // avoids affecting bounce rate.
   };
@@ -23,10 +24,10 @@ export default function App({ Component, pageProps }) {
       gtag.pageview(url);
     };
 
-    Router.events.on("routeChangeComplete", handleRouteChange);
+    Router.events.on('routeChangeComplete', handleRouteChange);
 
     return () => {
-      Router.events.off("routeChangeComplete", handleRouteChange);
+      Router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, []);
 

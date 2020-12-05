@@ -1,10 +1,9 @@
-import { getPage, getAllPagesWithSlug } from "lib/wordpress";
+import Flex from 'components/flex/Flex';
+import LayoutDefault from 'components/layouts/LayoutDefault';
+import PostBody from 'components/post/PostBody';
+import { getPage, getAllPagesWithSlug } from 'lib/wordpress';
 
-import LayoutDefault from "components/layouts/LayoutDefault";
-import ErrorPage from "next/error";
-import PostBody from "components/post/PostBody";
-
-import Flex from "components/flex/Flex";
+import ErrorPage from 'next/error';
 
 export default function Page({
   post,
@@ -35,7 +34,7 @@ export default function Page({
     return <ErrorPage statusCode={404} />;
   }
 
-  if (template === "Flex") {
+  if (template === 'Flex') {
     return (
       <LayoutDefault
         preview={preview}
@@ -66,7 +65,11 @@ export default function Page({
   );
 }
 
-export async function getStaticProps({ params, preview = false, previewData }) {
+export async function getStaticProps({
+  params,
+  preview = false,
+  previewData,
+}) {
   // if your homepage doesn't come from WP, you need this to custom render and not get a 404
   // next doesn't let you have index.js and [[...slug.js]]
   if (!params.slug?.length) {
@@ -77,10 +80,10 @@ export async function getStaticProps({ params, preview = false, previewData }) {
     };
   }
 
-  let slug = "/";
+  let slug = '/';
 
   if (params.slug?.length) {
-    slug += params.slug.join("/");
+    slug += params.slug.join('/');
   }
 
   const data = await getPage(slug, preview, previewData);
@@ -101,6 +104,6 @@ export async function getStaticPaths() {
 
   return {
     paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
-    fallback: "blocking",
+    fallback: 'blocking',
   };
 }

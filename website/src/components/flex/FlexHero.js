@@ -1,5 +1,5 @@
-import Image from "next/image";
-import styles from "./FlexHero.module.scss";
+import Image from 'next/image';
+import styles from './FlexHero.module.scss';
 
 const FlexHero = (props) => {
   return (
@@ -7,7 +7,7 @@ const FlexHero = (props) => {
       <h3>Hero</h3>
 
       {props.heroImage?.sourceUrl && (
-        <div className={styles["hero-image"]}>
+        <div className={styles['hero-image']}>
           <Image
             src={props.heroImage.sourceUrl}
             width={props.heroImage.mediaDetails.width}

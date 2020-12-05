@@ -1,5 +1,5 @@
-import Head from "next/head";
-import { META_TITLE, META_OG_IMAGE_URL } from "lib/constants";
+import { META_TITLE, META_OG_IMAGE_URL } from 'lib/constants';
+import Head from 'next/head';
 
 export default function Meta({ title, description, image }) {
   let meta_title = title ? `${title} | ${META_TITLE}` : META_TITLE;
@@ -16,10 +16,18 @@ export default function Meta({ title, description, image }) {
       {/* search */}
       <title key="title">{meta_title}</title>
       {description && (
-        <meta name="description" content={description} key="meta_description" />
+        <meta
+          name="description"
+          content={description}
+          key="meta_description"
+        />
       )}
       {/* og/facebook */}
-      <meta property="og:locale" content="en_US" key="meta_og_locale" />
+      <meta
+        property="og:locale"
+        content="en_US"
+        key="meta_og_locale"
+      />
       <meta
         property="og:title"
         content={title ? title : META_TITLE}
@@ -32,7 +40,11 @@ export default function Meta({ title, description, image }) {
           key="meta_og_description"
         />
       )}
-      <meta property="og:image" content={meta_image} key="meta_og_image" />
+      <meta
+        property="og:image"
+        content={meta_image}
+        key="meta_og_image"
+      />
       <meta
         property="og:site_name"
         content={META_TITLE}

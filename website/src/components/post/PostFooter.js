@@ -1,10 +1,8 @@
-import Link from "next/link";
-import { parseISO, format } from "date-fns";
-import * as widont from "widont";
+import styles from './PostFooter.module.scss';
 
 export function PostFooter({ date, author, categories, tags }) {
   return (
-    <div className={styles["post-footer"]}>
+    <div className={styles['post-footer']}>
       <div className={styles.meta}>
         {tags?.edges.length > 0 && <span>Tagged: &nbsp;</span>}
         {tags.edges.map((tag, index) => (

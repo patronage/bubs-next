@@ -1,12 +1,17 @@
-import Link from "next/link";
-import cx from "classnames";
-import styles from "./Footer.module.scss";
+import cx from 'classnames';
+import Link from 'next/link';
+import styles from './Footer.module.scss';
 
 export default function Footer() {
   return (
-    <footer className={cx("section-padded bg-dark text-white", styles.footer)}>
+    <footer
+      className={cx(
+        'section-padded bg-dark text-white',
+        styles.footer,
+      )}
+    >
       <div className="container">
-        <div className={cx("row", styles.nav)}>
+        <div className={cx('row', styles.nav)}>
           <div className="col">
             <ul className="list-inline mb-0">
               <li className="list-inline-item">

@@ -1,18 +1,17 @@
-import { staticPropHelper, staticPathGenerator } from "lib/archive";
-
-import LayoutDefault from "components/layouts/LayoutDefault";
-import PostArchive from "components/post/PostArchive";
+import LayoutDefault from 'components/layouts/LayoutDefault';
+import PostArchive from 'components/post/PostArchive';
+import { staticPropHelper, staticPathGenerator } from 'lib/archive';
 
 function CategoryIndex(props) {
   return (
     <LayoutDefault title="">
-      <PostArchive archiveTitle={`Category Archive`} {...props} />
+      <PostArchive archiveTitle={'Category Archive'} {...props} />
     </LayoutDefault>
   );
 }
 
 export async function getStaticProps(context) {
-  const indexProps = await staticPropHelper(context, "category");
+  const indexProps = await staticPropHelper(context, 'category');
 
   if (indexProps) {
     return { props: indexProps };
@@ -26,7 +25,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const paths = await staticPathGenerator("category");
+  const paths = await staticPathGenerator('category');
 
   return {
     paths,

@@ -10,9 +10,9 @@ $section-padding: $spacer * 3;
 $section-padding-mobile: $spacer * 1.5;
 
 // type
-$font-sans: "Source Sans Pro", sans-serif;
-$font-serif: "Roboto Slab", serif;
-$font-heading: "Roboto Condensed", sans-serif;
+$font-sans: 'Source Sans Pro', sans-serif;
+$font-serif: 'Roboto Slab', serif;
+$font-heading: 'Roboto Condensed', sans-serif;
 $font-button: $font-sans;
 $font-thin: 300;
 
@@ -41,19 +41,19 @@ $body-color: #222; // $text-color
 
 // Theme Colors
 $theme-colors: (
-  "primary": $primary,
-  "secondary": $secondary,
-  "success": $success,
-  "info": $info,
-  "warning": $warning,
-  "danger": $danger,
-  "light": $light,
-  "dark": $dark,
+  'primary': $primary,
+  'secondary': $secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'danger': $danger,
+  'light': $light,
+  'dark': $dark,
 );
 $custom-colors: (
-  "papayawhip": papayawhip,
-  "white": white,
-  "black": black,
+  'papayawhip': papayawhip,
+  'white': white,
+  'black': black,
 );
 
 // Merge the maps

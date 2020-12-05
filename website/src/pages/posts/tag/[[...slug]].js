@@ -1,18 +1,17 @@
-import { staticPropHelper, staticPathGenerator } from "lib/archive";
-
-import LayoutDefault from "components/layouts/LayoutDefault";
-import PostArchive from "components/post/PostArchive";
+import LayoutDefault from 'components/layouts/LayoutDefault';
+import PostArchive from 'components/post/PostArchive';
+import { staticPropHelper, staticPathGenerator } from 'lib/archive';
 
 function TaxIndex(props) {
   return (
     <LayoutDefault title="">
-      <PostArchive archiveTitle={`Tag Archive`} {...props} />
+      <PostArchive archiveTitle={'Tag Archive'} {...props} />
     </LayoutDefault>
   );
 }
 
 export async function getStaticProps(context) {
-  const indexProps = await staticPropHelper(context, "tag");
+  const indexProps = await staticPropHelper(context, 'tag');
 
   if (indexProps) {
     return { props: indexProps };
@@ -26,7 +25,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const paths = await staticPathGenerator("tag");
+  const paths = await staticPathGenerator('tag');
 
   return {
     paths,

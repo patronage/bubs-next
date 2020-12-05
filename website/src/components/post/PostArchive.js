@@ -1,6 +1,5 @@
-import Link from "next/link";
-
-import Paginator from "components/Paginator";
+import Paginator from 'components/Paginator';
+import Link from 'next/link';
 
 const PostArchive = ({
   archiveTitle,
@@ -11,7 +10,7 @@ const PostArchive = ({
 }) => {
   return (
     <>
-      <h1>{archiveTitle ? `${archiveTitle} Posts` : "Posts"}</h1>
+      <h1>{archiveTitle ? `${archiveTitle} Posts` : 'Posts'}</h1>
       {posts.map((post, key) => {
         return (
           <div key={key}>

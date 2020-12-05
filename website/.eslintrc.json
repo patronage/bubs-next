@@ -1,20 +1,31 @@
 {
   "env": {
     "browser": true,
+    "commonjs": true,
     "es6": true,
-    "node": true,
-    "jest/globals": true
+    "node": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  "plugins": ["prettier", "react", "import"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier/react",
+    "prettier"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true // enable linting for jsx files
     },
-    "parserOptions": {
-      "ecmaVersion": 6
-    },
+    "ecmaVersion": 11,
     "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   },
   "globals": {
     "analytics": true,
@@ -23,7 +34,6 @@
     "google": true,
     "gtag": true
   },
-  "plugins": ["prettier", "jest", "react"],
   "rules": {
     "no-console": 0,
     "indent": [
@@ -34,6 +44,7 @@
       }
     ],
     "linebreak-style": ["error", "unix"],
+    "no-unused-vars": "warn",
     "quotes": [
       "error",
       "single",
@@ -43,7 +54,21 @@
     ],
     "semi": ["error", "always"],
 
+    // Import
+    "import/order": [
+      "error",
+      { "alphabetize": { "order": "asc", "caseInsensitive": true } }
+    ],
+
     // React
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    // suppress errors for missing 'import React' in files
+    "react/react-in-jsx-scope": "off",
+    // NextJs specific fix: allow jsx syntax in js files
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ], //should add ".ts" if typescript project
+    "react/display-name": 1
   }
 }
