@@ -1,51 +1,36 @@
-This is the starter Headless WordPress + [Next.js](https://github.com/vercel/next.js) used to build sites by [Patronage](https://www.patronage.org). We've previously built nearly a hundred sites using our original [Timber/twig based bubs scaffolding](https://github.com/patronage/bubs), but are favoring headless WordPress now (link to case study to come).
+This is the starter Headless WordPress + [Next.js](https://github.com/vercel/next.js) used to build sites by [Patronage](https://www.patronage.org). We've previously built nearly a hundred sites using our original [Timber/twig based bubs scaffolding](https://github.com/patronage/bubs), but are favoring headless WordPress now.
 
 ### To get up and running locally:
 
-1. Setup Wordpress by going into the `wordpress` folder and running `composer install && yarn install`. Then you can use `yarn dev` as an alias to start docker.
-2. Setup Next by going into the `website` folder and pulling down env variables by running `vercel env pull` (see 'configuring vercel' if first time). Then run `vercel dev` to preview the site locally.
+#### Next.js
 
-### Configuring vercel
+1. Go into the the `website` folder and run `yarn install` to install deps.
+2. Run `yarn dev` to start up your website
+3. Go to http://localhost:3000.
 
-Vercel is the host for the site. It integrates with github to create preview versions from pull requests, and to deploy on master.
+And that's it! You're now running a local version of Next powered by the production graphql for this site.
 
-If it's your first time getting setup, you'll need to first accept an invite to the Patronage team for the project.
+#### WordPress
 
-Then you'll need to install/configure the [vercel cli](https://vercel.com/docs/cli):
+Setting up WordPress is optional. If you're only doing front-end development or local review you can talk directly to your production install of WordPress.
 
-1. `npm install -g vercel
-2. `vercel login` to login
+However, if you're customizing WordPress and in particular ACF fields, you'll want a local version you can do development against.
 
-After that, the first time you run a command, you'll need to pick a project via `vercel link`. Make sure you're using the team account from the cli to do that.
+We use a docker container to run WordPress without any need to mess with local MySQL or Apache. _You will need to [install composer](https://getcomposer.org/download/) to manage plugin dependencies_
 
-We use a [monorepo](https://vercel.com/blog/monorepos) repo structure, so you'll want to run `vercel link` from the project root.
+1. Setup Wordpress by going into the `wordpress` folder and running `composer install && yarn install`.
+2. Then you can use `yarn dev` as an alias to start docker.
 
-### Prettier/stylelint
+You can now view your wordpress site at http://localhost:8000/wp-login.php. The user is `admin`, and the password is `pass`.
 
-We have prettier and stylelint configured to format JS and SCSS respectively for consistency across developers.
+To connect your local Next website to WordPress, create a `website/.env` file, and save the following: `WORDPRESS_API_URL=http://localhost:8000/graphql`. You'll need to restart Next to pickup this change, then you're up and running.
 
-Prettier will run via husky pre-commit, and there is a command line `yarn stylelint` to see SCSS warnings across the project. But it's best to configure your editor with the plugins so that they run in the background on save.
+See our [WordPress docs](https://github.com/patronage/bubs-next/blob/main/docs/wordpress.md) for more about how WordPress is used and customized.
 
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+### Docs
 
-### Env for local overrides
+We maintain the following docs to help you get running. _When setting up a project locally, feel free to remove the `docs` folder._
 
-When you run `vercel env pull`, it'll save keys to a gitignored .env file. These are not neccessarily the production or preview environment keys, but ones specifically saved for devs.
-
-Any variable can be optionally ovveridden in a `.env.local`. Here is an example you might use:
-
-```sh
-## Set a wordpress localhost path if you want to load from local
-#WORDPRESS_API_URL="http://www.bailouts.loc/graphql"
-```
-
-### WordPress theme notes
-
-All plugins are managed via composer. The `headless` theme is configured to make some light adjustments to WordPress to support headless dev.
-
-In `themes/headless/functions.php` there is a `$headless_domain` variable that should be defined for each site. This variable is used to redirect the user whenever they try and access a page URL from WordPress admin.
-
-If this is your first time with docker, there are more instructions for getting that running in `wordpress/README.md`.
-
-### Notes on private projects
+- [Configuring WordPress and Next production and hosting](https://github.com/patronage/bubs-next/blob/main/docs/hosting.md).
+- [Headless WordPress Development](https://github.com/patronage/bubs-next/blob/main/docs/wordpress.md).
+- [Prettier, ESLint, and Stylelint for consistent code formatting](\* [Configuring WordPress and Next production and hosting](https://github.com/patronage/bubs-next/blob/main/docs/dvelopers.md).)
