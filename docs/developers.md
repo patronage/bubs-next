@@ -12,7 +12,7 @@ These commands will be run as a pre-commit hook using [Husky](https://github.com
 
 To lint as you go, we reccomend configuring your editor to use this config and apply fixes on save, and display warnings. For VSCode, you can do that by installing the [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [StyleLint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint) plugins.
 
-In our project we have a project level [.vscode](../website/.vscode) configuration that reccomends and configures these plugins for you. You can also optionally take that configuration, and save it to your own global vscode by opening `Preferences: Open Settings (JSON)`, and adding those rules:
+In our project we have a project level [.vscode](../.vscode) configuration that reccomends and configures these plugins for you. You can also optionally take that configuration, and save it to your own global vscode by opening `Preferences: Open Settings (JSON)`, and adding those rules:
 
 For other editors, you'll want to use their versions of these plugins, making sure they are configured to use the project level congigurations.
 
