@@ -1,0 +1,62 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Next Dev",
+      "type": "shell",
+      "command": "cd website && yarn dev"
+    },
+    {
+      "label": "Next Build",
+      "type": "shell",
+      "command": "cd website && yarn build"
+    },
+    {
+      "label": "Next Yarn Install",
+      "type": "shell",
+      "command": "cd website && yarn install"
+    },
+    {
+      "label": "Wordpress ACF Fix",
+      "type": "shell",
+      "command": "chmod -R 777 wordpress/wp-content/themes/headless/acf-json"
+    },
+    {
+      "label": "Wordpress DB Import",
+      "type": "shell",
+      "command": "cd wordpress && bash _build/db.sh"
+    },
+    {
+      "label": "Wordpress Dev",
+      "type": "shell",
+      "command": "cd wordpress && docker-compose up --build"
+    },
+    {
+      "label": "Wordpress Docker Recreate",
+      "type": "shell",
+      "command": "cd wordpress && docker-compose up --build --force-recreate --no-deps"
+    },
+    {
+      "label": "Wordpress Composer Install",
+      "type": "shell",
+      "command": "cd wordpress && composer install"
+    },
+    {
+      "label": "Wordpress Composer Update",
+      "type": "shell",
+      "command": "cd wordpress && composer update"
+    },
+    {
+      "label": "WP Engine Deploy Production",
+      "type": "shell",
+      "command": "cd wordpress && sh _build/deploy.sh production"
+    },
+    {
+      "label": "WP Engine Deploy Staging",
+      "type": "shell",
+      "command": "cd wordpress && sh _build/deploy.sh staging"
+    }
+  ]
+}
