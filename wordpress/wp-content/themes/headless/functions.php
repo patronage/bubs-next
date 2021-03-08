@@ -46,7 +46,6 @@ include_once 'setup/helpers/wpgraphql.php';
 // Wordpress Theme Support Config
 // REMOVAL OF THESE = POTIENTAL LOSS OF DATA
 
-add_theme_support('post-formats');
 add_theme_support('post-thumbnails');
 add_theme_support('menus');
 
