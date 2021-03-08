@@ -7,10 +7,16 @@ export default function LayoutDefault({
   title,
   description,
   image,
+  seo,
 }) {
   return (
     <>
-      <Meta title={title} description={description} image={image} />
+      <Meta
+        title={title}
+        description={description}
+        image={image}
+        seo={seo}
+      />
       <Header />
       {children}
       <Footer />
