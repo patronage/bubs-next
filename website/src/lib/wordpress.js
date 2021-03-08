@@ -27,6 +27,38 @@ async function fetchAPI(query, { variables } = {}) {
   return json.data;
 }
 
+/**
+ * Reusable Fragments
+ */
+
+let fragmentSEO = `
+  seo {
+    canonical
+    metaDesc
+    metaRobotsNofollow
+    metaRobotsNoindex
+    opengraphImage {
+      sourceUrl
+      mediaDetails {
+        height
+        width
+      }
+    }
+    opengraphDescription
+    opengraphTitle
+    twitterDescription
+    title
+    twitterTitle
+    twitterImage {
+      sourceUrl
+      mediaDetails {
+        height
+        width
+      }
+    }
+  }
+`;
+
 export async function getPreviewPost(id, idType = 'DATABASE_ID') {
   const data = await fetchAPI(
     `
@@ -240,6 +272,10 @@ export async function getPage(slug, preview, previewData) {
   let uri = slug;
   const data = await fetchAPI(
     `
+    fragment SEOFields on Page {
+      ${fragmentSEO}
+    }
+
     fragment PageFields on Page {
       title
       slug
@@ -257,33 +293,7 @@ export async function getPage(slug, preview, previewData) {
         }
       }
     }
-    fragment SEOFields on Page {
-      seo {
-        canonical
-        metaDesc
-        metaRobotsNofollow
-        metaRobotsNoindex
-        opengraphImage {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
-        }
-        opengraphDescription
-        opengraphTitle
-        twitterDescription
-        title
-        twitterTitle
-        twitterImage {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
-        }
-      }
-    }
+
     fragment FlexFields on Page {
       acfFlex {
         fieldGroupName
@@ -363,6 +373,10 @@ export async function getPost(slug, preview, previewData) {
   const uri = slug;
   const data = await fetchAPI(
     `
+    fragment SEOFields on Page {
+      ${fragmentSEO}
+    }
+
     fragment PostFields on Post {
       title
       slug
@@ -379,168 +393,8 @@ export async function getPost(slug, preview, previewData) {
     query PostBySlug($uri: String) {
       postBy(uri: $uri) {
         ...PostFields
+        ...SEOFields
         content
-      }
-    }
-    `,
-    {
-      variables: { uri },
-    },
-  );
-
-  // Draft posts may not have an slug
-  if (isDraft) data.post.slug = postPreview.id;
-  // Apply a revision (changes in a published post)
-  if (isRevision && data.post.revisions) {
-    const revision = data.post.revisions.edges[0]?.node;
-
-    if (revision) Object.assign(data.post, revision);
-    delete data.post.revisions;
-  }
-
-  data.post = data.pageBy;
-
-  return data;
-}
-
-export async function getHome(preview, previewData) {
-  const postPreview = preview && previewData?.post;
-  // The slug may be the id of an unpublished post
-  const isSamePost = 'home' === postPreview.slug;
-  const isDraft = isSamePost && postPreview?.status === 'draft';
-  const isRevision = isSamePost && postPreview?.status === 'publish';
-  const uri = 'home';
-  const data = await fetchAPI(
-    `
-    fragment PageFields on Page {
-      title
-      slug
-      featuredImage {
-        node {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
-        }
-      }
-      seo {
-        canonical
-        metaRobotsNofollow
-        metaRobotsNoindex
-        opengraphImage {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
-        }
-        opengraphDescription
-        opengraphTitle
-        twitterDescription
-        title
-        twitterTitle
-        twitterImage {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
-        }
-      }
-      content_area {
-        contentArea
-        link {
-          target
-          title
-          url
-        }
-      }
-      component_intro {
-        heading
-        subheading
-        tagline
-        introduction
-      }
-      on_the_issues {
-        issueArea {
-          icon {
-            sourceUrl
-            mediaDetails {
-              height
-              width
-            }
-          }
-          title
-          content
-          stat
-          statLabel
-          statSource
-        }
-      }
-      action_bar {
-        btns {
-          actionIcon {
-            sourceUrl
-            mediaDetails {
-              height
-              width
-            }
-          }
-          actionTitle
-          link {
-            target
-            title
-            url
-          }
-        }
-        contributeBtn {
-          target
-          title
-          url
-        }
-        contributeCta
-      }
-      sign_up {
-        sectionHeading
-      }
-    }
-    query Home {
-      page(id: "home", idType: URI) {
-        ...PageFields
-      }
-      themeSettings {
-        globalOptions {
-          minToMid
-          watchFaces {
-            demPct
-            envPct
-            pubPct
-            rcePct
-          }
-        }
-      }
-      events {
-        nodes {
-          acf_events {
-            eventDate
-            eventLabel
-            eventThumbnail {
-              sourceUrl
-              mediaDetails {
-                height
-                width
-              }
-            }
-            eventType {
-              name
-            }
-            minutePosition
-            postContent
-            fullPost
-          }
-          slug
-        }
       }
     }
     `,
