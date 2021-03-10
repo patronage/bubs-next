@@ -42,6 +42,7 @@ include_once 'setup/helpers/admin.php';
 //include_once 'setup/helpers/cloudinary.php';
 include_once 'setup/helpers/menus.php';
 include_once 'setup/helpers/wpgraphql.php';
+include_once 'setup/helpers/wysiwyg.php';
 
 // Wordpress Theme Support Config
 // REMOVAL OF THESE = POTIENTAL LOSS OF DATA
