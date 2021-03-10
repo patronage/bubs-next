@@ -376,7 +376,7 @@ export async function getPost(slug, preview, previewData) {
   const uri = slug;
   const data = await fetchAPI(
     `
-    fragment SEOFields on Page {
+    fragment SEOFields on Post {
       ${fragmentSEO}
     }
 
