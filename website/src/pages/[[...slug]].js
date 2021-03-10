@@ -39,7 +39,6 @@ export default function Page({
       <LayoutDefault
         preview={preview}
         title={post?.title}
-        image={post?.featuredImage?.sourceUrl}
         seo={post?.seo}
       >
         <Flex sections={flexSections} />
@@ -51,7 +50,6 @@ export default function Page({
     <LayoutDefault
       preview={preview}
       title={post?.title}
-      image={post?.featuredImage?.sourceUrl}
       seo={post?.seo}
     >
       <section className="section-padded">
