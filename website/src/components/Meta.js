@@ -1,4 +1,5 @@
 import { META } from 'lib/constants';
+import { nextLoader } from 'lib/image-loaders';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
 
@@ -13,9 +14,14 @@ export default function Meta({ title, description, image, seo }) {
   };
 
   if (seo?.opengraphImage?.sourceUrl || image) {
+    let imageUrl = nextLoader({
+      src: seo?.opengraphImage?.sourceUrl || image,
+      width: 1200,
+      height: 628,
+    });
     seoSettings.openGraph.images = [
       {
-        url: seo?.opengraphImage?.sourceUrl || image,
+        url: imageUrl,
         width: 1200,
         height: 628,
       },

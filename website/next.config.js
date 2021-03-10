@@ -4,7 +4,15 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 module.exports = withBundleAnalyzer({
   images: {
-    loader: 'cloudinary',
-    path: 'https://res.cloudinary.com/patronage/image/fetch/',
+    // Sizes the image helper will generate, want to match bootstrap grid
+    deviceSizes: [480, 640, 750, 828, 1080, 1200, 1600, 1920],
+
+    // Customize with your domains
+    domains: [
+      'localhost',
+      '127.0.0.1',
+      'bubsnext.wpengine.com',
+      'bubs.patronage.org',
+    ],
   },
 });

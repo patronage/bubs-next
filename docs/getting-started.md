@@ -10,10 +10,11 @@ In this doc we'll refer to the tasks by name, but you can also go to `.vscode/ta
 
 We reccomend using bubs-next as a project template. This will create a new repo based on the current code -- however this is a one time linknage. There is no way to pull future updates, but that is how we intend for the project to be used.
 
-A few cleanup steps we reccomend:
+A few customization steps we reccomend for any site:
 
 - Delete the `docs` folder.
 - Customize the constants in `website/lib/constants.js` that set default SEO Meta tags.
+- Update the image whitelist domains in `website/next.config.js`
 - If your project is a private repo, go into `wordpress/.gitignore`, and comment out the first section assuming your project is private. This will check in all WordPress plugin source. If you are a public repo you can optionally adjust the `.gitignore` to only hide private deps.
 - If your project is a private repo, you can add shared keys in `wordpress/composer.json` to make it easier for other devs to get started. For example `{%PLUGIN_ACF_KEY}` can be converted to a fixed key. Alternatively, you can set an ENV variable and leave this private.
 - Update the `WORDPRESS_DB_NAME` env variable stored in `wordpress/docker-compose.yml` so that a new DB is created for the project.
