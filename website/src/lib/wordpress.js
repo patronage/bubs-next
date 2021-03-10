@@ -303,6 +303,7 @@ export async function getPage(slug, preview, previewData) {
             blockquote
             fieldGroupName
             quoteAttribution
+            hideSection
             sectionClasses
             sectionSlug
           }
@@ -318,12 +319,14 @@ export async function getPage(slug, preview, previewData) {
                 width
               }
             }
+            hideSection
             sectionClasses
             sectionSlug
           }
           ... on Page_Acfflex_FlexContent_WysiwygContent {
             backgroundColor
             fieldGroupName
+            hideSection
             sectionClasses
             sectionHeading
             sectionSlug

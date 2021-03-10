@@ -13,7 +13,25 @@ const Flex = ({ sections }) => {
     let paddingBottom = true;
     let paddingTop = true;
     const section = sections[i];
-    const nextSection = sections[i + 1];
+    let nextSection = sections[i + 1];
+
+    // if current section is set to hidden, break and go to next
+    if (section.hideSection === true) {
+      continue;
+    }
+
+    // make sure nextSection isn't hidden. If it is, since it won't be rendered, we need to
+    // jump ahead until we find a viewable section and compare with that.
+    if (nextSection && nextSection.hideSection === true) {
+      let j = 1;
+      while (
+        nextSection?.hideSection === true &&
+        j <= sections.length
+      ) {
+        nextSection = sections[i + j];
+        j++;
+      }
+    }
 
     // certain sections we want no padding, we just want the el (e.g. a full width image)
     let noPaddingSections = ['page_Acfflex_FlexContent_Hero'];
