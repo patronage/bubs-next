@@ -30,3 +30,16 @@ Setup Wordpress by going into the `wordpress` folder and running `composer insta
 When you want to update wordpress core, you need to update the `wordpress/docker-compose.yml` file for Docker users. Then run `Wordpress Docker Recreate` task to rebuild your local container.
 
 Also update `composer.json` so that non-docker users get the updated WP version.
+
+## WYSIWYG Editor
+
+There are several functions inside of `wordpress/wp-content/themes/headless/setup/helpers/wysiwyg.php` that can be enabled to:
+
+* Customize the buttons shown
+* Add classes users can apply to an element
+* Modify the WYSIWYG with CSS. Our reccomendation isn't pixel perfection, but a p.small or p.large might have percentages to adjust from the defaults to give the editor a visual cue.
+
+We set a default image width of full, so that you get a responsive image.
+
+In `/website/src/components/post/PostBody.module.scss` we apply the WordPress WYSIWYG styles as global classes.
+

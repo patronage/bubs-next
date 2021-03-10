@@ -2,47 +2,59 @@
 // WordPress Generated Classes
 // http://codex.wordpress.org/CSS#WordPress_Generated_Classes
 
-// Media alignment
-.alignnone {
-  max-width: 100%;
-  margin-right: 0;
-  margin-left: 0;
-}
-
-.aligncenter {
-  display: block;
-  margin: ($font-size-base / 2) auto;
-}
-
-.alignleft,
-.alignright {
-  margin-bottom: ($font-size-base / 2);
-}
-
-@include media-breakpoint-up(sm) {
-  // Only float if not on an extra small device
-  .alignleft {
-    margin-right: ($font-size-base / 2);
-    float: left;
+.content {
+  // Media alignment
+  :global .alignnone {
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
   }
 
-  .alignright {
-    margin-left: ($font-size-base / 2);
-    float: right;
+  :global .aligncenter {
+    display: block;
+    margin: ($font-size-base / 2) auto;
   }
-}
 
-// Captions
-.wp-caption {
-  @extend .img-thumbnail !optional;
-}
+  :global .alignleft,
+  :global .alignright {
+    margin-bottom: ($font-size-base / 2);
+  }
 
-.wp-caption-text {
-  @extend .figure-caption !optional;
-}
+  @include media-breakpoint-up(sm) {
+    // Only float if not on an extra small device
+    :global .alignleft {
+      margin-right: ($font-size-base / 2);
+      float: left;
+    }
 
-// Text meant only for screen readers
-.screen-reader-text {
-  @extend .sr-only !optional;
-  @extend .sr-only-focusable !optional;
+    :global .alignright {
+      margin-left: ($font-size-base / 2);
+      float: right;
+    }
+  }
+
+  // Captions
+  :global .wp-caption {
+    @extend .img-thumbnail !optional;
+  }
+
+  :global .wp-caption-text {
+    @extend .figure-caption !optional;
+  }
+
+  // Text meant only for screen readers
+  :global .screen-reader-text {
+    @extend .sr-only !optional;
+    @extend .sr-only-focusable !optional;
+  }
+
+  // responsive videos
+  // https://css-tricks.com/aspect-ratio-is-going-to-deprecate-fitvids/
+  :global iframe[src*='youtube.com'],
+  :global iframe[src*='youtube-nocookie.com'],
+  :global iframe[src*='vimeo.com'] {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
 }

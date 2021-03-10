@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import React from 'react';
 import slugify from 'slugify';
 import FlexBlockquote from './FlexBlockquote';
 import FlexHero from './FlexHero';
@@ -12,16 +13,42 @@ const Flex = ({ sections }) => {
     let paddingBottom = true;
     let paddingTop = true;
     const section = sections[i];
-    const nextSection = sections[i + 1];
+    let nextSection = sections[i + 1];
 
-    // collapse padding if two sections in a row have the same color
-    if (
-      nextSection &&
-      nextSection.backgroundColor === section.backgroundColor
-    ) {
+    // if current section is set to hidden, break and go to next
+    if (section.hideSection === true) {
+      continue;
+    }
+
+    // make sure nextSection isn't hidden. If it is, since it won't be rendered, we need to
+    // jump ahead until we find a viewable section and compare with that.
+    if (nextSection && nextSection.hideSection === true) {
+      let j = 1;
+      while (
+        nextSection?.hideSection === true &&
+        j <= sections.length
+      ) {
+        nextSection = sections[i + j];
+        j++;
+      }
+    }
+
+    // certain sections we want no padding, we just want the el (e.g. a full width image)
+    let noPaddingSections = ['page_Acfflex_FlexContent_Hero'];
+
+    if (noPaddingSections.includes(section.fieldGroupName)) {
+      paddingTop = false;
       paddingBottom = false;
     }
 
+    // collapse padding if two sections in a row have the same color, unless it's a noPaddingSection
+    if (
+      nextSection &&
+      nextSection.backgroundColor === section.backgroundColor &&
+      !noPaddingSections.includes(nextSection.fieldGroupName)
+    ) {
+      paddingBottom = false;
+    }
     // for known dark bg's, we'll add white text
     let backgroundDark = false;
     const darkArr = ['primary', 'black', 'dark'];
@@ -32,6 +59,13 @@ const Flex = ({ sections }) => {
     // Pass the flex index to the section so we can prioritize
     // image loading for first sections, etc.
     section.index === i;
+
+    // get ID if passed in
+    let slug = '';
+    if (section.sectionSlug) {
+      slug = slugify(section.sectionSlug, { lower: true });
+      section.slug = slug;
+    }
 
     // look for any passed in classes, pass along to child
     section.customClasses = section.sectionClasses?.split(' ');
@@ -48,30 +82,35 @@ const Flex = ({ sections }) => {
     } else if (section.fieldGroupName.includes('Hero')) {
       componentName = 'hero';
       component = <FlexHero {...section} />;
-      paddingTop = false;
-      paddingBottom = false;
     }
 
-    const classNames = cx({
-      [`flex-${componentName}`]: true,
-      ['text-white']: backgroundDark,
-      'section-padded': paddingTop || paddingBottom,
-      ['pt-0']: !paddingTop,
-      ['pb-0']: !paddingBottom,
-      [`bg-${section.backgroundColor}`]: true,
-    });
-
-    // add slug ID if passed in
-    let slug = '';
-    if (section.sectionSlug) {
-      slug = slugify(section.sectionSlug, { lower: true });
-    }
-
-    renderedSections.push(
-      <section key={i} className={classNames} id={slug}>
-        {component}
-      </section>,
+    const classNames = cx(
+      {
+        [`flex-${componentName}`]: true,
+        ['text-white']: backgroundDark,
+        'section-padded': paddingTop || paddingBottom,
+        ['pt-0']: !paddingTop,
+        ['pb-0']: !paddingBottom,
+        [`bg-${section.backgroundColor}`]:
+          section.backgroundColor != 'transparent',
+      },
+      section.customClasses,
     );
+
+    // append classes and slug to component
+    if (component) {
+      let componentWithMoreProps = React.cloneElement(component, {
+        classNames: classNames,
+        id: slug,
+        flexClass: `flex-${componentName}`,
+      });
+
+      renderedSections.push(
+        <React.Fragment key={i}>
+          {componentWithMoreProps}
+        </React.Fragment>,
+      );
+    }
   }
 
   return <>{renderedSections}</>;

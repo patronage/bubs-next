@@ -2,8 +2,20 @@ import cx from 'classnames';
 import styles from './FlexBlockquote.module.scss';
 
 const FlexBlockquote = (props) => {
+  // map any custom classes to our SCSS module style object
+  let moduleClassNames = props.customClasses?.map((className) => {
+    return styles[className];
+  });
+
   return (
-    <div className={cx([styles.outer, props.customClasses])}>
+    <section
+      className={cx([
+        props.classNames,
+        moduleClassNames,
+        styles[props.flexClass],
+      ])}
+      id={props.slug}
+    >
       <div className="container">
         {props.blockquote && (
           <h2 className={styles.quote}>{props.blockquote}</h2>
@@ -14,7 +26,7 @@ const FlexBlockquote = (props) => {
           </p>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

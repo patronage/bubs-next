@@ -303,6 +303,7 @@ export async function getPage(slug, preview, previewData) {
             blockquote
             fieldGroupName
             quoteAttribution
+            hideSection
             sectionClasses
             sectionSlug
           }
@@ -318,12 +319,14 @@ export async function getPage(slug, preview, previewData) {
                 width
               }
             }
+            hideSection
             sectionClasses
             sectionSlug
           }
           ... on Page_Acfflex_FlexContent_WysiwygContent {
             backgroundColor
             fieldGroupName
+            hideSection
             sectionClasses
             sectionHeading
             sectionSlug
@@ -373,7 +376,7 @@ export async function getPost(slug, preview, previewData) {
   const uri = slug;
   const data = await fetchAPI(
     `
-    fragment SEOFields on Page {
+    fragment SEOFields on Post {
       ${fragmentSEO}
     }
 
