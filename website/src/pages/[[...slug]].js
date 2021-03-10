@@ -3,8 +3,6 @@ import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
 import { getPage, getAllPagesWithSlug } from 'lib/wordpress';
 
-import ErrorPage from 'next/error';
-
 export default function Page({
   post,
   preview,
@@ -28,10 +26,6 @@ export default function Page({
         </section>
       </LayoutDefault>
     );
-  }
-
-  if (!post?.slug) {
-    return <ErrorPage statusCode={404} />;
   }
 
   if (template === 'Flex') {
@@ -87,6 +81,11 @@ export async function getStaticProps({
   }
 
   const data = await getPage(slug, preview, previewData);
+  if (!data?.post?.slug) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {

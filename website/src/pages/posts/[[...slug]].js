@@ -5,16 +5,24 @@ import { staticPropHelper, staticPathGenerator } from 'lib/archive';
 import { getPost } from 'lib/wordpress';
 import { useRouter } from 'next/router';
 
-function BlogPostPage({ post }) {
+function PostsSinglePage({ post }) {
   return (
     <LayoutDefault title={post?.title}>
-      <h1>{post?.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post?.content }} />
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h1>{post?.title}</h1>
+            <div
+              dangerouslySetInnerHTML={{ __html: post?.content }}
+            />
+          </div>
+        </div>
+      </div>
     </LayoutDefault>
   );
 }
 
-function BlogIndexPage(props) {
+function PostsIndexPage(props) {
   return (
     <LayoutDefault title="">
       <section className="pt-3 pb-3">
@@ -30,14 +38,16 @@ function Blog(props) {
   const router = useRouter();
   const { query } = router;
 
+  // If query has a slug in the url, other than `page` show the single template. else show the single.
   if (
     query &&
-    (Object.keys(query).length === 0 ||
-      (query.slug && query.slug[0] === 'page'))
+    Object.keys(query).length !== 0 &&
+    query.slug &&
+    query.slug[0] !== 'page'
   ) {
-    return BlogIndexPage(props);
+    return PostsSinglePage(props);
   } else {
-    return BlogPostPage(props);
+    return PostsIndexPage(props);
   }
 }
 
@@ -55,7 +65,7 @@ export async function getStaticProps(context) {
   // Generate props for Post Single Page
   //
   try {
-    const { postBy } = await getPost(context.params.postslug[0]);
+    const { postBy } = await getPost(context.params.slug[0]);
     return { props: { post: postBy } };
   } catch (error) {
     console.log(error);
@@ -65,9 +75,7 @@ export async function getStaticProps(context) {
   // No condition was met for this catch-all route, send 404
   //
   return {
-    props: {
-      notfound: true,
-    },
+    notFound: true,
   };
 }
 
