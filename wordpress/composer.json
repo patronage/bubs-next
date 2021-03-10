@@ -28,6 +28,22 @@
           "ffraenz/private-composer-installer": "^5.0"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "wpe-headless/wpe-headless",
+        "version": "0.5.3",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://wp-product-info.wpesvc.net/v1/plugins/wpe-headless?download"
+        },
+        "require": {
+          "composer/installers": "^1.8",
+          "ffraenz/private-composer-installer": "^5.0"
+        }
+      }
     }
   ],
   "require": {
@@ -48,7 +64,8 @@
     "wpackagist-plugin/wp-graphql": "1.2.5",
     "wp-graphql/wp-graphql-acf": "0.4.0",
     "ashhitch/wp-graphql-yoast-seo": "4.11.0",
-    "wpackagist-plugin/safe-svg": "^1.9"
+    "wpackagist-plugin/safe-svg": "^1.9",
+    "wpe-headless/wpe-headless": "^0.5.3"
   },
   "config": {
     "optimize-autoloader": true,
