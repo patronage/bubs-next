@@ -17,9 +17,9 @@ if (defined('WP_HEADLESS_DOMAIN')) {
 // Theme Options
 function bubs_theme_options($wp_customize)
 {
-    include_once 'setup/theme-options/footer.php';
-    include_once 'setup/theme-options/integrations.php';
-    include_once 'setup/theme-options/social.php';
+    // include_once 'setup/theme-options/footer.php';
+    // include_once 'setup/theme-options/integrations.php';
+    // include_once 'setup/theme-options/social.php';
     $wp_customize->remove_section('custom_css');
 }
 
@@ -49,11 +49,3 @@ include_once 'setup/helpers/wysiwyg.php';
 
 add_theme_support('post-thumbnails');
 add_theme_support('menus');
-
-
-// Enable Roots Soil
-
-add_theme_support('soil-clean-up');
-add_theme_support('soil-relative-urls');
-add_theme_support('soil-disable-trackbacks');
-add_theme_support('soil-nice-search');

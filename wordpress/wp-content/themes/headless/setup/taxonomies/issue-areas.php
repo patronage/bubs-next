@@ -1,6 +1,6 @@
 <?php
 
-function wporg_register_taxonomy_issue()
+function wp_register_taxonomy_issue()
 {
     $labels = [
         'name'                  => _x('Issue Areas', 'taxonomy general name'),
@@ -28,6 +28,6 @@ function wporg_register_taxonomy_issue()
         'graphql_single_name'   => 'issue_area',
         'graphql_plural_name'   => 'issue_areas',
     ];
-    register_taxonomy('issue', ['event'], $args);
+    register_taxonomy('issue', ['press', 'post'], $args);
 }
-add_action('init', 'wporg_register_taxonomy_issue');
+add_action('init', 'wp_register_taxonomy_issue');
