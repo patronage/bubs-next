@@ -3,6 +3,11 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 module.exports = withBundleAnalyzer({
+  // Enable webpack 5
+  future: {
+    webpack5: true,
+  },
+
   // Match Wordpress
   trailingSlash: true,
 
