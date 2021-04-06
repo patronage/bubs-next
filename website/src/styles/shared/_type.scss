@@ -30,6 +30,18 @@ p {
   }
 }
 
+/* stylelint-disable no-descending-specificity */
+h1,
+.h1 {
+  color: $primary;
+  font-size: rem-calc(48px);
+
+  @include media-breakpoint-up(md) {
+    font-size: rem-calc(64px);
+  }
+}
+/* stylelint-enable no-descending-specificity */
+
 // focus
 
 :focus {

@@ -13,13 +13,18 @@
   }
 }
 
-// remove gutters between columns
-.no-gutter {
-  margin-right: 0;
-  margin-left: 0;
+.section-padded-top {
+  padding-top: $section-padding-mobile;
 
-  > [class*='col-'] {
-    padding-right: 0;
-    padding-left: 0;
+  @include media-breakpoint-up(md) {
+    padding-top: $section-padding;
+  }
+}
+
+.section-padded-bottom {
+  padding-bottom: $section-padding-mobile;
+
+  @include media-breakpoint-up(md) {
+    padding-bottom: $section-padding;
   }
 }

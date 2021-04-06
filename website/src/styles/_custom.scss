@@ -5,9 +5,23 @@
 //
 
 // spacing
-$spacer: 1rem;
-$section-padding: $spacer * 3;
-$section-padding-mobile: $spacer * 1.5;
+$spacer-px: 10px;
+$spacer: rem-calc(10px);
+$spacers: (
+  0: 0,
+  1: 1 * $spacer-px,
+  2: 2 * $spacer-px,
+  3: 3 * $spacer-px,
+  4: 4 * $spacer-px,
+  5: 5 * $spacer-px,
+  6: 6 * $spacer-px,
+  7: 7 * $spacer-px,
+  8: 8 * $spacer-px,
+  9: 9 * $spacer-px,
+  10: 10 * $spacer-px,
+);
+$section-padding: 80px;
+$section-padding-mobile: 40px;
 
 // type
 $font-sans: 'Source Sans Pro', sans-serif;
