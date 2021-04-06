@@ -7,6 +7,17 @@ h1 {
     text-decoration: none;
   }
 }
+
+h1,
+.h1 {
+  color: $primary;
+  font-size: rem-calc(48px);
+
+  @include media-breakpoint-up(md) {
+    font-size: rem-calc(64px);
+  }
+}
+
 // Bottom margin only
 
 h1,
@@ -29,18 +40,6 @@ p {
     margin-bottom: 0;
   }
 }
-
-/* stylelint-disable no-descending-specificity */
-h1,
-.h1 {
-  color: $primary;
-  font-size: rem-calc(48px);
-
-  @include media-breakpoint-up(md) {
-    font-size: rem-calc(64px);
-  }
-}
-/* stylelint-enable no-descending-specificity */
 
 // focus
 
