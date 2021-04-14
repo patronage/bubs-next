@@ -1,16 +1,16 @@
-import { WORDPRESS_API_URL } from "lib/constants";
+import { WORDPRESS_API_URL } from 'lib/constants';
 
 async function fetchAPI(query, { variables } = {}) {
-  const headers = { "Content-Type": "application/json" };
+  const headers = { 'Content-Type': 'application/json' };
 
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
     headers[
-      "Authorization"
+      'Authorization'
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
 
   const res = await fetch(WORDPRESS_API_URL, {
-    method: "POST",
+    method: 'POST',
     headers,
     body: JSON.stringify({
       query,
@@ -21,13 +21,45 @@ async function fetchAPI(query, { variables } = {}) {
   const json = await res.json();
   if (json.errors) {
     console.error(json.errors);
-    throw new Error("Failed to fetch API");
+    throw new Error('Failed to fetch API');
   }
   // console.log("graphql results", JSON.stringify(json.data, null, 2));
   return json.data;
 }
 
-export async function getPreviewPost(id, idType = "DATABASE_ID") {
+/**
+ * Reusable Fragments
+ */
+
+let fragmentSEO = `
+  seo {
+    canonical
+    metaDesc
+    metaRobotsNofollow
+    metaRobotsNoindex
+    opengraphImage {
+      sourceUrl
+      mediaDetails {
+        height
+        width
+      }
+    }
+    opengraphDescription
+    opengraphTitle
+    twitterDescription
+    title
+    twitterTitle
+    twitterImage {
+      sourceUrl
+      mediaDetails {
+        height
+        width
+      }
+    }
+  }
+`;
+
+export async function getPreviewPost(id, idType = 'DATABASE_ID') {
   const data = await fetchAPI(
     `
     query PreviewPost($id: ID!, $idType: PostIdType!) {
@@ -39,7 +71,7 @@ export async function getPreviewPost(id, idType = "DATABASE_ID") {
     }`,
     {
       variables: { id, idType },
-    }
+    },
   );
   return data.post;
 }
@@ -103,6 +135,10 @@ export async function getPosts(preview) {
             featuredImage {
               node {
                 sourceUrl
+                mediaDetails {
+                  height
+                  width
+                }
               }
             }
             author {
@@ -121,8 +157,40 @@ export async function getPosts(preview) {
         onlyEnabled: !preview,
         preview,
       },
-    }
+    },
   );
+
+  return data?.posts;
+}
+
+export async function getPostsByCategory(categorySlug) {
+  const data = await fetchAPI(`
+    {
+      posts(first: 10000, where: {categoryName: "${categorySlug}"}) {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.posts;
+}
+
+export async function getPostsByTag(tagSlug) {
+  const data = await fetchAPI(`
+    {
+      posts(first: 10000, where: {tag: "${tagSlug}"}) {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
 
   return data?.posts;
 }
@@ -145,6 +213,10 @@ export async function getHeroes() {
                 link
                 sourceUrl(size: LARGE)
                 altText
+                mediaDetails {
+                  height
+                  width
+                }
               }
             }
           }
@@ -156,6 +228,38 @@ export async function getHeroes() {
   return data?.heroes;
 }
 
+export async function getCategories() {
+  const data = await fetchAPI(`
+    query AllCategories {
+      categories {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  return data.categories;
+}
+
+export async function getTags() {
+  const data = await fetchAPI(`
+    query AllTags {
+      tags {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  return data.tags;
+}
+
 export async function getPage(slug, preview, previewData) {
   const postPreview = preview && previewData?.post;
   // The slug may be the id of an unpublished post
@@ -163,30 +267,86 @@ export async function getPage(slug, preview, previewData) {
   const isSamePost = isId
     ? Number(slug) === postPreview.id
     : slug === postPreview.slug;
-  const isDraft = isSamePost && postPreview?.status === "draft";
-  const isRevision = isSamePost && postPreview?.status === "publish";
+  const isDraft = isSamePost && postPreview?.status === 'draft';
+  const isRevision = isSamePost && postPreview?.status === 'publish';
   let uri = slug;
   const data = await fetchAPI(
     `
+    fragment SEOFields on Page {
+      ${fragmentSEO}
+    }
+
     fragment PageFields on Page {
       title
       slug
+      content
+      template {
+        templateName
+      }
       featuredImage {
         node {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
+        }
+      }
+    }
+
+    fragment FlexFields on Page {
+      acfFlex {
+        fieldGroupName
+        flexContent {
+          ... on Page_Acfflex_FlexContent_Blockquote {
+            backgroundColor
+            blockquote
+            fieldGroupName
+            quoteAttribution
+            hideSection
+            sectionClasses
+            sectionSlug
+          }
+          ... on Page_Acfflex_FlexContent_Hero {
+            backgroundColor
+            fieldGroupName
+            heroHeading
+            heroSubheading
+            heroImage {
+              sourceUrl
+              mediaDetails {
+                height
+                width
+              }
+            }
+            hideSection
+            sectionClasses
+            sectionSlug
+          }
+          ... on Page_Acfflex_FlexContent_WysiwygContent {
+            backgroundColor
+            fieldGroupName
+            hideSection
+            sectionClasses
+            sectionHeading
+            sectionSlug
+            wysiwygContent
+          }
         }
       }
     }
     query PageBySlug($uri: String) {
       pageBy(uri: $uri) {
         ...PageFields
+        ...FlexFields
+        ...SEOFields
         content
       }
     }
     `,
     {
       variables: { uri },
-    }
+    },
   );
 
   // Draft posts may not have an slug
@@ -204,126 +364,46 @@ export async function getPage(slug, preview, previewData) {
   return data;
 }
 
-export async function getHome(preview, previewData) {
+export async function getPost(slug, preview, previewData) {
   const postPreview = preview && previewData?.post;
   // The slug may be the id of an unpublished post
-  const isSamePost = "home" === postPreview.slug;
-  const isDraft = isSamePost && postPreview?.status === "draft";
-  const isRevision = isSamePost && postPreview?.status === "publish";
-  const uri = "home";
+  const isId = Number.isInteger(Number(slug));
+  const isSamePost = isId
+    ? Number(slug) === postPreview.id
+    : slug === postPreview?.slug;
+  const isDraft = isSamePost && postPreview?.status === 'draft';
+  const isRevision = isSamePost && postPreview?.status === 'publish';
+  const uri = slug;
   const data = await fetchAPI(
     `
-    fragment PageFields on Page {
+    fragment SEOFields on Post {
+      ${fragmentSEO}
+    }
+
+    fragment PostFields on Post {
       title
       slug
       featuredImage {
         node {
           sourceUrl
-        }
-      }
-      seo {
-        canonical
-        metaRobotsNofollow
-        metaRobotsNoindex
-        opengraphImage {
-          sourceUrl
-        }
-        opengraphDescription
-        opengraphTitle
-        twitterDescription
-        title
-        twitterTitle
-        twitterImage {
-          sourceUrl
-        }
-      }
-      content_area {
-        contentArea
-        link {
-          target
-          title
-          url
-        }
-      }
-      component_intro {
-        heading
-        subheading
-        tagline
-        introduction
-      }
-      on_the_issues {
-        issueArea {
-          icon {
-            sourceUrl
-          }
-          title
-          content
-          stat
-          statLabel
-          statSource
-        }
-      }
-      action_bar {
-        btns {
-          actionIcon {
-            sourceUrl
-          }
-          actionTitle
-          link {
-            target
-            title
-            url
+          mediaDetails {
+            height
+            width
           }
         }
-        contributeBtn {
-          target
-          title
-          url
-        }
-        contributeCta
-      }
-      sign_up {
-        sectionHeading
       }
     }
-    query Home {
-      page(id: "home", idType: URI) {
-        ...PageFields
-      }
-      themeSettings {
-        globalOptions {
-          minToMid
-          watchFaces {
-            demPct
-            envPct
-            pubPct
-            rcePct
-          }
-        }
-      }
-      events {
-        nodes {
-          acf_events {
-            eventDate
-            eventLabel
-            eventThumbnail {
-              sourceUrl
-            }
-            eventType {
-              name
-            }
-            minutePosition
-            postContent
-            fullPost
-          }
-          slug
-        }
+    query PostBySlug($uri: String) {
+      postBy(uri: $uri) {
+        ...PostFields
+        ...SEOFields
+        content
       }
     }
     `,
     {
       variables: { uri },
-    }
+    },
   );
 
   // Draft posts may not have an slug
@@ -341,15 +421,20 @@ export async function getHome(preview, previewData) {
   return data;
 }
 
-export async function getPostAndMorePosts(slug, preview, previewData) {
+export async function getPostAndMorePosts(
+  slug,
+  preview,
+  previewData,
+) {
   const postPreview = preview && previewData?.post;
   // The slug may be the id of an unpublished post
   const isId = Number.isInteger(Number(slug));
   const isSamePost = isId
     ? Number(slug) === postPreview.id
     : slug === postPreview.slug;
-  const isDraft = isSamePost && postPreview?.status === "draft";
-  const isRevision = isSamePost && postPreview?.status === "publish";
+  const isDraft = isSamePost && postPreview?.status === 'draft';
+  const isRevision = isSamePost && postPreview?.status === 'publish';
+  /*eslint-disable */
   const data = await fetchAPI(
     `
     fragment AuthorFields on User {
@@ -369,6 +454,10 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       featuredImage {
         node {
           sourceUrl
+          mediaDetails {
+            height
+            width
+          }
         }
       }
       author {
@@ -414,7 +503,7 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
           }
         }
         `
-            : ""
+            : ''
         }
       }
       posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
@@ -429,10 +518,11 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
     {
       variables: {
         id: isDraft ? postPreview.id : slug,
-        idType: isDraft ? "DATABASE_ID" : "SLUG",
+        idType: isDraft ? 'DATABASE_ID' : 'SLUG',
       },
-    }
+    },
   );
+  /*eslint-enable */
 
   // Draft posts may not have an slug
   if (isDraft) data.post.slug = postPreview.id;
@@ -445,7 +535,9 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
   }
 
   // Filter out the main post
-  data.posts.edges = data.posts.edges.filter(({ node }) => node.slug !== slug);
+  data.posts.edges = data.posts.edges.filter(
+    ({ node }) => node.slug !== slug,
+  );
   // If there are still 3 posts, remove the last one
   if (data.posts.edges.length > 2) data.posts.edges.pop();
 

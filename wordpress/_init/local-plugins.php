@@ -75,22 +75,24 @@ function run_activate_plugin( $plugin ) {
 
 /* Begin customization */
 
-if ( defined( 'WP_LOCAL_DEV' ) && WP_LOCAL_DEV ) {
+if ( defined( 'WP_ENV' ) && WP_ENV == "development" ) {
+
+    // set local dev ENV vars
+    define( 'GRAPHQL_DEBUG', true );
 
     // disable
     new Disable_Plugins_When_Local_Dev( array(
         'hello.php',
         'object-cache.php',
-        'absolute-privacy/absolute_privacy.php'
+        'absolute-privacy/absolute_privacy.php',
+        'google_apps_login/google_apps_login.php'
     ));
 
-    //enable
-    run_activate_plugin('debug-bar/debug-bar.php' );
-    run_activate_plugin('query-monitor/query-monitor.php' );
-    run_activate_plugin('transients-manager/transients-manager.php' );
-    run_activate_plugin('user-switching/user-switching.php' );
-    run_activate_plugin('airplane-mode/airplane-mode.php' );
-    run_activate_plugin('wp-graphiql/wp-graphiql.php' );
+    // enable
+    // run_activate_plugin('debug-bar/debug-bar.php' );
+    // run_activate_plugin('query-monitor/query-monitor.php' );
+    // run_activate_plugin('transients-manager/transients-manager.php' );
+    // run_activate_plugin('user-switching/user-switching.php' );
     // run_activate_plugin('object-cache.php' );
 
 }

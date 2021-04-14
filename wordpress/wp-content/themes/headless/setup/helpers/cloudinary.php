@@ -2,7 +2,7 @@
 
 function cdn_upload_url($args)
 {
-    $args['baseurl'] = 'https://res.cloudinary.com/bubsnext/image/upload/bubsnext';
+    $args['baseurl'] = 'https://res.cloudinary.com/patronage/image/upload/bubsnext';
     return $args;
 }
 

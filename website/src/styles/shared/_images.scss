@@ -12,6 +12,6 @@ img {
 }
 
 // fixes layout issues with tracking pixels
-iframe[width="0"][height="0"] {
+iframe[width='0'][height='0'] {
   display: none;
 }

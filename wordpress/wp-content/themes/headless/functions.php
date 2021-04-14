@@ -16,10 +16,11 @@ if (defined('WP_HEADLESS_DOMAIN')) {
 }
 
 // Theme Options
-function bubs_theme_options($wp_customize) {
-    include_once 'setup/theme-options/footer.php';
-    include_once 'setup/theme-options/integrations.php';
-    include_once 'setup/theme-options/social.php';
+function bubs_theme_options($wp_customize)
+{
+    // include_once 'setup/theme-options/footer.php';
+    // include_once 'setup/theme-options/integrations.php';
+    // include_once 'setup/theme-options/social.php';
     $wp_customize->remove_section('custom_css');
 }
 
@@ -39,21 +40,13 @@ include_once 'setup/taxonomies/issue-areas.php';
 // WP Helper Functions
 include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
-include_once 'setup/helpers/cloudinary.php';
+//include_once 'setup/helpers/cloudinary.php';
 include_once 'setup/helpers/menus.php';
 include_once 'setup/helpers/wpgraphql.php';
+include_once 'setup/helpers/wysiwyg.php';
 
 // Wordpress Theme Support Config
 // REMOVAL OF THESE = POTIENTAL LOSS OF DATA
 
-add_theme_support('post-formats');
 add_theme_support('post-thumbnails');
 add_theme_support('menus');
-
-
-// Enable Roots Soil
-
-add_theme_support('soil-clean-up');
-add_theme_support('soil-relative-urls');
-add_theme_support('soil-disable-trackbacks');
-add_theme_support('soil-nice-search');

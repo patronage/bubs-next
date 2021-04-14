@@ -56,6 +56,9 @@
             'publicly_queryable'    => true,
             'rewrite'             => $rewrite,
             'capability_type'       => 'page',
+            'show_in_graphql'       => true,
+            'graphql_single_name' => 'pressRelease',
+            'graphql_plural_name' => 'pressReleases',
         );
 
         register_post_type( 'press', $args );

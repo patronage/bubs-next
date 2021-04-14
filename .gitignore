@@ -1,5 +1,6 @@
-.vercel
+.DS_Store
 .env
+.vercel
 
 # local env files
 .env.local
@@ -100,5 +101,3 @@ out
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-.vercel

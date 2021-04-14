@@ -1,0 +1,16 @@
+@import 'styles/_scaffold.scss';
+
+.post-footer {
+  margin-top: 20px;
+}
+
+.meta {
+  margin-bottom: 0;
+  font-family: $font-sans;
+  font-size: 14px;
+  text-transform: uppercase;
+
+  @include media-breakpoint-up(md) {
+    font-size: 16px;
+  }
+}

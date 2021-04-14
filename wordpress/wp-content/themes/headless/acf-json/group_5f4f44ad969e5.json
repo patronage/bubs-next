@@ -11,11 +11,13 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "33",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
+            "show_in_graphql": 1,
             "choices": {
+                "transparent": "Transparent",
                 "light": "Light",
                 "dark": "Dark"
             },
@@ -36,10 +38,11 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "34",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
+            "show_in_graphql": 1,
             "default_value": "",
             "placeholder": "",
             "prepend": "",
@@ -55,15 +58,36 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "33",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
+            "show_in_graphql": 1,
             "default_value": "",
             "placeholder": "",
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_60481c0f5467b",
+            "label": "Hide Section",
+            "name": "hide_section",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "show_in_graphql": 1,
+            "message": "Visually Hide",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         }
     ],
     "location": [
@@ -83,5 +107,7 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1599030534
+    "show_in_graphql": 0,
+    "graphql_field_name": "acfSharedFlexSectionOptions",
+    "modified": 1615338607
 }
