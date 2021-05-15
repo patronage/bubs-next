@@ -6,7 +6,7 @@ But we still need to secure the graphql connection, and the WP admin interface.
 
 ## Keeping software up to date
 
-Managed WordPress from WP Engine or Pantheon for example will go a long way by keeping your production install. As WordPress specialized hosts, they also have expertise at taking steps to lock WordPress down.
+Managed WordPress from WP Engine or Pantheon for example will go a long way by keeping your production install. As WordPress specialized hosts, they also have expertise at [taking steps to lock WordPress down](https://wpengine.com/blog/11-top-wordpress-security-concerns-how-wp-engine-takes-care-of-them-for-you/).
 
 ## Securing Graphql
 
@@ -26,4 +26,4 @@ To help lock down WordPress, we typically will enable and configure the [Google 
 
 2. In `wordpress/functions.php`, you can enable `password-rotation.php`. This will reset all user passwords to secure defaults every few hours (however often the `wp_version_check` is configured).
 
-3. By default we disable the WP xmlrpc functionality. You can renable by commenting out `xmlrpc-disable.php`.
+3. In our opinion, the WordPress XMLRPC functionality should be disabled, and only enabled if needed. Some hosts help here, but we want to make sure so we disable the WP xmlrpc functionality. You can renable by commenting out `xmlrpc-disable.php`.
