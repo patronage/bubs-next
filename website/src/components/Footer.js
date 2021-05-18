@@ -1,8 +1,14 @@
 import cx from 'classnames';
+import GlobalsContext from 'contexts/GlobalsContext';
+import _get from 'lodash/get';
 import Link from 'next/link';
+import { useContext } from 'react';
 import styles from './Footer.module.scss';
 
 export default function Footer() {
+  const globals = useContext(GlobalsContext);
+  const menus = _get(globals, 'menus.nodes[0].menuItems.nodes', []);
+
   return (
     <footer
       className={cx(
@@ -14,26 +20,11 @@ export default function Footer() {
         <div className={cx('row', styles.nav)}>
           <div className="col">
             <ul className="list-inline mb-0">
-              <li className="list-inline-item">
-                <Link href="/">
-                  <a>Home</a>
-                </Link>
-              </li>
-              <li className="list-inline-item">
-                <Link href="/posts">
-                  <a>Posts</a>
-                </Link>
-              </li>
-              <li className="list-inline-item">
-                <Link href="/flex-demo">
-                  <a>Flex Demo</a>
-                </Link>
-              </li>
-              <li className="list-inline-item">
-                <Link href="/privacy">
-                  <a>Privacy Policy</a>
-                </Link>
-              </li>
+              {menus.map((item, i) => (
+                <li className="list-inline-item" key={i}>
+                  <a href={item.path}>{item.label}</a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
