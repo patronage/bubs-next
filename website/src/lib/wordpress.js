@@ -389,15 +389,17 @@ export async function getGlobalProps() {
         }
       }
     }
-    fragment GlobalOptions on RootQuery {
-      themeSettings
-    }
 
     query AllGlobals {
       ...Menus
-      ...GlobalOptions
     }
   `;
+
+  /*
+    fragment GlobalOptions on RootQuery {
+      themeSettings
+    }
+  */
 
   const data = await fetchAPI(query);
   return data;

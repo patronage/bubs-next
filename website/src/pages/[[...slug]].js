@@ -1,12 +1,19 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
-import { getContent, getAllContentWithSlug } from 'lib/wordpress';
+import {
+  getContent,
+  getGlobalProps,
+  getAllContentWithSlug,
+} from 'lib/wordpress';
+
+import { GlobalsProvider } from '../contexts/GlobalsContext';
 
 export default function Page({
   post,
   preview,
   isHome,
+  globals,
   template,
   flexSections,
 }) {
@@ -14,48 +21,54 @@ export default function Page({
   // you can remove this if you've defined a homepage in wordpress
   if (isHome) {
     return (
-      <LayoutDefault title="">
-        <section className="section-padded">
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <h3>Home Page</h3>
+      <GlobalsProvider globals={globals}>
+        <LayoutDefault title="">
+          <section className="section-padded">
+            <div className="container">
+              <div className="row">
+                <div className="col">
+                  <h3>Home Page</h3>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </LayoutDefault>
+          </section>
+        </LayoutDefault>
+      </GlobalsProvider>
     );
   }
 
   if (template === 'Flex') {
     return (
+      <GlobalsProvider globals={globals}>
+        <LayoutDefault
+          preview={preview}
+          title={post?.title}
+          seo={post?.seo}
+        >
+          <Flex sections={flexSections} />
+        </LayoutDefault>
+      </GlobalsProvider>
+    );
+  }
+
+  return (
+    <GlobalsProvider globals={globals}>
       <LayoutDefault
         preview={preview}
         title={post?.title}
         seo={post?.seo}
       >
-        <Flex sections={flexSections} />
-      </LayoutDefault>
-    );
-  }
-
-  return (
-    <LayoutDefault
-      preview={preview}
-      title={post?.title}
-      seo={post?.seo}
-    >
-      <section className="section-padded">
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <PostBody content={post.content} />
+        <section className="section-padded">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <PostBody content={post.content} />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </LayoutDefault>
+        </section>
+      </LayoutDefault>
+    </GlobalsProvider>
   );
 }
 
@@ -64,11 +77,14 @@ export async function getStaticProps({
   preview = false,
   previewData,
 }) {
+  const globals = await getGlobalProps();
+
   // if your homepage doesn't come from WP, you need this to custom render and not get a 404
   // next doesn't let you have index.js and [[...slug.js]]
   if (!params.slug?.length) {
     return {
       props: {
+        globals,
         isHome: true,
       },
     };
@@ -90,6 +106,7 @@ export async function getStaticProps({
 
   return {
     props: {
+      globals,
       preview,
       post: data.post,
       flexSections: data.post?.acfFlex?.flexContent || null,

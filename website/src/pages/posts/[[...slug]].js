@@ -1,36 +1,41 @@
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostArchive from 'components/post/PostArchive';
 
+import { GlobalsProvider } from 'contexts/GlobalsContext';
 import { staticPropHelper, staticPathGenerator } from 'lib/archive';
-import { getContent } from 'lib/wordpress';
+import { getContent, getGlobalProps } from 'lib/wordpress';
 import { useRouter } from 'next/router';
 
-function PostsSinglePage({ post }) {
+function PostsSinglePage({ post, globals }) {
   return (
-    <LayoutDefault title={post?.title}>
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <h1>{post?.title}</h1>
-            <div
-              dangerouslySetInnerHTML={{ __html: post?.content }}
-            />
+    <GlobalsProvider globals={globals}>
+      <LayoutDefault title={post?.title}>
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <h1>{post?.title}</h1>
+              <div
+                dangerouslySetInnerHTML={{ __html: post?.content }}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </LayoutDefault>
+      </LayoutDefault>
+    </GlobalsProvider>
   );
 }
 
 function PostsIndexPage(props) {
   return (
-    <LayoutDefault title="">
-      <section className="pt-3 pb-3">
-        <div className="container">
-          <PostArchive {...props} />
-        </div>
-      </section>
-    </LayoutDefault>
+    <GlobalsProvider globals={props.globals}>
+      <LayoutDefault title="">
+        <section className="pt-3 pb-3">
+          <div className="container">
+            <PostArchive {...props} />
+          </div>
+        </section>
+      </LayoutDefault>
+    </GlobalsProvider>
   );
 }
 
@@ -55,10 +60,12 @@ export async function getStaticProps(context) {
   //
   // Generate props for Post Index page
   //
+
+  const globals = await getGlobalProps();
   const indexProps = await staticPropHelper(context, 'post_type');
 
   if (indexProps) {
-    return { props: indexProps };
+    return { props: { ...indexProps, globals } };
   }
 
   //
@@ -66,7 +73,7 @@ export async function getStaticProps(context) {
   //
   try {
     const { post } = await getContent(context.params.slug[0]);
-    return { props: { post } };
+    return { props: { post, globals } };
   } catch (error) {
     console.log(error);
   }
