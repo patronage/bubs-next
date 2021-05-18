@@ -10,6 +10,10 @@ async function fetchAPI(query, { variables } = {}) {
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
 
+  console.log('- - - - -');
+  console.log(query);
+  console.log('- - - - -');
+
   const res = await fetch(WORDPRESS_API_URL, {
     method: 'POST',
     headers,
@@ -80,49 +84,6 @@ let fragmentSectionOptions = /* GraphQL */ `
   sectionSlug
 `;
 
-let fragmentHero = /* GraphQL */ `
-  acfHero {
-    fieldGroupName
-    heroButton {
-      target
-      title
-      url
-    }
-    heroCta
-    heroHeading
-    heroImage {
-      sourceUrl(size: HERO)
-    }
-    heroIntro
-    heroPosts {
-      ... on Post {
-        title
-        uri
-      }
-      ... on Page {
-        title
-        uri
-      }
-      ... on CaseStudy {
-        title
-        uri
-      }
-      ... on NewsPost {
-        title
-        uri
-      }
-      ... on ResourcePost {
-        title
-        uri
-      }
-    }
-    heroPrefix
-    heroStyle
-    heroSubhead
-    hideBreadcrumbs
-  }
-`;
-
 let fragmentCategories = /* GraphQL */ `
   categories {
     nodes {
@@ -153,7 +114,7 @@ export async function getPreviewPost(id, idType = 'DATABASE_ID') {
 /**
  * get all paths. used for static generation
  */
- export async function getAllContentWithSlug() {
+export async function getAllContentWithSlug() {
   const data = await fetchAPI(`
     query AllContent {
       contentNodes {
@@ -166,7 +127,6 @@ export async function getPreviewPost(id, idType = 'DATABASE_ID') {
   return data?.contentNodes;
 }
 
-
 function generateFlex(type) {
   let fragmentFlex = /* GraphQL */ `
     acfFlex {
@@ -178,44 +138,17 @@ function generateFlex(type) {
           wysiwygContent
           ${fragmentSectionOptions}
         }
-        ... on ${type}_Acfflex_FlexContent_Form {
-          fieldGroupName
-          heading
-          content
-          formHeading
-          formSubhead
-          formPosition
-          formFields
-          formInboundLead
-          formDownloadContent
-          formButton
-          formUrl
-          formRedirect {
-            url
+        ... on ${type}_Acfflex_FlexContent_Hero {
+          heroHeading
+          heroSubheading
+          heroImage {
+            sourceUrl
           }
           ${fragmentSectionOptions}
         }
-        ... on ${type}_Acfflex_FlexContent_Media {
-          fieldGroupName
-          youtubeUrl
-          variant
-          width
-          backgroundVideo {
-            mediaItemUrl
-            mediaDetails {
-              width
-              height
-            }
-          }
-          image {
-            altText
-            mediaDetails {
-              width
-              height
-            }
-            sourceUrl(size: _1600_WIDE)
-            mediaItemUrl
-          }
+        ... on ${type}_Acfflex_FlexContent_Blockquote {
+          blockquote
+          quoteAttribution
           ${fragmentSectionOptions}
         }
       }
@@ -283,16 +216,12 @@ export async function getContent(slug, preview, previewData) {
           isFrontPage
           content
           ${generateFlex('Page')}
-          ${fragmentHero}
           ${fragmentSEO}
-          ${fragmentPageOptions}
         }
         ... on Post {
           content
           ${generateFlex('Post')}
-          ${fragmentHero}
           ${fragmentSEO}
-          ${fragmentPageOptions}
         }
       }
     }

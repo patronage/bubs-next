@@ -1,7 +1,7 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
-import { getPage, getAllPagesWithSlug } from 'lib/wordpress';
+import { getContent, getAllContentWithSlug } from 'lib/wordpress';
 
 export default function Page({
   post,
@@ -80,7 +80,7 @@ export async function getStaticProps({
     slug += params.slug.join('/');
   }
 
-  const data = await getPage(slug, preview, previewData);
+  const data = await getContent(slug, preview, previewData);
   if (!data?.post?.slug) {
     return {
       notFound: true,
@@ -99,10 +99,12 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  const allPosts = await getAllPagesWithSlug();
+  const allPosts = await getAllContentWithSlug();
+
+  console.log(allPosts);
 
   return {
-    paths: allPosts.edges.map(({ node }) => `/${node.slug}`) || [],
+    paths: allPosts.nodes.map(({ uri }) => uri) || [],
     fallback: 'blocking',
   };
 }
