@@ -102,8 +102,6 @@ export async function getStaticProps({
 export async function getStaticPaths() {
   const allPosts = await getAllContentWithSlug();
 
-  console.log(allPosts);
-
   return {
     paths: allPosts.nodes.map(({ uri }) => uri) || [],
     fallback: 'blocking',
