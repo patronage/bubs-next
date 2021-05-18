@@ -81,6 +81,7 @@ export async function getStaticProps({
   }
 
   const data = await getContent(slug, preview, previewData);
+
   if (!data?.post?.slug) {
     return {
       notFound: true,
@@ -90,7 +91,7 @@ export async function getStaticProps({
   return {
     props: {
       preview,
-      post: data.pageBy,
+      post: data.post,
       flexSections: data.post?.acfFlex?.flexContent || null,
       template: data.post?.template?.templateName || null,
     },

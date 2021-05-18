@@ -139,14 +139,20 @@ function generateFlex(type) {
           ${fragmentSectionOptions}
         }
         ... on ${type}_Acfflex_FlexContent_Hero {
+          fieldGroupName
           heroHeading
           heroSubheading
           heroImage {
             sourceUrl
+            mediaDetails {
+              width
+              height
+            }
           }
           ${fragmentSectionOptions}
         }
         ... on ${type}_Acfflex_FlexContent_Blockquote {
+          fieldGroupName
           blockquote
           quoteAttribution
           ${fragmentSectionOptions}
