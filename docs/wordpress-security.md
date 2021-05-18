@@ -22,8 +22,12 @@ Here are some resources we're reviewing:
 
 To help lock down WordPress, we typically will enable and configure the [Google Apps Login](https://wordpress.org/plugins/google-apps-login/) plugin. There are two optional configurations in bubs which are disabled by default, but which can be enabled to add extra security.
 
-1. In `wordpress/functions.php`, you can enable `google-login-force.php`. In production, this will redirect logged out traffic to a google login prompt. This essentially disables email/password logins. Only enable if 100% of login emails have google accounts at the same email.
+1. In `wordpress/functions.php`, you can enable `google-login-force.php`. In production, this will redirect logged out traffic to a google login prompt. This helps obscure your email/password login form from bots. Only enable if 100% of login emails have google accounts at the same email.
 
 2. In `wordpress/functions.php`, you can enable `password-rotation.php`. This will reset all user passwords to secure defaults every few hours (however often the `wp_version_check` is configured).
 
 3. In our opinion, the WordPress XMLRPC functionality should be disabled, and only enabled if needed. Some hosts help here, but we want to make sure so we disable the WP xmlrpc functionality. You can renable by commenting out `xmlrpc-disable.php`.
+
+## Audit Logs
+
+We've included the [Simple History](https://wordpress.org/plugins/simple-history/) plugin as an audit log for WordPress activity. This can be useful to retrace steps should anything happen -- whether that's a malicuous attack, or a content editor deleting something they shouldn't have.
