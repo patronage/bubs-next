@@ -38,11 +38,17 @@ include_once 'setup/taxonomies/issue-areas.php';
 
 // WP Helper Functions
 include_once 'setup/helpers/acf-options.php';
+
 include_once 'setup/helpers/admin.php';
 //include_once 'setup/helpers/cloudinary.php';
 include_once 'setup/helpers/menus.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
+
+// Security Settings
+// include_once 'setup/helpers/google-login-force.php';
+// include_once 'setup/helpers/password-rotation-wpe.php';
+include_once 'setup/helpers/xmlrpc-disable.php';
 
 // Wordpress Theme Support Config
 // REMOVAL OF THESE = POTIENTAL LOSS OF DATA
