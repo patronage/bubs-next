@@ -2,7 +2,7 @@ import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostArchive from 'components/post/PostArchive';
 
 import { staticPropHelper, staticPathGenerator } from 'lib/archive';
-import { getPost } from 'lib/wordpress';
+import { getContent } from 'lib/wordpress';
 import { useRouter } from 'next/router';
 
 function PostsSinglePage({ post }) {
@@ -65,8 +65,8 @@ export async function getStaticProps(context) {
   // Generate props for Post Single Page
   //
   try {
-    const { postBy } = await getPost(context.params.slug[0]);
-    return { props: { post: postBy } };
+    const { post } = await getContent(context.params.slug[0]);
+    return { props: { post } };
   } catch (error) {
     console.log(error);
   }

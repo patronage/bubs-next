@@ -27,13 +27,13 @@ add_action('customize_register', 'bubs_theme_options');
 
 
 // Post Types
-include_once 'setup/post-types/events.php';
-include_once 'setup/post-types/heroes.php';
-include_once 'setup/post-types/members.php';
+//include_once 'setup/post-types/events.php';
+//include_once 'setup/post-types/heroes.php';
+//include_once 'setup/post-types/members.php';
 
 
 // Taxonomies
-include_once 'setup/taxonomies/issue-areas.php';
+//include_once 'setup/taxonomies/issue-areas.php';
 
 
 // WP Helper Functions

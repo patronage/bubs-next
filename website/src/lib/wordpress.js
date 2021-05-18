@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
 
 async function fetchAPI(query, { variables } = {}) {
@@ -31,8 +32,12 @@ async function fetchAPI(query, { variables } = {}) {
  * Reusable Fragments
  */
 
-let fragmentSEO = `
+let fragmentSEO = /* GraphQL */ `
   seo {
+    breadcrumbs {
+      text
+      url
+    }
     canonical
     metaDesc
     metaRobotsNofollow
@@ -59,6 +64,32 @@ let fragmentSEO = `
   }
 `;
 
+let fragmentPageOptions = /* GraphQL */ `
+  acfPageOptions {
+    footerHideNav
+    footerHideSignup
+    footerStyle
+    headerHideNav
+  }
+`;
+
+let fragmentSectionOptions = /* GraphQL */ `
+  backgroundColor
+  hideSection
+  sectionClasses
+  sectionSlug
+`;
+
+let fragmentCategories = /* GraphQL */ `
+  categories {
+    nodes {
+      name
+      slug
+      uri
+    }
+  }
+`;
+
 export async function getPreviewPost(id, idType = 'DATABASE_ID') {
   const data = await fetchAPI(
     `
@@ -76,191 +107,62 @@ export async function getPreviewPost(id, idType = 'DATABASE_ID') {
   return data.post;
 }
 
-export async function getAllPostsWithSlug() {
+/**
+ * get all paths. used for static generation
+ */
+export async function getAllContentWithSlug() {
   const data = await fetchAPI(`
-    {
-      posts(first: 10000) {
-        edges {
-          node {
-            slug
-          }
+    query AllContent {
+      contentNodes {
+        nodes {
+          uri
         }
       }
     }
   `);
-  return data?.posts;
+  return data?.contentNodes;
 }
 
-export async function getAllPagesWithSlug() {
-  const data = await fetchAPI(`
-    {
-      pages {
-        edges {
-          node {
-            slug
-          }
+function generateFlex(type) {
+  let fragmentFlex = /* GraphQL */ `
+    acfFlex {
+      fieldGroupName
+      flexContent {
+        ... on ${type}_Acfflex_FlexContent_WysiwygContent {
+          fieldGroupName
+          sectionHeading
+          wysiwygContent
+          ${fragmentSectionOptions}
         }
-      }
-    }
-  `);
-  return data?.pages;
-}
-
-export async function getPageWithSlug() {
-  const data = await fetchAPI(`
-    {
-      posts(first: 10000) {
-        edges {
-          node {
-            slug
-          }
-        }
-      }
-    }
-  `);
-  return data?.posts;
-}
-
-export async function getPosts(preview) {
-  const data = await fetchAPI(
-    `
-    query AllPosts {
-      posts(first: 20, where: {orderby: {field: DATE, order: DESC}}) {
-        edges {
-          node {
-            title
-            excerpt
-            slug
-            date
-            featuredImage {
-              node {
-                sourceUrl
-                mediaDetails {
-                  height
-                  width
-                }
-              }
-            }
-            author {
-              node {
-                firstName
-                lastName
-              }
+        ... on ${type}_Acfflex_FlexContent_Hero {
+          fieldGroupName
+          heroHeading
+          heroSubheading
+          heroImage {
+            sourceUrl
+            mediaDetails {
+              width
+              height
             }
           }
+          ${fragmentSectionOptions}
+        }
+        ... on ${type}_Acfflex_FlexContent_Blockquote {
+          fieldGroupName
+          blockquote
+          quoteAttribution
+          ${fragmentSectionOptions}
         }
       }
     }
-  `,
-    {
-      variables: {
-        onlyEnabled: !preview,
-        preview,
-      },
-    },
-  );
-
-  return data?.posts;
+  `;
+  return fragmentFlex;
 }
 
-export async function getPostsByCategory(categorySlug) {
-  const data = await fetchAPI(`
-    {
-      posts(first: 10000, where: {categoryName: "${categorySlug}"}) {
-        edges {
-          node {
-            slug
-          }
-        }
-      }
-    }
-  `);
-
-  return data?.posts;
-}
-
-export async function getPostsByTag(tagSlug) {
-  const data = await fetchAPI(`
-    {
-      posts(first: 10000, where: {tag: "${tagSlug}"}) {
-        edges {
-          node {
-            slug
-          }
-        }
-      }
-    }
-  `);
-
-  return data?.posts;
-}
-
-export async function getHeroes() {
-  const data = await fetchAPI(`
-    query AllHeroes {
-      heroes {
-        edges {
-          node {
-            hero {
-              buttonLink
-              buttonText
-              buttonType
-              fieldGroupName
-              headline
-              subhead
-              img {
-                uri
-                link
-                sourceUrl(size: LARGE)
-                altText
-                mediaDetails {
-                  height
-                  width
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `);
-
-  return data?.heroes;
-}
-
-export async function getCategories() {
-  const data = await fetchAPI(`
-    query AllCategories {
-      categories {
-        edges {
-          node {
-            slug
-          }
-        }
-      }
-    }
-  `);
-
-  return data.categories;
-}
-
-export async function getTags() {
-  const data = await fetchAPI(`
-    query AllTags {
-      tags {
-        edges {
-          node {
-            slug
-          }
-        }
-      }
-    }
-  `);
-
-  return data.tags;
-}
-
-export async function getPage(slug, preview, previewData) {
+/**
+ * Get fields for single page regardless of post type.
+ */
+export async function getContent(slug, preview, previewData) {
   const postPreview = preview && previewData?.post;
   // The slug may be the id of an unpublished post
   const isId = Number.isInteger(Number(slug));
@@ -269,85 +171,67 @@ export async function getPage(slug, preview, previewData) {
     : slug === postPreview.slug;
   const isDraft = isSamePost && postPreview?.status === 'draft';
   const isRevision = isSamePost && postPreview?.status === 'publish';
-  let uri = slug;
-  const data = await fetchAPI(
-    `
-    fragment SEOFields on Page {
-      ${fragmentSEO}
-    }
+  // console.log('slug for single', slug);
+  let query = /* GraphQL */ `
+    query GetContent($slug: ID!) {
+      contentNode(id: $slug, idType: URI) {
+        __typename
+        id
+        isPreview
+        link
+        slug
+        uri
 
-    fragment PageFields on Page {
-      title
-      slug
-      content
-      template {
-        templateName
-      }
-      featuredImage {
-        node {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
+        ... on NodeWithTitle {
+          title
         }
-      }
-    }
-
-    fragment FlexFields on Page {
-      acfFlex {
-        fieldGroupName
-        flexContent {
-          ... on Page_Acfflex_FlexContent_Blockquote {
-            backgroundColor
-            blockquote
-            fieldGroupName
-            quoteAttribution
-            hideSection
-            sectionClasses
-            sectionSlug
-          }
-          ... on Page_Acfflex_FlexContent_Hero {
-            backgroundColor
-            fieldGroupName
-            heroHeading
-            heroSubheading
-            heroImage {
+        ... on NodeWithFeaturedImage {
+          featuredImage {
+            node {
+              caption
               sourceUrl
               mediaDetails {
                 height
                 width
               }
             }
-            hideSection
-            sectionClasses
-            sectionSlug
           }
-          ... on Page_Acfflex_FlexContent_WysiwygContent {
-            backgroundColor
-            fieldGroupName
-            hideSection
-            sectionClasses
-            sectionHeading
-            sectionSlug
-            wysiwygContent
+        }
+        ... on NodeWithTemplate {
+          template {
+            __typename
+            templateName
           }
+        }
+        ... on NodeWithAuthor {
+          authorId
+          author {
+            node {
+              id
+              name
+              nicename
+              lastName
+            }
+          }
+        }
+        ... on Page {
+          isFrontPage
+          content
+          ${generateFlex('Page')}
+          ${fragmentSEO}
+        }
+        ... on Post {
+          content
+          ${generateFlex('Post')}
+          ${fragmentSEO}
         }
       }
     }
-    query PageBySlug($uri: String) {
-      pageBy(uri: $uri) {
-        ...PageFields
-        ...FlexFields
-        ...SEOFields
-        content
-      }
-    }
-    `,
-    {
-      variables: { uri },
-    },
-  );
+  `;
+  // console.log('query for getContent', query);
+  const data = await fetchAPI(query, {
+    variables: { slug },
+  });
 
   // Draft posts may not have an slug
   if (isDraft) data.post.slug = postPreview.id;
@@ -359,112 +243,113 @@ export async function getPage(slug, preview, previewData) {
     delete data.post.revisions;
   }
 
-  data.post = data.pageBy;
-
+  // console.log('data', data);
+  data.post = data.contentNode;
   return data;
 }
 
-export async function getPost(slug, preview, previewData) {
-  const postPreview = preview && previewData?.post;
-  // The slug may be the id of an unpublished post
-  const isId = Number.isInteger(Number(slug));
-  const isSamePost = isId
-    ? Number(slug) === postPreview.id
-    : slug === postPreview?.slug;
-  const isDraft = isSamePost && postPreview?.status === 'draft';
-  const isRevision = isSamePost && postPreview?.status === 'publish';
-  const uri = slug;
-  const data = await fetchAPI(
-    `
-    fragment SEOFields on Post {
-      ${fragmentSEO}
-    }
+/**
+ * Get a list of posts for news.
+ */
 
-    fragment PostFields on Post {
-      title
-      slug
-      featuredImage {
-        node {
-          sourceUrl
-          mediaDetails {
-            height
-            width
+export async function getPosts({
+  ids,
+  first = 12,
+  after = null,
+  searchQuery = null,
+  contentTypes = ['POST', 'CASE_STUDIES', 'RESOURCES', 'NEWS'],
+  orderField = 'DATE',
+  orderDirection = 'DESC',
+  taxonomyType = null,
+  taxonomyTerms = null,
+}) {
+  const taxonomyQuery =
+    'taxQuery: {taxArray: { taxonomy: $taxonomyType, terms: $taxonomyTerms, field: SLUG }},';
+
+  const taxonomyParams = `
+      $taxonomyType: TaxonomyEnum!
+      $taxonomyTerms: [String]`;
+
+  let query = /* GraphQL */ `
+    # query GetPosts($first: Int, $contentTypes: Array) {
+    query GetPosts(
+      $ids: [ID]
+      $first: Int
+      $after: String
+      $contentTypes: [ContentTypeEnum!]!
+      $searchQuery: String
+      $orderField: PostObjectsConnectionOrderbyEnum!
+      $orderDirection: OrderEnum!
+      ${taxonomyType && taxonomyTerms ? taxonomyParams : ''}
+    ) {
+      contentNodes(
+        first: $first
+        after: $after
+        where: {
+          ${taxonomyType && taxonomyTerms ? taxonomyQuery : ''}
+          in: $ids,
+          search: $searchQuery,
+          contentTypes: $contentTypes,
+          orderby: {field: $orderField, order: $orderDirection}}
+      ) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes {
+          slug
+          uri
+          ... on NodeWithFeaturedImage {
+            featuredImage {
+              node {
+                caption
+                sourceUrl(size: SOCIAL)
+                mediaDetails {
+                  height
+                  width
+                }
+              }
+            }
+          }
+          ... on NodeWithTitle {
+            title
+          }
+          contentType {
+            node {
+              name
+            }
+          }
+          ... on Post {
+            ${fragmentCategories}
           }
         }
       }
     }
-    query PostBySlug($uri: String) {
-      postBy(uri: $uri) {
-        ...PostFields
-        ...SEOFields
-        content
-      }
-    }
-    `,
-    {
-      variables: { uri },
+  `;
+  // console.log('query', query);
+  const data = await fetchAPI(query, {
+    variables: {
+      contentTypes,
+      first,
+      searchQuery,
+      after,
+      ids,
+      orderField,
+      orderDirection,
+      taxonomyType,
+      taxonomyTerms,
     },
-  );
-
-  // Draft posts may not have an slug
-  if (isDraft) data.post.slug = postPreview.id;
-  // Apply a revision (changes in a published post)
-  if (isRevision && data.post.revisions) {
-    const revision = data.post.revisions.edges[0]?.node;
-
-    if (revision) Object.assign(data.post, revision);
-    delete data.post.revisions;
-  }
-
-  data.post = data.pageBy;
+  });
+  // console.log('data', JSON.stringify(data, null, 2));
 
   return data;
 }
 
-export async function getPostAndMorePosts(
-  slug,
-  preview,
-  previewData,
-) {
-  const postPreview = preview && previewData?.post;
-  // The slug may be the id of an unpublished post
-  const isId = Number.isInteger(Number(slug));
-  const isSamePost = isId
-    ? Number(slug) === postPreview.id
-    : slug === postPreview.slug;
-  const isDraft = isSamePost && postPreview?.status === 'draft';
-  const isRevision = isSamePost && postPreview?.status === 'publish';
-  /*eslint-disable */
-  const data = await fetchAPI(
-    `
-    fragment AuthorFields on User {
-      firstName
-      lastName
-      name
-      nicename
-      nickname
-      uri
-      slug
-    }
-    fragment PostFields on Post {
-      title
-      excerpt
-      slug
-      date
-      featuredImage {
-        node {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
-        }
-      }
-      author {
-        node {
-          ...AuthorFields
-        }
-      }
+/** All Taxonomy Terms */
+
+export async function getCategories() {
+  let query = /* GraphQL */ `
+    query AllCategories {
       categories {
         edges {
           node {
@@ -473,73 +358,47 @@ export async function getPostAndMorePosts(
           }
         }
       }
-      tags {
-        edges {
-          node {
-            name
-            slug
-          }
-        }
-      }
     }
-    query PostBySlug($id: ID!, $idType: PostIdType!) {
-      post(id: $id, idType: $idType) {
-        ...PostFields
-        content
-        ${
-          // Only some of the fields of a revision are considered as there are some inconsistencies
-          isRevision
-            ? `
-        revisions(first: 1, where: { orderby: { field: MODIFIED, order: DESC } }) {
-          edges {
-            node {
-              title
-              excerpt
-              content
-              author {
-                ...AuthorFields
-              }
+  `;
+
+  const data = await fetchAPI(query);
+  return data.categories;
+}
+
+/**
+ * Global Props
+ * (Might merge into other queries via fragment)
+ * */
+export async function getGlobalProps() {
+  let query = /* GraphQL */ `
+    fragment Menus on RootQuery {
+      menus {
+        nodes {
+          id
+          databaseId
+          name
+          menuItems {
+            nodes {
+              id
+              label
+              parentId
+              url
+              path
             }
           }
         }
-        `
-            : ''
-        }
-      }
-      posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
-        edges {
-          node {
-            ...PostFields
-          }
-        }
       }
     }
-  `,
-    {
-      variables: {
-        id: isDraft ? postPreview.id : slug,
-        idType: isDraft ? 'DATABASE_ID' : 'SLUG',
-      },
-    },
-  );
-  /*eslint-enable */
+    fragment GlobalOptions on RootQuery {
+      themeSettings
+    }
 
-  // Draft posts may not have an slug
-  if (isDraft) data.post.slug = postPreview.id;
-  // Apply a revision (changes in a published post)
-  if (isRevision && data.post.revisions) {
-    const revision = data.post.revisions.edges[0]?.node;
+    query AllGlobals {
+      ...Menus
+      ...GlobalOptions
+    }
+  `;
 
-    if (revision) Object.assign(data.post, revision);
-    delete data.post.revisions;
-  }
-
-  // Filter out the main post
-  data.posts.edges = data.posts.edges.filter(
-    ({ node }) => node.slug !== slug,
-  );
-  // If there are still 3 posts, remove the last one
-  if (data.posts.edges.length > 2) data.posts.edges.pop();
-
+  const data = await fetchAPI(query);
   return data;
 }

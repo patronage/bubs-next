@@ -1,10 +1,10 @@
 const {
-  getPost,
-  getTags,
+  getContent,
+  //getTags,
   getCategories,
-  getPostsByTag,
-  getPostsByCategory,
-  getAllPostsWithSlug,
+  //getPostsByTag,
+  //getPostsByCategory,
+  getAllContentWithSlug,
 } = require('./wordpress');
 
 const POSTS_PER_PAGE = 2;
@@ -25,14 +25,14 @@ export async function staticPathGenerator(type = 'post_type') {
 
     if (type === 'category' || type === 'tag') {
       // Taxonomy Archive
-      let allTaxonomyResults;
+      let allTaxonomyResults = { edges: [] };
 
       // This could support custom taxonomies or authors if needed
       if (type === 'category') {
         allTaxonomyResults = await getCategories();
-      } else if (type === 'tag') {
+      } /*else if (type === 'tag') {
         allTaxonomyResults = await getTags();
-      }
+      }*/
 
       const taxonomyResults = allTaxonomyResults.edges;
 
@@ -40,14 +40,14 @@ export async function staticPathGenerator(type = 'post_type') {
         const slug = taxonomyResult.node.slug;
         paths.push({ params: { slug: [slug] } }); // Index Page
 
-        let allPosts;
+        let allPosts = { edges: [] };
 
         // This could support custom taxonomies or authors if needed
-        if (type === 'category') {
+        /*if (type === 'category') {
           allPosts = await getPostsByCategory(slug);
         } else if (type === 'tag') {
           allPosts = await getPostsByTag(slug);
-        }
+        }*/
 
         const posts = allPosts.edges;
 
@@ -62,9 +62,9 @@ export async function staticPathGenerator(type = 'post_type') {
       }
     } else {
       // Post type archive
-      const allPosts = await getAllPostsWithSlug();
+      const allPosts = await getAllContentWithSlug();
       paths.push({ params: { slug: [] } }); // Index Page
-      const posts = allPosts.edges;
+      const posts = allPosts.edges || [];
 
       // Generate Pagination Paths
       for (
@@ -127,10 +127,10 @@ export async function staticPropHelper(
         };
       }
 
-      let allPosts;
+      let allPosts = { edges: [] };
       const posts = [];
 
-      if (type === 'category') {
+      /*if (type === 'category') {
         allPosts = await getPostsByCategory(
           staticPropsContext.params.slug[0],
         );
@@ -140,10 +140,10 @@ export async function staticPropHelper(
         );
       } else {
         allPosts = await getAllPostsWithSlug();
-      }
+      }*/
 
       // Get the zero-indexed paginator index (remember URL is indexed by 1)
-      console.log(staticPropsContext.params.slug);
+      //console.log(staticPropsContext.params.slug);
       const page =
         (staticPropsContext.params.slug &&
         staticPropsContext.params.slug[paginatorIndex]
@@ -158,8 +158,8 @@ export async function staticPropHelper(
       // Generate Post Paths
       for (let i = 0; i < filteredPosts.length; i++) {
         const slug = filteredPosts[i].node.slug;
-        const { postBy } = await getPost(slug);
-        posts.push(postBy);
+        const { post } = await getContent(slug);
+        posts.push(post);
       }
 
       return {
