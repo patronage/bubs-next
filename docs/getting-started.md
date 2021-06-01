@@ -1,6 +1,6 @@
 # How to get up and running
 
-Below are the different steps you can take to run Wordpress (backend) and Next (front-end) of a site.
+Below are the different steps you can take to run Wordpress (back-end) and Next (front-end) of a site.
 
 To make it easier to manage the various tasks you might need, we reccomend using [VS Code Tasks](https://code.visualstudio.com/docs/editor/tasks) we've configured.
 
@@ -8,7 +8,7 @@ In this doc we'll refer to the tasks by name, but you can also go to `.vscode/ta
 
 ## Repo setup
 
-We reccomend using bubs-next as a project template. This will create a new repo based on the current code -- however this is a one time linknage. There is no way to pull future updates, but that is how we intend for the project to be used.
+We recommend using bubs-next as a project template. This will create a new repo based on the current code -- however this is a one time linkage. There is no way to pull future updates, but that is how we intend for the project to be used.
 
 A few customization steps we reccomend for any site:
 
@@ -33,7 +33,7 @@ A `Next Yarn Install` task exists as a convencience alias for going into the web
 
 ## Developing WordPress
 
-If you want adjust ACF fields, add post types, or do other WordPress configuration, you will need to install WordPress. We include a docker container version of WordPress for ease of local development. ALternatively you can use local dev environment with PHP and MySql.
+If you want adjust ACF fields, add post types, or do other WordPress configuration, you will need to install WordPress. We include a docker container version of WordPress for ease of local development. Alternatively, you can use local dev environment with PHP and MySql.
 
 This section includes some details on starting WordPress, but you'll also want to see the [WP docs](wordpress.md) for more details on making version updates, customizing ACF and themes, and more.
 
