@@ -67,7 +67,9 @@ let fragmentSEO = /* GraphQL */ `
 let fragmentPageOptions = /* GraphQL */ `
   acfPageOptions {
     footerHideNav
+    footerHideSearch
     footerHideSignup
+    footerHideSocial
     footerStyle
     headerHideNav
   }
@@ -219,11 +221,13 @@ export async function getContent(slug, preview, previewData) {
           content
           ${generateFlex('Page')}
           ${fragmentSEO}
+          ${fragmentPageOptions}
         }
         ... on Post {
           content
           ${generateFlex('Post')}
           ${fragmentSEO}
+          ${fragmentPageOptions}
         }
       }
     }
@@ -370,36 +374,48 @@ export async function getCategories() {
  * (Might merge into other queries via fragment)
  * */
 export async function getGlobalProps() {
+  let fragmentMenu = /* GraphQL */ `
+    nodes {
+      id
+      databaseId
+      label
+      parentId
+      url
+      path
+    }
+`;
+
   let query = /* GraphQL */ `
     fragment Menus on RootQuery {
-      menus {
-        nodes {
-          id
-          databaseId
-          name
-          menuItems {
-            nodes {
-              id
-              label
-              parentId
-              url
-              path
-            }
-          }
-        }
+      menuHeader: menuItems(where: { location: HEADER }, first: 100) {
+        ${fragmentMenu}
+      }
+      menuFooter: menuItems(where: { location: FOOTER }, first: 100) {
+        ${fragmentMenu}
+      }
+      menuFooterSocial: menuItems(where: { location: FOOTER_SOCIAL }, first: 100) {
+        ${fragmentMenu}
+      }
+      menuFooterSecondary: menuItems(where: { location: FOOTER_SECONDARY }, first: 100) {
+        ${fragmentMenu}
       }
     }
 
+    # fragment GlobalOptions on RootQuery {
+    #   themeSettings {
+    #     acfGlobalOptions {
+    #       fieldGroupName
+    #       newsletterButton
+    #       newsletterHeading
+    #     }
+    #   }
+    # }
+
     query AllGlobals {
       ...Menus
+      # ...GlobalOptions
     }
   `;
-
-  /*
-    fragment GlobalOptions on RootQuery {
-      themeSettings
-    }
-  */
 
   const data = await fetchAPI(query);
   return data;

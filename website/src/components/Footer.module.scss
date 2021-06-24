@@ -32,3 +32,17 @@
     }
   }
 }
+
+.copyright {
+  font-size: rem-calc(14px);
+
+  .divider {
+    padding-left: 10px;
+  }
+
+  li:last-of-type {
+    .divider {
+      display: none;
+    }
+  }
+}
