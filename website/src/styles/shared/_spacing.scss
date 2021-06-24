@@ -13,13 +13,23 @@
   }
 }
 
-// remove gutters between columns
-.no-gutter {
-  margin-right: 0;
-  margin-left: 0;
+.section-padded-top {
+  padding-top: $section-padding-mobile;
 
-  > [class*='col-'] {
-    padding-right: 0;
-    padding-left: 0;
+  @include media-breakpoint-up(lg) {
+    padding-top: $section-padding;
   }
+}
+
+.section-padded-bottom {
+  padding-bottom: $section-padding-mobile;
+
+  @include media-breakpoint-up(lg) {
+    padding-bottom: $section-padding;
+  }
+}
+
+// apply to the preceding module if you want to tighten gap
+.collapse-bottom + .section-padded {
+  padding-top: 20px;
 }

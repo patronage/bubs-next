@@ -5,9 +5,26 @@
 //
 
 // spacing
-$spacer: 1rem;
-$section-padding: $spacer * 3;
-$section-padding-mobile: $spacer * 1.5;
+// we set spacing in 10px increments, allowing up to 10, e.g. p-10.
+// we also enable negative spacers
+$spacer-px: 10px;
+$spacer: rem-calc(10px);
+$spacers: (
+  0: 0,
+  1: 1 * $spacer-px,
+  2: 2 * $spacer-px,
+  3: 3 * $spacer-px,
+  4: 4 * $spacer-px,
+  5: 5 * $spacer-px,
+  6: 6 * $spacer-px,
+  7: 7 * $spacer-px,
+  8: 8 * $spacer-px,
+  9: 9 * $spacer-px,
+  10: 10 * $spacer-px,
+);
+$section-padding: 80px;
+$section-padding-mobile: 40px;
+$enable-negative-margins: true;
 
 // type
 $font-sans: 'Source Sans Pro', sans-serif;
@@ -68,16 +85,16 @@ $font-family-base: $font-serif;
 $headings-font-family: $font-heading;
 $font-size-base: 1rem;
 $line-height-base: 1.5;
-$grid-gutter-width: 30px;
+$grid-gutter-width: 40px;
 $border-radius: 0;
 $border-radius-lg: 0;
 $border-radius-sm: 0;
 
 // customize grid
-// $container-max-widths: (
-//   sm: 540px,
-//   md: 720px,
-//   lg: 960px,
-//   xl: 1140px,
-//   xxl: 1141px,
-// );
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1340px,
+);

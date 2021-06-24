@@ -1,4 +1,8 @@
 // As much as possible, set type by customizing the default bootstrap variables in _variables.scss
+body {
+  font-size: rem-calc(24px);
+  line-height: 130%;
+}
 
 h1 {
   font-weight: bold;
