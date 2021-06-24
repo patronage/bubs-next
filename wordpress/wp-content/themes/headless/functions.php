@@ -4,8 +4,16 @@
 // require_once(get_theme_root() . "/../plugins/composer-libs/autoload.php");
 
 //
-// Load WP Config files
+// Define variables
+// Workarounds for not having env support on WP Engine
 //
+
+$site_name = 'Bubs Next';
+$production_wp_host = 'bubsnext.patronage.org';
+$production_next_domain = 'https://bubsnext.patronage.org/';
+$staging_wp_host = 'bubsnextstage.wpengine.com';
+$staging_next_domain = 'https://bubsnext-git-staging-patronage.vercel.app/';
+
 
 // Headless var
 if (defined('WP_HEADLESS_DOMAIN')) {
@@ -14,12 +22,13 @@ if (defined('WP_HEADLESS_DOMAIN')) {
     $headless_domain = "https://bubsnext.patronage.org/";
 }
 
+//
+// Load WP Config files
+//
+
 // Theme Options
 function bubs_theme_options($wp_customize)
 {
-    // include_once 'setup/theme-options/footer.php';
-    // include_once 'setup/theme-options/integrations.php';
-    // include_once 'setup/theme-options/social.php';
     $wp_customize->remove_section('custom_css');
 }
 
@@ -38,9 +47,11 @@ add_action('customize_register', 'bubs_theme_options');
 
 // WP Helper Functions
 include_once 'setup/helpers/acf-options.php';
+include_once 'setup/helpers/admin-env.php';
 
 include_once 'setup/helpers/admin.php';
 //include_once 'setup/helpers/cloudinary.php';
+// include_once 'setup/helpers/excerpt.php';
 include_once 'setup/helpers/menus.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
