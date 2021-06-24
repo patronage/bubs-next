@@ -10,7 +10,8 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
