@@ -9,12 +9,19 @@
 
 .logo {
   margin: 0;
-  font-size: 18px;
+  font-size: rem-calc(18px);
   text-transform: uppercase;
 }
 
 .nav {
+  margin: 0;
+  font-size: rem-calc(18px);
+  text-transform: uppercase;
+
   a {
+    margin-right: 5px;
+    margin-left: 5px;
     color: $white;
+    text-decoration: none;
   }
 }

@@ -14,7 +14,6 @@ import styles from './Footer.module.scss';
 
 export default function Footer() {
   const globals = useContext(GlobalsContext);
-  console.log('globals', JSON.stringify(globals, null, 2));
 
   // populate and format menus
 
