@@ -14,6 +14,7 @@ import styles from './Footer.module.scss';
 
 export default function Footer() {
   const globals = useContext(GlobalsContext);
+  console.log('globals', JSON.stringify(globals, null, 2));
 
   // populate and format menus
 
@@ -56,8 +57,59 @@ export default function Footer() {
       )}
     >
       <div className="container">
-        {!hideSocial && socialNav.length && (
-          <div className={cx([styles.social, 'row row-cols-12'])}>
+        {!hideNav && footerNav.length > 0 && (
+          <div
+            className={cx([
+              styles.primary,
+              'row row-cols-2 row-cols-lg-auto',
+            ])}
+          >
+            {footerNav.map((item, i) => (
+              <div key={i}>
+                <Link href={item.path}>
+                  <a className={styles.topLevel}>{item.label}</a>
+                </Link>
+                {item.children && item.children.length > 0 && (
+                  <ul className="list-unstyled">
+                    {item.children.map((item, i) => (
+                      <li key={`primary-${i}`}>
+                        <Link href={item.path}>
+                          <a>{item.label}</a>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className={cx([styles.copyright, 'row text-center'])}>
+          <div className="col">
+            {secondaryNav.length > 0 && (
+              <ul className="list-inline mb-0">
+                {secondaryNav.map((item, i) => (
+                  <li className="list-inline-item" key={i}>
+                    <Link href={item.path} prefetch={false}>
+                      <a>{item.label}</a>
+                    </Link>
+                    <span className={styles.divider}>|</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p>&copy; copyright {new Date().getFullYear()}</p>
+          </div>
+        </div>
+
+        {!hideSocial && socialNav.length > 0 && (
+          <div
+            className={cx([
+              styles.social,
+              'row row-cols-12 text-center',
+            ])}
+          >
             <ul className="list-inline mb-0">
               {socialNav.map((item, i) => (
                 <li className="list-inline-item" key={i}>
@@ -87,56 +139,6 @@ export default function Footer() {
             </ul>
           </div>
         )}
-        {!hideNav && footerNav && (
-          <div
-            className={cx([
-              styles.primary,
-              'row row-cols-2 row-cold-lg-4',
-            ])}
-          >
-            {footerNav.map((item, i) => (
-              <div key={i}>
-                <Link href={item.path} passHref>
-                  <div className={styles.topLevel}>
-                    <a>{item.label}</a>
-                  </div>
-                </Link>
-                {item.children && item.children.length > 0 && (
-                  <ul>
-                    {item.children.map((item, i) => (
-                      <li
-                        key={`primary-${i}`}
-                        className="list-style-none"
-                      >
-                        <Link href={item.path}>
-                          <a>{item.label}</a>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className={cx([styles.copyright, 'row text-center'])}>
-          <div className="col">
-            {secondaryNav.length && (
-              <ul className="list-inline mb-0">
-                {secondaryNav.map((item, i) => (
-                  <li className="list-inline-item" key={i}>
-                    <Link href={item.path} prefetch={false}>
-                      <a>{item.label}</a>
-                    </Link>
-                    <span className={styles.divider}>|</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <p>&copy; copyright {new Date().getFullYear()}</p>
-          </div>
-        </div>
       </div>
     </footer>
   );
