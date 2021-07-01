@@ -32,6 +32,8 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENV', 'development');
 
+        define('WP_DEBUG_LOG', true);
+
         define('WP_HEADLESS_DOMAIN', 'http://localhost:3000');
 volumes:
   db_data: {}
