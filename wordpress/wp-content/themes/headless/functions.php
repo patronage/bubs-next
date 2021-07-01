@@ -9,7 +9,7 @@
 //
 
 $site_name = 'Bubs Next';
-$production_wp_host = 'bubsnext.patronage.org';
+$production_wp_host = 'bubsnext.wpengine.com';
 $production_next_domain = 'https://bubsnext.patronage.org/';
 $staging_wp_host = 'bubsnextstage.wpengine.com';
 $staging_next_domain = 'https://bubsnext-git-staging-patronage.vercel.app/';
@@ -19,7 +19,7 @@ $staging_next_domain = 'https://bubsnext-git-staging-patronage.vercel.app/';
 if (defined('WP_HEADLESS_DOMAIN')) {
     $headless_domain = WP_HEADLESS_DOMAIN;
 } else {
-    $headless_domain = "https://bubsnext.patronage.org/";
+    $headless_domain = $production_next_domain;
 }
 
 //
@@ -36,27 +36,32 @@ add_action('customize_register', 'bubs_theme_options');
 
 
 // Post Types
-//include_once 'setup/post-types/events.php';
-//include_once 'setup/post-types/heroes.php';
-//include_once 'setup/post-types/members.php';
+//include_once 'setup/post-types/your-custom-type.php';
 
 
 // Taxonomies
-//include_once 'setup/taxonomies/issue-areas.php';
+//include_once 'setup/taxonomies/your-custom-taxonmy.php';
 
 
+//
 // WP Helper Functions
-include_once 'setup/helpers/acf-options.php';
-include_once 'setup/helpers/admin-env.php';
+//
 
+// Admin
+include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
-//include_once 'setup/helpers/cloudinary.php';
+include_once 'setup/helpers/admin-env.php';
 // include_once 'setup/helpers/excerpt.php';
+include_once 'setup/helpers/images.php';
 include_once 'setup/helpers/menus.php';
-include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
 
+// Graphql
+include_once 'setup/helpers/wpgraphql.php';
+
+
 // Security Settings
+include_once 'setup/helpers/google-login-cookies.php';
 // include_once 'setup/helpers/google-login-force.php';
 // include_once 'setup/helpers/password-rotation-wpe.php';
 include_once 'setup/helpers/xmlrpc-disable.php';
