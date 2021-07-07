@@ -29,7 +29,16 @@ export default function Meta({ title, description, image, seo }) {
     ];
   }
 
-  // console.log('seo', JSON.stringify(seoSettings, null, 4));
+  // defaults are fine, only set noindex or nofollow if explicit
+  if (seo?.metaRobotsNoindex == 'noindex') {
+    seoSettings.noindex = true;
+  }
+  if (seo?.metaRobotsNofollow == 'nofollow') {
+    seoSettings.nofollow = true;
+  }
+
+  // console.log('seoSettings', JSON.stringify(seoSettings, null, 2));
+  // console.log('seo', JSON.stringify(seo, null, 2));
 
   return (
     <>
