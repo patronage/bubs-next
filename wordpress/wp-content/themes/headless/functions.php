@@ -59,7 +59,6 @@ include_once 'setup/helpers/wysiwyg.php';
 // Graphql
 include_once 'setup/helpers/wpgraphql.php';
 
-
 // Security Settings
 include_once 'setup/helpers/google-login-cookies.php';
 // include_once 'setup/helpers/google-login-force.php';
