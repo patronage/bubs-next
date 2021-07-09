@@ -12,23 +12,23 @@
 
   :global .aligncenter {
     display: block;
-    margin: ($font-size-base / 2) auto;
+    margin: divide($font-size-base, 2) auto;
   }
 
   :global .alignleft,
   :global .alignright {
-    margin-bottom: ($font-size-base / 2);
+    margin-bottom: divide($font-size-base, 2);
   }
 
   @include media-breakpoint-up(sm) {
     // Only float if not on an extra small device
     :global .alignleft {
-      margin-right: ($font-size-base / 2);
+      margin-right: divide($font-size-base, 2);
       float: left;
     }
 
     :global .alignright {
-      margin-left: ($font-size-base / 2);
+      margin-left: divide($font-size-base, 2);
       float: right;
     }
   }
