@@ -10,26 +10,26 @@ import {
   FaTwitter,
   FaYoutube,
 } from 'react-icons/fa';
+import { IoLogoTiktok } from 'react-icons/io5';
 import styles from './Footer.module.scss';
 
 export default function Footer() {
   const globals = useContext(GlobalsContext);
 
   // populate and format menus
+  const footerNav = Array.isArray(globals?.menuFooter?.nodes)
+    ? formatMenu(globals.menuFooter.nodes)
+    : [];
 
-  let footerNav = [];
-  let secondaryNav = [];
-  let socialNav = [];
+  const secondaryNav = Array.isArray(
+    globals?.menuFooterSecondary?.nodes,
+  )
+    ? formatMenu(globals.menuFooterSecondary.nodes)
+    : [];
 
-  if (Array.isArray(globals?.menuFooter?.nodes)) {
-    footerNav = formatMenu(globals.menuFooter.nodes);
-  }
-  if (Array.isArray(globals?.menuFooterSocial?.nodes)) {
-    socialNav = globals.menuFooterSocial.nodes;
-  }
-  if (Array.isArray(globals?.menuFooterSecondary?.nodes)) {
-    secondaryNav = globals.menuFooterSecondary.nodes;
-  }
+  const socialNav = Array.isArray(globals?.menuFooterSocial?.nodes)
+    ? formatMenu(globals.menuFooterSocial.nodes)
+    : [];
 
   let hideSocial = false;
   // let hideSignup = false;
@@ -131,6 +131,9 @@ export default function Footer() {
                     )}
                     {item.path.includes('linkedin.com') && (
                       <FaLinkedinIn />
+                    )}
+                    {item.path.includes('tiktok.com') && (
+                      <IoLogoTiktok />
                     )}
                   </a>
                 </li>
