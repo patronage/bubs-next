@@ -15,20 +15,51 @@
   }
 }
 
-.nav {
+/* stylelint-disable no-descending-specificity */
+
+.primary {
+  font-size: rem-calc(18px);
+
+  .topLevel {
+    color: $white;
+    font-size: rem-calc(20px);
+    font-weight: bold;
+  }
+
   li {
     margin-right: 0;
+  }
+}
 
-    &::after {
-      padding-left: 0.5rem;
-      color: $gray-300;
-      content: '|';
+.copyright {
+  color: $gray-400;
+  font-size: rem-calc(14px);
+
+  a {
+    color: $gray-400;
+
+    &:hover {
+      color: $white;
     }
+  }
 
-    &:last-child {
-      &::after {
-        content: '';
-      }
+  .divider {
+    padding-left: 10px;
+  }
+
+  li:last-of-type {
+    .divider {
+      display: none;
+    }
+  }
+}
+
+.social {
+  a {
+    color: $gray-400;
+
+    &:hover {
+      color: $white;
     }
   }
 }

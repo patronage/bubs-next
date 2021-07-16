@@ -84,7 +84,10 @@ export async function getStaticProps({
   if (!params.slug?.length) {
     return {
       props: {
-        globals,
+        globals: {
+          ...globals,
+          pageOptions: null,
+        },
         isHome: true,
       },
     };
@@ -106,7 +109,7 @@ export async function getStaticProps({
 
   return {
     props: {
-      globals,
+      globals: { ...globals, pageOptions: data.post?.acfPageOptions },
       preview,
       post: data.post,
       flexSections: data.post?.acfFlex?.flexContent || null,
