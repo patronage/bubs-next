@@ -1,3 +1,4 @@
+import pluralize from 'pluralize';
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
 
@@ -90,36 +91,55 @@ let fragmentCategories = /* GraphQL */ `
   }
 `;
 
-export async function getPreviewPost(id, idType = 'DATABASE_ID') {
+export async function getPreviewContent(id, idType = 'DATABASE_ID') {
   const data = await fetchAPI(
-    `
-    query PreviewPost($id: ID!, $idType: PostIdType!) {
-      post(id: $id, idType: $idType) {
-        databaseId
-        slug
+    `query PreviewContent($id: ID!, $idType: ContentNodeIdTypeEnum!) {
+      contentNode(id: $id, idType: $idType) {
+        uri
         status
+        databaseId
+        contentType {
+          node {
+            name
+            uri
+          }
+        }
       }
     }`,
     {
       variables: { id, idType },
     },
   );
-  return data.post;
+  return data.contentNode;
 }
 
 /**
  * get all paths. used for static generation
  */
-export async function getAllContentWithSlug() {
-  const data = await fetchAPI(`
-    query AllContent {
-      contentNodes {
+ export async function getAllContentWithSlug(contentType) {
+  const data = await fetchAPI(
+    `${
+      contentType
+        ? 'query AllContent($contentType: ContentTypeEnum!) '
+        : 'query AllContent'
+    } {
+      ${
+        contentType
+          ? 'contentNodes(where: {contentTypes: [$contentType]})'
+          : 'contentNodes'
+      } {
         nodes {
           uri
         }
       }
     }
-  `);
+  `,
+    {
+      variables: {
+        contentType,
+      },
+    },
+  );
   return data?.contentNodes;
 }
 
