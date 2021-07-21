@@ -112,8 +112,8 @@ export async function getStaticProps({
   return {
     props: {
       globals,
-      preview,
       post: data.contentNode,
+      preview: preview || false,
       postId: data.contentNode.databaseId,
       flexSections: data.contentNode?.acfFlex?.flexContent || null,
       template: data.contentNode?.template?.templateName || null,

@@ -65,7 +65,7 @@ export async function getStaticProps(context) {
   const indexProps = await staticPropHelper(context, 'post_type');
 
   if (indexProps) {
-    return { props: { ...indexProps, globals, preview: context.preview } };
+    return { props: { ...indexProps, globals, preview: context.preview || false } };
   }
 
   //
@@ -73,7 +73,7 @@ export async function getStaticProps(context) {
   //
   try {
     const { post } = await getContent(context.params.slug[0]);
-    return { props: { post, globals, preview: context.preview } };
+    return { props: { post, globals, preview: context.preview || false } };
   } catch (error) {
     console.log(error);
   }

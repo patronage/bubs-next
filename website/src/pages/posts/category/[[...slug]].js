@@ -19,7 +19,7 @@ export async function getStaticProps(context) {
   const indexProps = await staticPropHelper(context, 'category');
 
   if (indexProps) {
-    return { props: { ...indexProps, globals, preview: context.preview } };
+    return { props: { ...indexProps, globals, preview: context.preview || false } };
   }
 
   return {
