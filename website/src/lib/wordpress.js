@@ -115,6 +115,10 @@ export async function getPreviewContent(id, idType = 'DATABASE_ID') {
 
 /**
  * get all paths. used for static generation
+ * @param {*} contentType slug of post type
+ *
+ * If a contentType is passed, the allQuery graphql is modified to query for
+ * only that post type instead of getting posts from any CPT
  */
 export async function getAllContentWithSlug(contentType) {
   const data = await fetchAPI(
