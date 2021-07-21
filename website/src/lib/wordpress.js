@@ -1,6 +1,6 @@
-import pluralize from 'pluralize';
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
+import pluralize from 'pluralize';
 
 async function fetchAPI(query, { variables } = {}) {
   const headers = { 'Content-Type': 'application/json' };
@@ -116,7 +116,7 @@ export async function getPreviewContent(id, idType = 'DATABASE_ID') {
 /**
  * get all paths. used for static generation
  */
- export async function getAllContentWithSlug(contentType) {
+export async function getAllContentWithSlug(contentType) {
   const data = await fetchAPI(
     `${
       contentType

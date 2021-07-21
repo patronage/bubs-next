@@ -23,10 +23,7 @@ export default function Page({
   if (isHome) {
     return (
       <GlobalsProvider globals={globals}>
-        <LayoutDefault
-          title=""
-          preview={preview}
-        >
+        <LayoutDefault title="" preview={preview}>
           <section className="section-padded">
             <div className="container">
               <div className="row">
