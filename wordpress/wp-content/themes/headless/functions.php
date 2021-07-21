@@ -7,12 +7,6 @@
 // Load WP Config files
 //
 
-$production_wp_host = 'bubsnext.wpengine.com';
-$production_next_domain = 'https://bubsnext.vercel.app/';
-$staging_wp_host = 'bubsnexts.wpengine.com';
-$staging_next_domain = 'https://bubsnext-git-preview-patronage.vercel.app/';
-$preview_secret = defined('WORDPRESS_PREVIEW_SECRET') ? WORDPRESS_PREVIEW_SECRET : '';
-
 // Headless var
 if (defined('WP_HEADLESS_DOMAIN')) {
     $headless_domain = WP_HEADLESS_DOMAIN;
@@ -46,6 +40,7 @@ add_action('customize_register', 'bubs_theme_options');
 include_once 'setup/helpers/acf-options.php';
 
 include_once 'setup/helpers/admin.php';
+include_once 'setup/helpers/admin-env.php';
 //include_once 'setup/helpers/cloudinary.php';
 include_once 'setup/helpers/menus.php';
 include_once 'setup/helpers/wpgraphql.php';
