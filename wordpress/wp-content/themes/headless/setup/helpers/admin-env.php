@@ -8,26 +8,15 @@ $site_prefix = '';
 $preview_domain = '';
 $staging_wp_host = 'bubsnexts.wpengine.com';
 
-if ( defined('WP_ENV') && WP_ENV == "development" ) {
+if ( WP_HOST === 'localhost' ) {
   // on Local
   $custom_scheme = 'ectoplasm';
   $site_prefix = 'LOCAL: ';
-  $preview_domain = 'http://localhost:3000';
-} else if ( function_exists('is_wpe') ) {
-
-  // on WPE
-  if ( strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false ) {
-    // On Staging
-    $custom_scheme = 'sunrise';
-    $site_prefix = 'STAGING: ';
-    $preview_domain = 'https://bubs-next-git-preview-mode-patronage.vercel.app';
-  } else {
-    // on Production
-    $preview_domain = 'https://bubsnext.vercelapp.com';
-  }
+} else if ( WP_HOST === 'staging' ) {
+  $custom_scheme = 'sunrise';
+  $site_prefix = 'STAGING: ';
 }
 
-define('WORDPRESS_PREVIEW_DOMAIN', $preview_domain);
 
 if ( $custom_scheme ) {
   function bubs_update_user_option_admin_color( $color_scheme ) {
