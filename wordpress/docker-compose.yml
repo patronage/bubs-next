@@ -33,5 +33,7 @@ services:
         define('WP_ENV', 'development');
 
         define('WP_HEADLESS_DOMAIN', 'http://localhost:3000');
+        define('GRAPHQL_JWT_AUTH_SECRET_KEY', 'bubs-next-jwt-auth-secret-key');
+        define('WORDPRESS_PREVIEW_SECRET', 'bubs-next-preview-secret');
 volumes:
   db_data: {}
