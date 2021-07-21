@@ -11,7 +11,7 @@
 if (defined('WP_HEADLESS_DOMAIN')) {
     $headless_domain = WP_HEADLESS_DOMAIN;
 } else {
-    $headless_domain = "https://bubsnext.vercelapp.com/";
+    $headless_domain = "https://bubs.patronage.org/";
 }
 
 // Theme Options

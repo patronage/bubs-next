@@ -20,7 +20,7 @@ if ( defined('WP_ENV') && WP_ENV == "development" ) {
     // On Staging
     $custom_scheme = 'sunrise';
     $site_prefix = 'STAGING: ';
-    $preview_domain = 'https://bubsnext-git-preview-patronage.vercel.app';
+    $preview_domain = 'https://bubs-next-git-preview-mode-patronage.vercel.app';
   } else {
     // on Production
     $preview_domain = 'https://bubsnext.vercelapp.com';
