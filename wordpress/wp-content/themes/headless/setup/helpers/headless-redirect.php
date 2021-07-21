@@ -1,9 +1,8 @@
 <?php
 
-$preview_secret = defined('WORDPRESS_PREVIEW_SECRET') ? WORDPRESS_PREVIEW_SECRET : '';
-
 function headless_redirect(){
   global $headless_domain;
+  $preview_secret = defined('WORDPRESS_PREVIEW_SECRET') ? WORDPRESS_PREVIEW_SECRET : '';
 
   $post_type = get_post_type(get_the_ID());
   $slug = str_replace(home_url(), '', get_permalink(get_the_ID()));

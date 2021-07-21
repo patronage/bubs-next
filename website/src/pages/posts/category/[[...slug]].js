@@ -7,7 +7,7 @@ import { getGlobalProps } from 'lib/wordpress';
 function CategoryIndex(props) {
   return (
     <GlobalsProvider globals={props.globals}>
-      <LayoutDefault title="">
+      <LayoutDefault title="" preview={props.preview}>
         <PostArchive archiveTitle={'Category Archive'} {...props} />
       </LayoutDefault>
     </GlobalsProvider>
@@ -19,7 +19,7 @@ export async function getStaticProps(context) {
   const indexProps = await staticPropHelper(context, 'category');
 
   if (indexProps) {
-    return { props: { ...indexProps, globals } };
+    return { props: { ...indexProps, globals, preview: context.preview } };
   }
 
   return {

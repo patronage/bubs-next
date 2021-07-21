@@ -88,6 +88,7 @@ export async function getStaticProps({
     return {
       props: {
         globals,
+        preview,
         isHome: true,
       },
     };
@@ -106,6 +107,7 @@ export async function getStaticProps({
       notFound: true,
     };
   }
+
 
   return {
     props: {
