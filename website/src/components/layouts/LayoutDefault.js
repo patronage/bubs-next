@@ -1,6 +1,7 @@
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Meta from 'components/Meta';
+import PreviewModeBar from 'components/PreviewModeBar';
 
 export default function LayoutDefault({
   children,
@@ -8,6 +9,8 @@ export default function LayoutDefault({
   description,
   image,
   seo,
+  postId,
+  preview,
 }) {
   return (
     <>
@@ -17,6 +20,7 @@ export default function LayoutDefault({
         image={image}
         seo={seo}
       />
+      {preview && <PreviewModeBar postId={postId} />}
       <Header />
       {children}
       <Footer />
