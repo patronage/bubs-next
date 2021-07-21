@@ -7,7 +7,6 @@
  * E.g., it puts together the home page when no home.php file exists
  */
 
-
-
-wp_redirect( $headless_domain, 301 );
-exit;
+$redirect = headless_redirect();
+// echo $redirect;
+wp_redirect( $redirect, 307 );
