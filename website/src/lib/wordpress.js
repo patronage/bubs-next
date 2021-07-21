@@ -184,19 +184,40 @@ function generateFlex(type) {
  */
 export async function getContent(slug, preview, previewData) {
   const postPreview = preview && previewData?.post;
-  // The slug may be the id of an unpublished post
-  const isId = Number.isInteger(Number(slug));
-  const isSamePost = isId
-    ? Number(slug) === postPreview.id
-    : slug === postPreview.slug;
-  const isDraft = isSamePost && postPreview?.status === 'draft';
-  const isRevision = isSamePost && postPreview?.status === 'publish';
-  // console.log('slug for single', slug);
+
+  // Because static pages can't support query strings and those
+  // make preview mode much easier across published statuses and post types
+  // this coerces any numeric slug in preview mode to an ID and assumes post type
+  const segments = slug.split('/');
+  const lastSegment = segments[segments.length - 1];
+  const secondLastSegment =
+    segments.length > 2 ? segments[segments.length - 2] : null;
+  // Get singular post type name
+  const singularPostType = secondLastSegment
+    ? pluralize.singular(secondLastSegment)
+    : null;
+
+  if (preview && slug !== '/' && !isNaN(Number(lastSegment))) {
+    if (previewData?.post?.type === 'post') {
+      slug = `/?p=${lastSegment}`;
+    } else if (secondLastSegment) {
+      slug = `/?id=${lastSegment}&post_type=${singularPostType}`;
+    } else {
+      slug = `/?page_id=${lastSegment}`;
+    }
+  } else if (preview && slug !== '/') {
+    slug += '?preview=true';
+  }
+
+  const isDraft = postPreview?.status === 'draft';
+  const isRevision = postPreview?.status === 'publish';
+
   let query = /* GraphQL */ `
-    query GetContent($slug: ID!) {
-      contentNode(id: $slug, idType: URI) {
+    query GetContent($slug: ID!, $preview: Boolean) {
+      contentNode(id: $slug, idType: URI, asPreview: $preview) {
         __typename
         id
+        databaseId
         isPreview
         link
         slug
@@ -248,20 +269,11 @@ export async function getContent(slug, preview, previewData) {
       }
     }
   `;
+
   // console.log('query for getContent', query);
   const data = await fetchAPI(query, {
-    variables: { slug },
+    variables: { slug, preview: !!preview },
   });
-
-  // Draft posts may not have an slug
-  if (isDraft) data.post.slug = postPreview.id;
-  // Apply a revision (changes in a published post)
-  if (isRevision && data.post.revisions) {
-    const revision = data.post.revisions.edges[0]?.node;
-
-    if (revision) Object.assign(data.post, revision);
-    delete data.post.revisions;
-  }
 
   // console.log('data', data);
   data.post = data.contentNode;

@@ -11,6 +11,7 @@ import { GlobalsProvider } from '../contexts/GlobalsContext';
 
 export default function Page({
   post,
+  postId,
   preview,
   isHome,
   globals,
@@ -22,7 +23,10 @@ export default function Page({
   if (isHome) {
     return (
       <GlobalsProvider globals={globals}>
-        <LayoutDefault title="">
+        <LayoutDefault
+          title=""
+          preview={preview}
+        >
           <section className="section-padded">
             <div className="container">
               <div className="row">
@@ -42,8 +46,9 @@ export default function Page({
       <GlobalsProvider globals={globals}>
         <LayoutDefault
           preview={preview}
-          title={post?.title}
           seo={post?.seo}
+          postId={postId}
+          title={post?.title}
         >
           <Flex sections={flexSections} />
         </LayoutDefault>
@@ -54,15 +59,16 @@ export default function Page({
   return (
     <GlobalsProvider globals={globals}>
       <LayoutDefault
+        postId={postId}
+        seo={post?.seo}
         preview={preview}
         title={post?.title}
-        seo={post?.seo}
       >
         <section className="section-padded">
           <div className="container">
             <div className="row">
               <div className="col">
-                <PostBody content={post.content} />
+                <PostBody content={post?.content} />
               </div>
             </div>
           </div>
@@ -98,7 +104,7 @@ export async function getStaticProps({
 
   const data = await getContent(slug, preview, previewData);
 
-  if (!data?.post?.slug) {
+  if (!preview && !data?.contentNode?.slug) {
     return {
       notFound: true,
     };
@@ -108,9 +114,10 @@ export async function getStaticProps({
     props: {
       globals,
       preview,
-      post: data.post,
-      flexSections: data.post?.acfFlex?.flexContent || null,
-      template: data.post?.template?.templateName || null,
+      post: data.contentNode,
+      postId: data.contentNode.databaseId,
+      flexSections: data.contentNode?.acfFlex?.flexContent || null,
+      template: data.contentNode?.template?.templateName || null,
     },
     revalidate: 10,
   };
