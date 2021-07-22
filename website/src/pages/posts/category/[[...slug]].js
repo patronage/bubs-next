@@ -19,7 +19,13 @@ export async function getStaticProps(context) {
   const indexProps = await staticPropHelper(context, 'category');
 
   if (indexProps) {
-    return { props: { ...indexProps, globals } };
+    return {
+      props: {
+        ...indexProps,
+        globals,
+      },
+      revalidate: 60,
+    };
   }
 
   return {
@@ -34,7 +40,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 

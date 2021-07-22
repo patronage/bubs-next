@@ -65,7 +65,13 @@ export async function getStaticProps(context) {
   const indexProps = await staticPropHelper(context, 'post_type');
 
   if (indexProps) {
-    return { props: { ...indexProps, globals } };
+    return {
+      props: {
+        ...indexProps,
+        globals,
+      },
+      revalidate: 60,
+    };
   }
 
   //
@@ -73,7 +79,13 @@ export async function getStaticProps(context) {
   //
   try {
     const { post } = await getContent(context.params.slug[0]);
-    return { props: { post, globals } };
+    return {
+      props: {
+        post,
+        globals,
+      },
+      revalidate: 60,
+    };
   } catch (error) {
     console.log(error);
   }
@@ -91,7 +103,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 
