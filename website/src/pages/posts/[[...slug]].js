@@ -62,7 +62,11 @@ export async function getStaticProps(context) {
   //
 
   const globals = await getGlobalProps();
-  const indexProps = await staticPropHelper(context, 'post_type');
+  const indexProps = await staticPropHelper(
+    context,
+    'POST',
+    'post_type',
+  );
 
   if (indexProps) {
     return {
@@ -78,10 +82,13 @@ export async function getStaticProps(context) {
   // Generate props for Post Single Page
   //
   try {
-    const { post } = await getContent(context.params.slug[0]);
+    const { contentNode } = await getContent(
+      `/posts/${context.params.slug[0]}`,
+    );
+    console.log('contentNode', context.params.slug[0], contentNode);
     return {
       props: {
-        post,
+        post: contentNode,
         globals,
       },
       revalidate: 60,

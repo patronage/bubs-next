@@ -16,7 +16,7 @@ function TaxIndex(props) {
 
 export async function getStaticProps(context) {
   const globals = await getGlobalProps();
-  const indexProps = await staticPropHelper(context, 'tag');
+  const indexProps = await staticPropHelper(context, 'POST', 'tag');
 
   if (indexProps) {
     return {
