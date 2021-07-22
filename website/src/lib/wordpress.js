@@ -21,7 +21,7 @@ async function fetchAPI(query, { variables } = {}) {
 
   const json = await res.json();
   if (json.errors) {
-    console.error(json.errors);
+    console.error(JSON.stringify(json.errors, null, 2));
     throw new Error('Failed to fetch API');
   }
   // console.log("graphql results", JSON.stringify(json.data, null, 2));
