@@ -82,7 +82,11 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_graphql": 0,
-    "graphql_field_name": "hero",
-    "modified": 1621356426
+    "show_in_graphql": 1,
+    "graphql_field_name": "flexHero",
+    "map_graphql_types_from_location_rules": 1,
+    "graphql_types": [
+        "Template_Flex"
+    ],
+    "modified": 1626981665
 }

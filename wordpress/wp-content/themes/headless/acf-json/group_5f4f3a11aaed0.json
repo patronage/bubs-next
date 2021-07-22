@@ -58,5 +58,11 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1599027807
+    "show_in_graphql": 1,
+    "graphql_field_name": "flexWysiwyg",
+    "map_graphql_types_from_location_rules": 1,
+    "graphql_types": [
+        "Template_Flex"
+    ],
+    "modified": 1626981533
 }
