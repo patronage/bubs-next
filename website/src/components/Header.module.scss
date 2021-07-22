@@ -8,28 +8,19 @@
 }
 
 .logo {
-  --minFontSize: 16px;
-  --maxFontSize: 48px;
-  --scaler: 10vw;
-
   margin: 0;
   color: $white;
-  font-size: clamp(
-    var(--minFontSize),
-    var(--scaler),
-    var(--maxFontSize)
-  );
+  font-size: rem-calc(18px);
   text-transform: uppercase;
-  // font-size: rem-calc(18px);
+
+  @include media-breakpoint-up(lg) {
+    font-size: rem-calc(36px);
+  }
 
   a {
     color: $white;
     text-decoration: none;
   }
-
-  // @include media-breakpoint-up(lg) {
-  //   font-size: rem-calc(48px);
-  // }
 }
 
 .nav {

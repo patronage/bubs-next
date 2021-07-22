@@ -71,7 +71,7 @@ export default function Footer() {
                 {item.children && item.children.length > 0 && (
                   <ul className="list-unstyled">
                     {item.children.map((item, i) => (
-                      <li key={`primary-${i}`}>
+                      <li key={i}>
                         <Link href={item.path}>
                           <a>{item.label}</a>
                         </Link>
