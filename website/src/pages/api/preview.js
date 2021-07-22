@@ -1,5 +1,4 @@
-import { getPreviewContent } from 'lib/wordpress';
-import pluralize from 'pluralize';
+import { getContentTypes, getPreviewContent } from 'lib/wordpress';
 
 export default async function preview(req, res) {
   const { secret, id, preview_id } = req.query;
@@ -22,6 +21,14 @@ export default async function preview(req, res) {
     return res.status(401).json({ message: 'Post not found' });
   }
 
+  // Get the content types to help build preview URLs
+  const contentTypesArray = await getContentTypes();
+  const contentTypes = {};
+
+  for ( const contentType of contentTypesArray ) {
+    contentTypes[contentType.name] = contentType.restBase;
+  }
+
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({
     post: {
@@ -33,18 +40,18 @@ export default async function preview(req, res) {
   });
 
   let Location = post.uri;
-  const pluralType = pluralize(post.contentType.node.name);
+  const typePath = contentTypes[post.contentType.node.name];
 
   // Draft posts need a little help pointing towards the correct Next.js page template
   if (
     post.status === 'draft' &&
     post.contentType.node.name !== 'page'
   ) {
-    Location = `/${pluralType}/${post.databaseId}`;
+    Location = `/${typePath}/${post.databaseId}`;
   } else if (post.status === 'draft') {
     Location = `/${post.databaseId}`;
   } else if (preview_id && post.contentType.node.name !== 'page') {
-    Location = `/${pluralType}/${preview_id}`;
+    Location = `/${typePath}/${preview_id}`;
   } else if (preview_id) {
     Location = `/${preview_id}`;
   }

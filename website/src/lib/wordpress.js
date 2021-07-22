@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
-import pluralize from 'pluralize';
 
 async function fetchAPI(query, { variables } = {}) {
   const headers = { 'Content-Type': 'application/json' };
@@ -21,6 +20,7 @@ async function fetchAPI(query, { variables } = {}) {
   });
 
   const json = await res.json();
+
   if (json.errors) {
     console.error(json.errors);
     throw new Error('Failed to fetch API');
@@ -91,9 +91,26 @@ let fragmentCategories = /* GraphQL */ `
   }
 `;
 
+export async function getContentTypes() {
+  const query = /* GraphQL */ `
+    query ContentTypes {
+      contentTypes {
+        nodes {
+          name
+          restBase
+        }
+      }
+    }
+  `;
+
+  const data = await fetchAPI(query, { variables: {preview: true } });
+
+  return data?.contentTypes?.nodes;
+}
+
 export async function getPreviewContent(id, idType = 'DATABASE_ID') {
-  const data = await fetchAPI(
-    `query PreviewContent($id: ID!, $idType: ContentNodeIdTypeEnum!) {
+  const query = /* GraphQL */ `
+    query PreviewContent($id: ID!, $idType: ContentNodeIdTypeEnum!) {
       contentNode(id: $id, idType: $idType) {
         uri
         status
@@ -105,11 +122,13 @@ export async function getPreviewContent(id, idType = 'DATABASE_ID') {
           }
         }
       }
-    }`,
-    {
-      variables: { id, idType },
-    },
-  );
+    }
+  `;
+
+  const data = await fetchAPI(query, {
+    variables: { id, idType, preview: true },
+  });
+
   return data.contentNode;
 }
 
@@ -121,7 +140,7 @@ export async function getPreviewContent(id, idType = 'DATABASE_ID') {
  * only that post type instead of getting posts from any CPT
  */
 export async function getAllContentWithSlug(contentType) {
-  const data = await fetchAPI(
+  const data = await fetchAPI(/* GraphQL */
     `${
       contentType
         ? 'query AllContent($contentType: ContentTypeEnum!) '
@@ -189,28 +208,36 @@ function generateFlex(type) {
 export async function getContent(slug, preview, previewData) {
   const postPreview = preview && previewData?.post;
 
-  // Because static pages can't support query strings and those
-  // make preview mode much easier across published statuses and post types
-  // this coerces any numeric slug in preview mode to an ID and assumes post type
-  const segments = slug.split('/');
-  const lastSegment = segments[segments.length - 1];
-  const secondLastSegment =
-    segments.length > 2 ? segments[segments.length - 2] : null;
-  // Get singular post type name
-  const singularPostType = secondLastSegment
-    ? pluralize.singular(secondLastSegment)
-    : null;
+  if ( preview ) {
+    // Get the content types to help build preview URLs
+    const contentTypesArray = await getContentTypes();
+    const contentTypes = {};
 
-  if (preview && slug !== '/' && !isNaN(Number(lastSegment))) {
-    if (previewData?.post?.type === 'post') {
-      slug = `/?p=${lastSegment}`;
-    } else if (secondLastSegment) {
-      slug = `/?id=${lastSegment}&post_type=${singularPostType}`;
-    } else {
-      slug = `/?page_id=${lastSegment}`;
+    for ( const contentType of contentTypesArray ) {
+      contentTypes[contentType.restBase] = contentType.name;
     }
-  } else if (preview && slug !== '/') {
-    slug += '?preview=true';
+
+    // Because static pages can't support query strings and those
+    // make preview mode much easier across published statuses and post types
+    // this coerces any numeric slug in preview mode to an ID and assumes post type
+    const segments = slug.split('/');
+    const lastSegment = segments[segments.length - 1];
+    const secondLastSegment =
+      segments.length > 2 ? segments[segments.length - 2] : null;
+    // Get post type URL segment
+    const postType = contentTypes[secondLastSegment];
+
+    if ( slug !== '/' && !isNaN(Number(lastSegment))) {
+      if (postType === 'post') {
+        slug = `/?p=${lastSegment}`;
+      } else if (secondLastSegment) {
+        slug = `/?id=${lastSegment}&post_type=${postType}`;
+      } else {
+        slug = `/?page_id=${lastSegment}`;
+      }
+    } else if ( slug !== '/' ) {
+      slug += '?preview=true';
+    }
   }
 
   const isDraft = postPreview?.status === 'draft';

@@ -60,7 +60,6 @@ export async function getStaticProps(context) {
   //
   // Generate props for Post Index page
   //
-
   const globals = await getGlobalProps();
   const indexProps = await staticPropHelper(context, 'post_type');
 
@@ -72,7 +71,7 @@ export async function getStaticProps(context) {
   // Generate props for Post Single Page
   //
   try {
-    const { post } = await getContent(context.params.slug[0]);
+    const { post } = await getContent(context.params.slug[0], context.preview, context.previewData);
     return { props: { post, globals, preview: context.preview || false } };
   } catch (error) {
     console.log(error);
