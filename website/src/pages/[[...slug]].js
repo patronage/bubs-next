@@ -109,7 +109,7 @@ export async function getStaticProps({
       globals,
       preview,
       post: data.post,
-      flexSections: data.post?.acfFlex?.flexContent || null,
+      flexSections: data.post?.template?.acfFlex?.flexContent || null,
       template: data.post?.template?.templateName || null,
     },
     revalidate: 10,

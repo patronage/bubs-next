@@ -123,42 +123,6 @@ export async function getAllContentWithSlug() {
   return data?.contentNodes;
 }
 
-function generateFlex(type) {
-  let fragmentFlex = /* GraphQL */ `
-    acfFlex {
-      fieldGroupName
-      flexContent {
-        ... on ${type}_Acfflex_FlexContent_WysiwygContent {
-          fieldGroupName
-          sectionHeading
-          wysiwygContent
-          ${fragmentSectionOptions}
-        }
-        ... on ${type}_Acfflex_FlexContent_Hero {
-          fieldGroupName
-          heroHeading
-          heroSubheading
-          heroImage {
-            sourceUrl
-            mediaDetails {
-              width
-              height
-            }
-          }
-          ${fragmentSectionOptions}
-        }
-        ... on ${type}_Acfflex_FlexContent_Blockquote {
-          fieldGroupName
-          blockquote
-          quoteAttribution
-          ${fragmentSectionOptions}
-        }
-      }
-    }
-  `;
-  return fragmentFlex;
-}
-
 /**
  * Get fields for single page regardless of post type.
  */
@@ -181,6 +145,41 @@ export async function getContent(slug, preview, previewData) {
         link
         slug
         uri
+
+        template {
+        ... on Template_Flex {
+          acfFlex {
+            fieldGroupName
+            flexContent {
+              ... on Template_Flex_Acfflex_FlexContent_WysiwygContent {
+                fieldGroupName
+                sectionHeading
+                wysiwygContent
+                ${fragmentSectionOptions}
+              }
+              ... on Template_Flex_Acfflex_FlexContent_Hero {
+                fieldGroupName
+                heroHeading
+                heroSubheading
+                heroImage {
+                  sourceUrl
+                  mediaDetails {
+                    width
+                    height
+                  }
+                }
+                ${fragmentSectionOptions}
+              }
+              ... on Template_Flex_Acfflex_FlexContent_Blockquote {
+                fieldGroupName
+                blockquote
+                quoteAttribution
+                ${fragmentSectionOptions}
+              }
+            }
+          }
+          }
+        }
 
         ... on NodeWithTitle {
           title
@@ -217,12 +216,10 @@ export async function getContent(slug, preview, previewData) {
         ... on Page {
           isFrontPage
           content
-          ${generateFlex('Page')}
           ${fragmentSEO}
         }
         ... on Post {
           content
-          ${generateFlex('Post')}
           ${fragmentSEO}
         }
       }
