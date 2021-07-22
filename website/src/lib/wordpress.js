@@ -227,6 +227,7 @@ export async function getContent(slug, preview, previewData) {
     // Get post type URL segment
     const postType = contentTypes[secondLastSegment];
 
+    // wordpress requires a different slug structure for various post types
     if ( slug !== '/' && !isNaN(Number(lastSegment))) {
       if (postType === 'post') {
         slug = `/?p=${lastSegment}`;
@@ -240,6 +241,7 @@ export async function getContent(slug, preview, previewData) {
     }
   }
 
+  // @todo remove?
   const isDraft = postPreview?.status === 'draft';
   const isRevision = postPreview?.status === 'publish';
 
