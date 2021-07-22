@@ -10,6 +10,8 @@ async function fetchAPI(query, { variables } = {}) {
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
 
+  console.log('API', WORDPRESS_API_URL);
+  console.log('variables', variables);
   const res = await fetch(WORDPRESS_API_URL, {
     method: 'POST',
     headers,
