@@ -241,7 +241,6 @@ export async function getContent(slug, preview, previewData) {
   }
 
   // console.log('data', data);
-  data.post = data.contentNode;
   return data;
 }
 
