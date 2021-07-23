@@ -109,8 +109,9 @@ export async function getStaticProps({
       globals,
       preview,
       post: data.contentNode,
-      flexSections: data.post?.template?.acfFlex?.flexContent || null,
-      template: data.post?.template?.templateName || null,
+      flexSections:
+        data.contentNode?.template?.acfFlex?.flexContent || null,
+      template: data.contentNode?.template?.templateName || null,
     },
     revalidate: 10,
   };
