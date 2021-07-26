@@ -1,9 +1,6 @@
 const {
   getContent,
-  //getTags,
   getCategories,
-  //getPostsByTag,
-  //getPostsByCategory,
   getAllContentWithSlug,
 } = require('./wordpress');
 
@@ -62,9 +59,9 @@ export async function staticPathGenerator(type = 'post_type') {
       }
     } else {
       // Post type archive
-      const allPosts = await getAllContentWithSlug();
+      const allPosts = await getAllContentWithSlug('POST');
       paths.push({ params: { slug: [] } }); // Index Page
-      const posts = allPosts.edges || [];
+      const posts = allPosts.nodes || [];
 
       // Generate Pagination Paths
       for (
@@ -93,13 +90,14 @@ export async function staticPathGenerator(type = 'post_type') {
 
 export async function staticPropHelper(
   staticPropsContext,
-  type = 'post_type',
+  contentType,
+  archiveType = 'post_type',
 ) {
   try {
     let taxonomyIndex = 0;
     let paginatorIndex = 1;
 
-    if (type !== 'post_type') {
+    if (archiveType !== 'post_type') {
       taxonomyIndex = 1;
       paginatorIndex = 2;
     }
@@ -109,15 +107,11 @@ export async function staticPropHelper(
       Object.keys(staticPropsContext.params).length ===
         taxonomyIndex ||
       // URL is /posts/page/* or /%taxonomySlug%/page/*
-      (staticPropsContext.params &&
-        staticPropsContext.params.slug &&
-        staticPropsContext.params.slug[taxonomyIndex] === 'page')
+      staticPropsContext?.params?.slug?.[taxonomyIndex] === 'page'
     ) {
       // 404 if the paginator ID is non-numeric
       if (
-        staticPropsContext.params &&
-        staticPropsContext.params.slug &&
-        staticPropsContext.params.slug[paginatorIndex] &&
+        staticPropsContext?.params?.slug?.[paginatorIndex] &&
         isNaN(Number(staticPropsContext.params.slug[paginatorIndex]))
       ) {
         return {
@@ -127,7 +121,7 @@ export async function staticPropHelper(
         };
       }
 
-      let allPosts = { edges: [] };
+      let allPosts = { nodes: [] };
       const posts = [];
 
       /*if (type === 'category') {
@@ -142,24 +136,25 @@ export async function staticPropHelper(
         allPosts = await getAllPostsWithSlug();
       }*/
 
+      allPosts = await getAllContentWithSlug(contentType);
+
       // Get the zero-indexed paginator index (remember URL is indexed by 1)
       //console.log(staticPropsContext.params.slug);
       const page =
-        (staticPropsContext.params.slug &&
-        staticPropsContext.params.slug[paginatorIndex]
+        (staticPropsContext?.params?.slug?.[paginatorIndex]
           ? Number(staticPropsContext.params.slug[paginatorIndex])
           : 1) - 1;
       const sliceStart = page * POSTS_PER_PAGE;
-      const filteredPosts = allPosts.edges.slice(
+      const filteredPosts = allPosts.nodes.slice(
         sliceStart,
         sliceStart + POSTS_PER_PAGE,
       );
 
       // Generate Post Paths
       for (let i = 0; i < filteredPosts.length; i++) {
-        const slug = filteredPosts[i].node.slug;
-        const { post } = await getContent(slug);
-        posts.push(post);
+        const uri = filteredPosts[i].uri;
+        const { contentNode } = await getContent(uri);
+        posts.push(contentNode);
       }
 
       return {
@@ -167,7 +162,7 @@ export async function staticPropHelper(
         // Paginator Helpers
         paginatorIndex: page + 1, // 1-Indexed as this is strictly for display
         postsPerPage: POSTS_PER_PAGE,
-        totalPosts: allPosts.edges.length,
+        totalPosts: allPosts.nodes.length,
       };
     }
   } catch (error) {

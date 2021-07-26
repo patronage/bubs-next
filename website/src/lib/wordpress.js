@@ -174,8 +174,8 @@ export async function getContent(slug, preview, previewData) {
   // The slug may be the id of an unpublished post
   const isId = Number.isInteger(Number(slug));
   const isSamePost = isId
-    ? Number(slug) === postPreview.id
-    : slug === postPreview.slug;
+    ? Number(slug) === postPreview?.id
+    : slug === postPreview?.slug;
   const isDraft = isSamePost && postPreview?.status === 'draft';
   const isRevision = isSamePost && postPreview?.status === 'publish';
   // console.log('slug for single', slug);
@@ -242,7 +242,7 @@ export async function getContent(slug, preview, previewData) {
     variables: { slug },
   });
 
-  // Draft posts may not have an slug
+  /*// Draft posts may not have an slug
   if (isDraft) data.post.slug = postPreview.id;
   // Apply a revision (changes in a published post)
   if (isRevision && data.post.revisions) {
@@ -250,7 +250,7 @@ export async function getContent(slug, preview, previewData) {
 
     if (revision) Object.assign(data.post, revision);
     delete data.post.revisions;
-  }
+  }*/
 
   // console.log('data', data);
   data.post = data.contentNode;
