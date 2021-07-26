@@ -4,12 +4,17 @@ import { WORDPRESS_API_URL } from 'lib/constants';
 async function fetchAPI(query, { variables } = {}) {
   const headers = { 'Content-Type': 'application/json' };
 
-  if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
+  if (
+    process.env.WORDPRESS_AUTH_REFRESH_TOKEN &&
+    variables?.preview
+  ) {
     headers[
       'Authorization'
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
 
+  // console.log('API', WORDPRESS_API_URL);
+  // console.log('variables', variables);
   const res = await fetch(WORDPRESS_API_URL, {
     method: 'POST',
     headers,
@@ -21,7 +26,7 @@ async function fetchAPI(query, { variables } = {}) {
 
   const json = await res.json();
   if (json.errors) {
-    console.error(json.errors);
+    console.error(JSON.stringify(json.errors, null, 2));
     throw new Error('Failed to fetch API');
   }
   // console.log("graphql results", JSON.stringify(json.data, null, 2));
@@ -67,7 +72,9 @@ let fragmentSEO = /* GraphQL */ `
 let fragmentPageOptions = /* GraphQL */ `
   acfPageOptions {
     footerHideNav
+    footerHideSearch
     footerHideSignup
+    footerHideSocial
     footerStyle
     headerHideNav
   }
@@ -131,8 +138,8 @@ export async function getContent(slug, preview, previewData) {
   // The slug may be the id of an unpublished post
   const isId = Number.isInteger(Number(slug));
   const isSamePost = isId
-    ? Number(slug) === postPreview.id
-    : slug === postPreview.slug;
+    ? Number(slug) === postPreview?.id
+    : slug === postPreview?.slug;
   const isDraft = isSamePost && postPreview?.status === 'draft';
   const isRevision = isSamePost && postPreview?.status === 'publish';
   // console.log('slug for single', slug);
@@ -217,10 +224,12 @@ export async function getContent(slug, preview, previewData) {
           isFrontPage
           content
           ${fragmentSEO}
+          ${fragmentPageOptions}
         }
         ... on Post {
           content
           ${fragmentSEO}
+          ${fragmentPageOptions}
         }
       }
     }
@@ -230,7 +239,7 @@ export async function getContent(slug, preview, previewData) {
     variables: { slug },
   });
 
-  // Draft posts may not have an slug
+  /*// Draft posts may not have an slug
   if (isDraft) data.post.slug = postPreview.id;
   // Apply a revision (changes in a published post)
   if (isRevision && data.post.revisions) {
@@ -238,7 +247,7 @@ export async function getContent(slug, preview, previewData) {
 
     if (revision) Object.assign(data.post, revision);
     delete data.post.revisions;
-  }
+  }*/
 
   // console.log('data', data);
   data.post = data.contentNode;
@@ -367,36 +376,48 @@ export async function getCategories() {
  * (Might merge into other queries via fragment)
  * */
 export async function getGlobalProps() {
+  let fragmentMenu = /* GraphQL */ `
+    nodes {
+      id
+      databaseId
+      label
+      parentId
+      url
+      path
+    }
+`;
+
   let query = /* GraphQL */ `
     fragment Menus on RootQuery {
-      menus {
-        nodes {
-          id
-          databaseId
-          name
-          menuItems {
-            nodes {
-              id
-              label
-              parentId
-              url
-              path
-            }
-          }
-        }
+      menuHeader: menuItems(where: { location: HEADER }, first: 100) {
+        ${fragmentMenu}
+      }
+      menuFooter: menuItems(where: { location: FOOTER }, first: 100) {
+        ${fragmentMenu}
+      }
+      menuFooterSocial: menuItems(where: { location: FOOTER_SOCIAL }, first: 100) {
+        ${fragmentMenu}
+      }
+      menuFooterSecondary: menuItems(where: { location: FOOTER_SECONDARY }, first: 100) {
+        ${fragmentMenu}
       }
     }
 
+    # fragment GlobalOptions on RootQuery {
+    #   themeSettings {
+    #     acfGlobalOptions {
+    #       fieldGroupName
+    #       newsletterButton
+    #       newsletterHeading
+    #     }
+    #   }
+    # }
+
     query AllGlobals {
       ...Menus
+      # ...GlobalOptions
     }
   `;
-
-  /*
-    fragment GlobalOptions on RootQuery {
-      themeSettings
-    }
-  */
 
   const data = await fetchAPI(query);
   return data;

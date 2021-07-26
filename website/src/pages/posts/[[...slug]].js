@@ -62,18 +62,37 @@ export async function getStaticProps(context) {
   //
 
   const globals = await getGlobalProps();
-  const indexProps = await staticPropHelper(context, 'post_type');
+  const indexProps = await staticPropHelper(
+    context,
+    'POST',
+    'post_type',
+  );
 
   if (indexProps) {
-    return { props: { ...indexProps, globals } };
+    return {
+      props: {
+        ...indexProps,
+        globals,
+      },
+      revalidate: 60,
+    };
   }
 
   //
   // Generate props for Post Single Page
   //
   try {
-    const { post } = await getContent(context.params.slug[0]);
-    return { props: { post, globals } };
+    const { contentNode } = await getContent(
+      `/posts/${context.params.slug[0]}`,
+    );
+    console.log('contentNode', context.params.slug[0], contentNode);
+    return {
+      props: {
+        post: contentNode,
+        globals,
+      },
+      revalidate: 60,
+    };
   } catch (error) {
     console.log(error);
   }
@@ -91,7 +110,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 
