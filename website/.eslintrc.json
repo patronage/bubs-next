@@ -5,12 +5,13 @@
     "es6": true,
     "node": true
   },
-  "plugins": ["react", "import"],
+  "plugins": ["prettier", "react", "import"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:@next/next/recommended"
+    "plugin:@next/next/recommended",
+    "plugin:prettier/recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -33,7 +34,9 @@
     "gtag": true
   },
   "rules": {
-    "no-console": 0,
+    // "no-console": ["warn", 0],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "indent": "off", // conflicts with prettier
     "linebreak-style": ["error", "unix"],
     "no-unused-vars": "warn",
     "quotes": [
@@ -60,6 +63,9 @@
       1,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ], //should add ".ts" if typescript project
-    "react/display-name": 1
+    "react/display-name": 1,
+
+    // React Hooks
+    "react-hooks/exhaustive-deps": "off"
   }
 }
