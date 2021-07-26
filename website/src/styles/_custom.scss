@@ -81,7 +81,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 //
 
 $font-family-sans-serif: $font-sans;
-$font-family-base: $font-serif;
+$font-family-base: $font-sans;
 $headings-font-family: $font-heading;
 $font-size-base: 1rem;
 $line-height-base: 1.5;

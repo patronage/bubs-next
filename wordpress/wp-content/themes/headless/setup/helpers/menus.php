@@ -1,20 +1,18 @@
 <?php
 
 //
-// Add Menus to Timber
+// Add Menus to Wordpress
 //
 
-register_nav_menus(array(
+function bubs_register_nav_menu(){
+  register_nav_menus(array(
     'header' => 'Header Navigation',
-    // 'footer' => 'Footer Navigation'
-));
-
-function timber_menus( $data ) {
-    $data["header_menu"] = new TimberMenu('header-menu');
-    $data["footer_menu"] = new TimberMenu('footer-menu');
-    return $data;
+    'footer' => 'Footer Navigation',
+    'footer_secondary' => 'Footer Secondary Navigation',
+    'footer_social' => 'Social',
+  ));
 }
 
-add_filter( 'timber_context', 'timber_menus' );
+add_action( 'after_setup_theme', 'bubs_register_nav_menu', 0 );
 
 ?>
