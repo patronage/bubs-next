@@ -23,7 +23,7 @@
 // Workaround until this is fixed in a future version:
 // https://github.com/wp-graphql/wp-graphql-acf/issues/76
 
-function expose_acf_to_graphql_only($result, $rule, $screen, $field_group) {
+/*function expose_acf_to_graphql_only($result, $rule, $screen, $field_group) {
   if ( !is_graphql_http_request() ) {
     return $result;
   }
@@ -44,4 +44,4 @@ function expose_acf_to_graphql_only($result, $rule, $screen, $field_group) {
   return $result;
 }
 
-add_filter('acf/location/rule_match', 'expose_acf_to_graphql_only', 10, 4);
+add_filter('acf/location/rule_match', 'expose_acf_to_graphql_only', 10, 4);*/

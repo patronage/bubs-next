@@ -4,11 +4,11 @@ import { GlobalsProvider } from 'contexts/GlobalsContext';
 import { staticPropHelper, staticPathGenerator } from 'lib/archive';
 import { getGlobalProps } from 'lib/wordpress';
 
-function CategoryIndex(props) {
+function TaxIndex(props) {
   return (
     <GlobalsProvider globals={props.globals}>
-      <LayoutDefault title="" preview={props.preview}>
-        <PostArchive archiveTitle={'Category Archive'} {...props} />
+      <LayoutDefault title="">
+        <PostArchive archiveTitle={'Tag Archive'} {...props} />
       </LayoutDefault>
     </GlobalsProvider>
   );
@@ -16,18 +16,13 @@ function CategoryIndex(props) {
 
 export async function getStaticProps(context) {
   const globals = await getGlobalProps();
-  const indexProps = await staticPropHelper(
-    context,
-    'POST',
-    'category',
-  );
+  const indexProps = await staticPropHelper(context, 'POST', 'tag');
 
   if (indexProps) {
     return {
       props: {
         ...indexProps,
         globals,
-        preview: context.preview || false,
       },
       revalidate: 60,
     };
@@ -41,7 +36,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const paths = await staticPathGenerator('category');
+  const paths = await staticPathGenerator('tag');
 
   return {
     paths,
@@ -49,4 +44,4 @@ export async function getStaticPaths() {
   };
 }
 
-export default CategoryIndex;
+export default TaxIndex;

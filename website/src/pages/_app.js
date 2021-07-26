@@ -1,7 +1,7 @@
 import { META } from 'lib/constants';
 import * as gtag from 'lib/gtag';
 import { DefaultSeo } from 'next-seo';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import 'styles/global.scss';
 
@@ -19,6 +19,8 @@ export function reportWebVitals({ id, name, label, value }) {
 }
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
+
   useEffect(() => {
     // Google analytics:
     // https://github.com/vercel/next.js/blob/canary/examples/with-google-analytics/pages/_app.js
@@ -26,10 +28,10 @@ export default function App({ Component, pageProps }) {
       gtag.pageview(url);
     };
 
-    Router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('routeChangeComplete', handleRouteChange);
 
     return () => {
-      Router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, []);
 

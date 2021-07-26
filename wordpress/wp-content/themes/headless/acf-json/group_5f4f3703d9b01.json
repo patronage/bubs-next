@@ -251,5 +251,9 @@
     "description": "",
     "show_in_graphql": 1,
     "graphql_field_name": "acfFlex",
-    "modified": 1606237852
+    "map_graphql_types_from_location_rules": 1,
+    "graphql_types": [
+        "Template_Flex"
+    ],
+    "modified": 1626982168
 }
