@@ -111,9 +111,10 @@ export async function getStaticProps({
     props: {
       globals: { ...globals, pageOptions: data.post?.acfPageOptions },
       preview,
-      post: data.post,
-      flexSections: data.post?.acfFlex?.flexContent || null,
-      template: data.post?.template?.templateName || null,
+      post: data.contentNode,
+      flexSections:
+        data.contentNode?.template?.acfFlex?.flexContent || null,
+      template: data.contentNode?.template?.templateName || null,
     },
     revalidate: 10,
   };
