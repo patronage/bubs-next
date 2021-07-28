@@ -44,13 +44,7 @@ export default function App({ Component, pageProps }) {
         openGraph={{
           type: 'website',
           locale: 'en_US',
-          url: META.url,
           site_name: META.siteName,
-          images: [
-            {
-              url: META.image,
-            },
-          ],
         }}
         twitter={{
           handle: META.twitterHandle,

@@ -1,9 +1,13 @@
+import GlobalsContext from 'contexts/GlobalsContext';
 import { META } from 'lib/constants';
 import { nextLoader } from 'lib/image-loaders';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
+import { useContext } from 'react';
 
 export default function Meta({ title, description, image, seo }) {
+  const globals = useContext(GlobalsContext);
+
   let seoSettings = {
     title: seo?.title || title ? `${title} ${META.titleAppend}` : '',
     description: seo?.metaDesc || description,
@@ -13,13 +17,24 @@ export default function Meta({ title, description, image, seo }) {
     },
   };
 
+  let imageUrl;
+
+  // check for passed in image from SEO object or image param. Otherwise check for global fallback
   if (seo?.opengraphImage?.sourceUrl || image) {
-    let imageUrl = nextLoader({
+    imageUrl = nextLoader({
       src: seo?.opengraphImage?.sourceUrl || image,
       width: 1200,
       height: 628,
     });
+  } else if (globals.seo.openGraph?.defaultImage?.sourceUrl) {
+    imageUrl = nextLoader({
+      src: globals.seo.openGraph.defaultImage.sourceUrl,
+      width: 1200,
+      height: 628,
+    });
+  }
 
+  if (imageUrl) {
     seoSettings.openGraph.images = [
       {
         url: META.url + imageUrl,

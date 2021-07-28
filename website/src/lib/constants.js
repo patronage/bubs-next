@@ -12,7 +12,4 @@ export const META = {
   url: 'https://bubs.patronage.org',
   twitterHandle: '@patronageorg',
   siteName: 'Bubs by Patronage',
-  description:
-    'Bubs is a starter for getting up and running with headless WordPress and Next.js.',
-  image: `${DOMAIN}/img/default-share-graphic.jpg`,
 };
