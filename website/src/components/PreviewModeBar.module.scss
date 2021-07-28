@@ -1,0 +1,15 @@
+.bar {
+  position: sticky;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  padding: 15px 0;
+  background-color: #000;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: bold;
+
+  a {
+    color: #fff;
+  }
+}

@@ -25,6 +25,7 @@ async function fetchAPI(query, { variables } = {}) {
   });
 
   const json = await res.json();
+
   if (json.errors) {
     console.error(JSON.stringify(json.errors, null, 2));
     throw new Error('Failed to fetch API');
@@ -97,36 +98,81 @@ let fragmentCategories = /* GraphQL */ `
   }
 `;
 
-export async function getPreviewPost(id, idType = 'DATABASE_ID') {
-  const data = await fetchAPI(
-    `
-    query PreviewPost($id: ID!, $idType: PostIdType!) {
-      post(id: $id, idType: $idType) {
-        databaseId
-        slug
-        status
+export async function getContentTypes() {
+  const query = /* GraphQL */ `
+    query ContentTypes {
+      contentTypes {
+        nodes {
+          name
+          restBase
+        }
       }
-    }`,
-    {
-      variables: { id, idType },
-    },
-  );
-  return data.post;
+    }
+  `;
+
+  const data = await fetchAPI(query, {
+    variables: { preview: true },
+  });
+
+  return data?.contentTypes?.nodes;
+}
+
+export async function getPreviewContent(id, idType = 'DATABASE_ID') {
+  const query = /* GraphQL */ `
+    query PreviewContent($id: ID!, $idType: ContentNodeIdTypeEnum!) {
+      contentNode(id: $id, idType: $idType) {
+        uri
+        status
+        databaseId
+        contentType {
+          node {
+            name
+            uri
+          }
+        }
+      }
+    }
+  `;
+
+  const data = await fetchAPI(query, {
+    variables: { id, idType, preview: true },
+  });
+
+  return data.contentNode;
 }
 
 /**
  * get all paths. used for static generation
+ * @param {*} contentType slug of post type
+ *
+ * If a contentType is passed, the allQuery graphql is modified to query for
+ * only that post type instead of getting posts from any CPT
  */
-export async function getAllContentWithSlug() {
-  const data = await fetchAPI(`
-    query AllContent {
-      contentNodes {
+export async function getAllContentWithSlug(contentType) {
+  const data = await fetchAPI(
+    /* GraphQL */
+    `${
+      contentType
+        ? 'query AllContent($contentType: ContentTypeEnum!) '
+        : 'query AllContent'
+    } {
+      ${
+        contentType
+          ? 'contentNodes(where: {contentTypes: [$contentType]})'
+          : 'contentNodes'
+      } {
         nodes {
           uri
         }
       }
     }
-  `);
+  `,
+    {
+      variables: {
+        contentType,
+      },
+    },
+  );
   return data?.contentNodes;
 }
 
@@ -135,19 +181,50 @@ export async function getAllContentWithSlug() {
  */
 export async function getContent(slug, preview, previewData) {
   const postPreview = preview && previewData?.post;
-  // The slug may be the id of an unpublished post
-  const isId = Number.isInteger(Number(slug));
-  const isSamePost = isId
-    ? Number(slug) === postPreview?.id
-    : slug === postPreview?.slug;
-  const isDraft = isSamePost && postPreview?.status === 'draft';
-  const isRevision = isSamePost && postPreview?.status === 'publish';
-  // console.log('slug for single', slug);
+
+  if (preview) {
+    // Get the content types to help build preview URLs
+    const contentTypesArray = await getContentTypes();
+    const contentTypes = {};
+
+    for (const contentType of contentTypesArray) {
+      contentTypes[contentType.restBase] = contentType.name;
+    }
+
+    // Because static pages can't support query strings and those
+    // make preview mode much easier across published statuses and post types
+    // this coerces any numeric slug in preview mode to an ID and assumes post type
+    const segments = slug.split('/');
+    const lastSegment = segments[segments.length - 1];
+    const secondLastSegment =
+      segments.length > 2 ? segments[segments.length - 2] : null;
+    // Get post type URL segment
+    const postType = contentTypes[secondLastSegment];
+
+    // wordpress requires a different slug structure for various post types
+    if (slug !== '/' && !isNaN(Number(lastSegment))) {
+      if (postType === 'post') {
+        slug = `/?p=${lastSegment}`;
+      } else if (secondLastSegment) {
+        slug = `/?id=${lastSegment}&post_type=${postType}`;
+      } else {
+        slug = `/?page_id=${lastSegment}`;
+      }
+    } else if (slug !== '/') {
+      slug += '?preview=true';
+    }
+  }
+
+  // @todo remove?
+  const isDraft = postPreview?.status === 'draft';
+  const isRevision = postPreview?.status === 'publish';
+
   let query = /* GraphQL */ `
-    query GetContent($slug: ID!) {
-      contentNode(id: $slug, idType: URI) {
+    query GetContent($slug: ID!, $preview: Boolean) {
+      contentNode(id: $slug, idType: URI, asPreview: $preview) {
         __typename
         id
+        databaseId
         isPreview
         link
         slug
@@ -232,20 +309,11 @@ export async function getContent(slug, preview, previewData) {
       }
     }
   `;
+
   // console.log('query for getContent', query);
   const data = await fetchAPI(query, {
-    variables: { slug },
+    variables: { slug, preview: !!preview },
   });
-
-  /*// Draft posts may not have an slug
-  if (isDraft) data.post.slug = postPreview.id;
-  // Apply a revision (changes in a published post)
-  if (isRevision && data.post.revisions) {
-    const revision = data.post.revisions.edges[0]?.node;
-
-    if (revision) Object.assign(data.post, revision);
-    delete data.post.revisions;
-  }*/
 
   // console.log('data', data);
   return data;
@@ -260,7 +328,7 @@ export async function getPosts({
   first = 12,
   after = null,
   searchQuery = null,
-  contentTypes = ['POST', 'CASE_STUDIES', 'RESOURCES', 'NEWS'],
+  contentTypes = ['POST'],
   orderField = 'DATE',
   orderDirection = 'DESC',
   taxonomyType = null,

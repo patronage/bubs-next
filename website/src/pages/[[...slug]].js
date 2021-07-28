@@ -11,6 +11,7 @@ import { GlobalsProvider } from '../contexts/GlobalsContext';
 
 export default function Page({
   post,
+  postId,
   preview,
   isHome,
   globals,
@@ -22,7 +23,7 @@ export default function Page({
   if (isHome) {
     return (
       <GlobalsProvider globals={globals}>
-        <LayoutDefault title="">
+        <LayoutDefault title="" preview={preview}>
           <section className="section-padded">
             <div className="container">
               <div className="row">
@@ -42,8 +43,9 @@ export default function Page({
       <GlobalsProvider globals={globals}>
         <LayoutDefault
           preview={preview}
-          title={post?.title}
           seo={post?.seo}
+          postId={postId}
+          title={post?.title}
         >
           <Flex sections={flexSections} />
         </LayoutDefault>
@@ -54,15 +56,16 @@ export default function Page({
   return (
     <GlobalsProvider globals={globals}>
       <LayoutDefault
+        postId={postId}
+        seo={post?.seo}
         preview={preview}
         title={post?.title}
-        seo={post?.seo}
       >
         <section className="section-padded">
           <div className="container">
             <div className="row">
               <div className="col">
-                <PostBody content={post.content} />
+                <PostBody content={post?.content} />
               </div>
             </div>
           </div>
@@ -84,6 +87,7 @@ export async function getStaticProps({
   if (!params.slug?.length) {
     return {
       props: {
+        preview,
         globals: {
           ...globals,
           pageOptions: null,
@@ -101,7 +105,7 @@ export async function getStaticProps({
 
   const data = await getContent(slug, preview, previewData);
 
-  if (!data?.post?.slug) {
+  if (!preview && !data?.contentNode?.slug) {
     return {
       notFound: true,
     };
@@ -109,8 +113,11 @@ export async function getStaticProps({
 
   return {
     props: {
-      globals: { ...globals, pageOptions: data.post?.acfPageOptions },
-      preview,
+      globals: {
+        ...globals,
+        pageOptions: data.post?.acfPageOptions || null,
+      },
+      preview: preview || false,
       post: data.contentNode,
       flexSections:
         data.contentNode?.template?.acfFlex?.flexContent || null,
@@ -124,7 +131,7 @@ export async function getStaticPaths() {
   const allPosts = await getAllContentWithSlug();
 
   return {
-    paths: allPosts.nodes.map(({ uri }) => uri) || [],
+    paths: allPosts?.nodes.map(({ uri }) => uri) || [],
     fallback: 'blocking',
   };
 }

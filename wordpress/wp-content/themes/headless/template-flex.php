@@ -2,5 +2,7 @@
 
 /* Template Name: Flex */
 
-wp_redirect($headless_domain, 301);
+$redirect = headless_redirect();
+// echo $redirect;
+wp_redirect( $redirect, 307 );
 exit;

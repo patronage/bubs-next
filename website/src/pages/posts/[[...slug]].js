@@ -6,10 +6,10 @@ import { staticPropHelper, staticPathGenerator } from 'lib/archive';
 import { getContent, getGlobalProps } from 'lib/wordpress';
 import { useRouter } from 'next/router';
 
-function PostsSinglePage({ post, globals }) {
+function PostsSinglePage({ post, globals, preview }) {
   return (
     <GlobalsProvider globals={globals}>
-      <LayoutDefault title={post?.title}>
+      <LayoutDefault title={post?.title} preview={preview}>
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -28,7 +28,7 @@ function PostsSinglePage({ post, globals }) {
 function PostsIndexPage(props) {
   return (
     <GlobalsProvider globals={props.globals}>
-      <LayoutDefault title="">
+      <LayoutDefault title="" preview={props.preview}>
         <section className="pt-3 pb-3">
           <div className="container">
             <PostArchive {...props} />
@@ -60,7 +60,6 @@ export async function getStaticProps(context) {
   //
   // Generate props for Post Index page
   //
-
   const globals = await getGlobalProps();
   const indexProps = await staticPropHelper(
     context,
@@ -73,6 +72,7 @@ export async function getStaticProps(context) {
       props: {
         ...indexProps,
         globals,
+        preview: context.preview || false,
       },
       revalidate: 60,
     };
@@ -84,12 +84,17 @@ export async function getStaticProps(context) {
   try {
     const { contentNode } = await getContent(
       `/posts/${context.params.slug[0]}`,
+      context.preview,
+      context.previewData,
     );
+
     console.log('contentNode', context.params.slug[0], contentNode);
+
     return {
       props: {
         post: contentNode,
         globals,
+        preview: context.preview || false,
       },
       revalidate: 60,
     };
