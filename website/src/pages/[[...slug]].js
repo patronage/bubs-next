@@ -113,7 +113,10 @@ export async function getStaticProps({
 
   return {
     props: {
-      globals: { ...globals, pageOptions: data.post?.acfPageOptions },
+      globals: {
+        ...globals,
+        pageOptions: data.post?.acfPageOptions || null,
+      },
       preview: preview || false,
       post: data.contentNode,
       flexSections:
@@ -128,7 +131,7 @@ export async function getStaticPaths() {
   const allPosts = await getAllContentWithSlug();
 
   return {
-    paths: allPosts.nodes.map(({ uri }) => uri) || [],
+    paths: allPosts?.nodes.map(({ uri }) => uri) || [],
     fallback: 'blocking',
   };
 }

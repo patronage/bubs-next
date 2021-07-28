@@ -25,7 +25,7 @@ export default async function preview(req, res) {
   const contentTypesArray = await getContentTypes();
   const contentTypes = {};
 
-  for ( const contentType of contentTypesArray ) {
+  for (const contentType of contentTypesArray) {
     contentTypes[contentType.name] = contentType.restBase;
   }
 

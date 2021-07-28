@@ -328,7 +328,7 @@ export async function getPosts({
   first = 12,
   after = null,
   searchQuery = null,
-  contentTypes = ['POST', 'CASE_STUDIES', 'RESOURCES', 'NEWS'],
+  contentTypes = ['POST'],
   orderField = 'DATE',
   orderDirection = 'DESC',
   taxonomyType = null,
