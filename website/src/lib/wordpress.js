@@ -476,7 +476,7 @@ export async function getGlobalProps() {
               width
               height
             }
-            sourceUrl(size: _1600_WIDE)
+            sourceUrl
           }
         }
       }
