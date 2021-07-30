@@ -7,6 +7,12 @@
  * E.g., it puts together the home page when no home.php file exists
  */
 
-$redirect = headless_redirect();
-// echo $redirect;
-wp_redirect( $redirect, 307 );
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+if ( strpos($user_agent, 'WPEBot') ) {
+  http_response_code(200);
+} else {
+  $redirect = headless_redirect();
+  // echo $redirect;
+  wp_redirect( $redirect, 307 );
+}
