@@ -20,7 +20,7 @@ if ( defined('WP_ENV') && WP_ENV == "development" ) {
     $preview_domain = 'https://bubs-next-git-preview-mode-patronage.vercel.app';
   } else {
     define('WP_HOST', 'production');
-    $preview_domain = 'https://bubsnext.vercelapp.com';
+    $preview_domain = 'https://bubs-next.vercel.app';
   }
 }
 
