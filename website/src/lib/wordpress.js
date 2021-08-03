@@ -468,6 +468,20 @@ export async function getGlobalProps() {
       }
     }
 
+    fragment SEO on RootQuery {
+      seo {
+        openGraph {
+          defaultImage {
+            mediaDetails {
+              width
+              height
+            }
+            sourceUrl
+          }
+        }
+      }
+    }
+
     # fragment GlobalOptions on RootQuery {
     #   themeSettings {
     #     acfGlobalOptions {
@@ -480,6 +494,7 @@ export async function getGlobalProps() {
 
     query AllGlobals {
       ...Menus
+      ...SEO
       # ...GlobalOptions
     }
   `;
