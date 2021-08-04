@@ -59,7 +59,8 @@ export async function staticPathGenerator(type = 'post_type') {
       }
     } else {
       // Post type archive
-      const allPosts = await getAllContentWithSlug('POST');
+      const { contentNodes } = await getAllContentWithSlug('POST');
+      const allPosts = contentNodes;
       paths.push({ params: { slug: [] } }); // Index Page
       const posts = allPosts.nodes || [];
 
@@ -136,7 +137,11 @@ export async function staticPropHelper(
         allPosts = await getAllPostsWithSlug();
       }*/
 
-      allPosts = await getAllContentWithSlug(contentType);
+      const { contentNodes } = await getAllContentWithSlug(
+        contentType,
+      );
+
+      allPosts = contentNodes;
 
       // Get the zero-indexed paginator index (remember URL is indexed by 1)
       //console.log(staticPropsContext.params.slug);

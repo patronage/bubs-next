@@ -173,7 +173,7 @@ export async function getAllContentWithSlug(contentType) {
       },
     },
   );
-  return data?.contentNodes;
+  return data;
 }
 
 /**

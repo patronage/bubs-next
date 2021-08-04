@@ -128,10 +128,10 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  const allPosts = await getAllContentWithSlug();
+  const { contentNodes } = await getAllContentWithSlug();
 
   return {
-    paths: allPosts?.nodes.map(({ uri }) => uri) || [],
+    paths: contentNodes?.nodes.map(({ uri }) => uri) || [],
     fallback: 'blocking',
   };
 }
