@@ -102,7 +102,7 @@ export default function Footer() {
               dangerouslySetInnerHTML={{
                 __html:
                   globals?.acfOptionsThemeSettings?.acfGlobalOptions
-                    ?.footerCopyright,
+                    ?.footer?.footerCopyright,
               }}
             >
               {/*&copy; copyright {new Date().getFullYear()}{' '}*/}
