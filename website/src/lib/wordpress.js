@@ -482,20 +482,19 @@ export async function getGlobalProps() {
       }
     }
 
-    # fragment GlobalOptions on RootQuery {
-    #   themeSettings {
-    #     acfGlobalOptions {
-    #       fieldGroupName
-    #       newsletterButton
-    #       newsletterHeading
-    #     }
-    #   }
-    # }
+    fragment GlobalOptions on RootQuery {
+      acfOptionsThemeSettings {
+        acfGlobalOptions {
+          fieldGroupName
+          footerCopyright
+        }
+      }
+    }
 
     query AllGlobals {
       ...Menus
       ...SEO
-      # ...GlobalOptions
+      ...GlobalOptions
     }
   `;
 
