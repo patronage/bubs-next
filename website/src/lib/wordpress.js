@@ -485,8 +485,10 @@ export async function getGlobalProps() {
     fragment GlobalOptions on RootQuery {
       acfOptionsThemeSettings {
         acfGlobalOptions {
-          fieldGroupName
-          footerCopyright
+          footer {
+            fieldGroupName
+            footerCopyright
+          }
         }
       }
     }
