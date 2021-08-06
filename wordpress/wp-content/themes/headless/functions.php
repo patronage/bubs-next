@@ -17,7 +17,7 @@ if ( defined('WP_ENV') && WP_ENV == "development" ) {
 } else if ( function_exists('is_wpe') ) {
   if ( strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false ) {
     define('WP_HOST', 'staging');
-    $headless_domain = 'https://bubs-next-git-preview-mode-patronage.vercel.app';
+    $headless_domain = 'https://bubs-next-git-preview-mode-oauth-patronage.vercel.app';
   } else {
     define('WP_HOST', 'production');
     $headless_domain = 'https://bubs-next.vercel.app';
