@@ -1,16 +1,11 @@
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
 
-async function fetchAPI(query, { variables } = {}) {
+async function fetchAPI(query, { variables } = {}, token) {
   const headers = { 'Content-Type': 'application/json' };
 
-  if (
-    process.env.WORDPRESS_AUTH_REFRESH_TOKEN &&
-    variables?.preview
-  ) {
-    headers[
-      'Authorization'
-    ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
+  if (variables?.preview && token) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
 
   // console.log('API', WORDPRESS_API_URL);
@@ -98,7 +93,7 @@ let fragmentCategories = /* GraphQL */ `
   }
 `;
 
-export async function getContentTypes() {
+export async function getContentTypes(token) {
   const query = /* GraphQL */ `
     query ContentTypes {
       contentTypes {
@@ -110,14 +105,22 @@ export async function getContentTypes() {
     }
   `;
 
-  const data = await fetchAPI(query, {
-    variables: { preview: true },
-  });
+  const data = await fetchAPI(
+    query,
+    {
+      variables: { preview: true },
+    },
+    token,
+  );
 
   return data?.contentTypes?.nodes;
 }
 
-export async function getPreviewContent(id, idType = 'DATABASE_ID') {
+export async function getPreviewContent(
+  id,
+  idType = 'DATABASE_ID',
+  token,
+) {
   const query = /* GraphQL */ `
     query PreviewContent($id: ID!, $idType: ContentNodeIdTypeEnum!) {
       contentNode(id: $id, idType: $idType) {
@@ -134,9 +137,13 @@ export async function getPreviewContent(id, idType = 'DATABASE_ID') {
     }
   `;
 
-  const data = await fetchAPI(query, {
-    variables: { id, idType, preview: true },
-  });
+  const data = await fetchAPI(
+    query,
+    {
+      variables: { id, idType, preview: true },
+    },
+    token,
+  );
 
   return data.contentNode;
 }
@@ -184,7 +191,9 @@ export async function getContent(slug, preview, previewData) {
 
   if (preview) {
     // Get the content types to help build preview URLs
-    const contentTypesArray = await getContentTypes();
+    const contentTypesArray = await getContentTypes(
+      previewData?.token,
+    );
     const contentTypes = {};
 
     for (const contentType of contentTypesArray) {
@@ -311,9 +320,13 @@ export async function getContent(slug, preview, previewData) {
   `;
 
   // console.log('query for getContent', query);
-  const data = await fetchAPI(query, {
-    variables: { slug, preview: !!preview },
-  });
+  const data = await fetchAPI(
+    query,
+    {
+      variables: { slug, preview: !!preview },
+    },
+    previewData?.token,
+  );
 
   // console.log('data', data);
   return data;
