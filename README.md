@@ -9,4 +9,4 @@ Other helpful files:
 
 - [Configuring Next hosting](https://github.com/patronage/bubs-next/blob/main/docs/hosting-next.md).
 - [Headless WordPress Development](https://github.com/patronage/bubs-next/blob/main/docs/wordpress.md).
-- [Prettier, ESLint, and Stylelint for consistent code formatting](https://github.com/patronage/bubs-next/blob/main/docs/dvelopers.md)
+- [Prettier, ESLint, and Stylelint for consistent code formatting](https://github.com/patronage/bubs-next/blob/main/docs/developers.md)
