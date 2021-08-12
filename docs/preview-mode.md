@@ -6,6 +6,6 @@ Preview mode allows you to easily view the latest version of a post, bypassing t
 `define('WORDPRESS_AUTH_SECRET', 'bubs-next-wp-auth-secret-key');`
 `define('WORDPRESS_HEADLESS_SECRET', 'bubs-next-headless-secret-key');`
 Once these are both saved and you have the value of `WORDPRESS_HEADLESS_SECRET` written down, you can close the editor and SFTP app.
-2. Save the value of `WORDPRESS_HEADLESS_SECRET` to the Vercel environment variable that correlates to the `wp-config.php` you just edited.
+2. Save the value of `WORDPRESS_HEADLESS_SECRET` to the Vercel environment variable that correlates to the `wp-config.php` you just edited. Set WORDPRESS_DOMAIN to the root URL of the Wordpress instance (without /graphql)
 3. Open `wordpress/wp-content/headless/functions.php` and edit the values for `$preview_domain` for staging and production. The staging URL can be also be set from within the Wordpress dashboard under `Headless Settings` menu item, but make sure a generic preview URL is selected as a fallback. 
 4. Preview mode should now work. You can test by logging into Wordpress admin, creating a post (but don't publish!) and then click "Preview". If it all works, you should be able to view your post with a black bar on the top of the page indicating preview mode is enabled.
