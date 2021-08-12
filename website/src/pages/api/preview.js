@@ -5,11 +5,17 @@ export default async function preview(req, res) {
   let accessToken;
   const { code, id, preview_id } = req.query;
 
+  if (!id) {
+    return res.status(401).json({ message: 'Invalid request' });
+  }
+
   if (req.previewData.token) {
     accessToken = req.previewData.token;
   } else if (code) {
     const result = await authorize(decodeURIComponent(code));
     accessToken = result.access_token;
+  } else {
+    return res.status(401).json({ message: 'Invalid token' });
   }
 
   // Fetch WordPress to check if the provided `id` exists
