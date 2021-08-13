@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$auth_secret = defined('WP_AUTH_SECRET') ? WP_AUTH_SECRET : '';
+$auth_secret = defined('HEADLESS_AUTH_SECRET') ? HEADLESS_AUTH_SECRET : '';
 
 /**
  * Generate an access token given a user.
