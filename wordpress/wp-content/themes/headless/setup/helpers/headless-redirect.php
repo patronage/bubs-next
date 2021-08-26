@@ -34,10 +34,24 @@ function headless_redirect(){
   // else do standard redirect tree
 
   if ($slug) {
-    $redirect = $headless_domain . $slug;
+    if ( current_user_can( 'edit_posts' ) ) {
+      $auth_code = wpe_headless_generate_authentication_code(
+        wp_get_current_user()
+      );
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug;
+    } else {
+      $redirect = $headless_domain . $slug;
+    }
   } else {
     $path = $_SERVER['REQUEST_URI'];
-    $redirect = $headless_domain . $path;
+    if ( current_user_can( 'edit_posts' ) ) {
+      $auth_code = wpe_headless_generate_authentication_code(
+        wp_get_current_user()
+      );
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path;
+    } else {
+      $redirect = $headless_domain . $path;
+    }
   }
 
   return $redirect;

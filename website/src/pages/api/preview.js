@@ -3,7 +3,7 @@ import { getContentTypes, getPreviewContent } from 'lib/wordpress';
 
 export default async function preview(req, res) {
   let accessToken;
-  const { code, id, preview_id } = req.query;
+  const { code, id, preview_id, path, slug } = req.query;
 
   if (!id) {
     return res.status(401).json({ message: 'Invalid request' });
@@ -69,6 +69,10 @@ export default async function preview(req, res) {
     Location = `/${typePath}/${preview_id}`;
   } else if (preview_id) {
     Location = `/${preview_id}`;
+  } else if (slug) {
+    Location = `/${slug}`;
+  } else if (path) {
+    Location = `/${path}`;
   }
 
   // Redirect to the path from the fetched post
