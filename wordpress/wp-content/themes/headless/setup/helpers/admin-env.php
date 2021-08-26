@@ -5,8 +5,6 @@
 
 $custom_scheme = '';
 $site_prefix = '';
-$preview_domain = '';
-$staging_wp_host = 'bubsnexts.wpengine.com';
 
 if ( WP_HOST === 'localhost' ) {
   // on Local
