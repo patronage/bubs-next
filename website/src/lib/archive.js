@@ -122,7 +122,6 @@ export async function staticPropHelper(
         };
       }
 
-      let allPosts = { nodes: [] };
       const posts = [];
 
       /*if (type === 'category') {
@@ -137,11 +136,7 @@ export async function staticPropHelper(
         allPosts = await getAllPostsWithSlug();
       }*/
 
-      const { contentNodes } = await getAllContentWithSlug(
-        contentType,
-      );
-
-      allPosts = contentNodes;
+      const allPosts = await getAllContentWithSlug(contentType);
 
       // Get the zero-indexed paginator index (remember URL is indexed by 1)
       //console.log(staticPropsContext.params.slug);
