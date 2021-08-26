@@ -18,4 +18,17 @@ module.exports = withBundleAnalyzer({
       'bubs.patronage.org',
     ],
   },
+
+  async rewrites() {
+    return [
+      {
+        source: '/(.*)sitemap.xml',
+        destination: '/api/sitemap',
+      },
+      {
+        source: '/feed',
+        destination: '/api/sitemap',
+      },
+    ];
+  },
 });
