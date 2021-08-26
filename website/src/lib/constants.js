@@ -4,7 +4,8 @@ export const DOMAIN = process.env.VERCEL_URL
 
 export const WORDPRESS_API_URL =
   process.env.WORDPRESS_API_URL ||
-  process.env.WORDPRESS_DOMAIN + '/graphql' ||
+  (process.env.WORDPRESS_DOMAIN &&
+    process.env.WORDPRESS_DOMAIN + '/graphql') ||
   'https://bubsnext.wpengine.com/graphql';
 
 /** SEO Tags */
