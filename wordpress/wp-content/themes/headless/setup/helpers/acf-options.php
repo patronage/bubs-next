@@ -8,4 +8,15 @@
             'capability'      => 'edit_posts',
             'show_in_graphql' => true,
         ));
+
+        if ( WP_HOST !== 'production' ) {
+          // TODO only if dev or staging
+          acf_add_options_page(array(
+            'page_title' 	=> 'Headless Settings',
+            'menu_title'	=> 'Headless Settings',
+            'redirect'	=> false,
+          ));
+        }
     }
+
+

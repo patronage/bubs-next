@@ -31,9 +31,7 @@ services:
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENV', 'development');
-
-        define('WP_HEADLESS_DOMAIN', 'http://localhost:3000');
-        define('GRAPHQL_JWT_AUTH_SECRET_KEY', 'bubs-next-jwt-auth-secret-key');
-        define('WORDPRESS_PREVIEW_SECRET', 'bubs-next-preview-secret');
+        define('WORDPRESS_AUTH_SECRET', 'bubs-next-wp-auth-secret-key');
+        define('WORDPRESS_HEADLESS_SECRET', 'bubs-next-headless-secret-key');
 volumes:
   db_data: {}

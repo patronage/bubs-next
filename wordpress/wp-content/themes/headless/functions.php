@@ -7,24 +7,32 @@
 // Load WP Config files
 //
 
-$preview_domain = '';
+$headless_domain = ''; // leave blank;
+$production_headless_domain = 'https://bubs-next.vercel.app';
 $staging_wp_host = 'bubsnexts.wpengine.com';
+$staging_headless_domain = 'https://bubs-next-git-staging-patronage.vercel.app';
+$local_domain = 'http://localhost:3000';
+
 
 // Determine the hosting environment we're in
 if ( defined('WP_ENV') && WP_ENV == "development" ) {
   define('WP_HOST', 'localhost');
-  $preview_domain = 'http://localhost:3000';
+  $headless_domain = $local_domain;
 } else if ( function_exists('is_wpe') ) {
   if ( strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false ) {
     define('WP_HOST', 'staging');
-    $preview_domain = 'https://bubs-next-git-preview-mode-patronage.vercel.app';
+    $preview_domain = get_field('vercel_preview_url', 'option');
+
+    if ($preview_domain) {
+      $headless_domain = rtrim($preview_domain, '/');
+    } else {
+      $headless_domain = $staging_headless_domain;
+    }
   } else {
     define('WP_HOST', 'production');
-    $preview_domain = 'https://bubs-next.vercel.app';
+    $headless_domain = $production_headless_domain;
   }
 }
-
-define('WORDPRESS_PREVIEW_DOMAIN', $preview_domain);
 
 // Theme Options
 function bubs_theme_options($wp_customize)
@@ -49,6 +57,7 @@ add_action('customize_register', 'bubs_theme_options');
 
 
 // WP Helper Functions
+include_once 'setup/helpers/auth.php';
 include_once 'setup/helpers/acf-options.php';
 
 include_once 'setup/helpers/admin.php';
