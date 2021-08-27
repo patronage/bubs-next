@@ -63,17 +63,19 @@ export async function getStaticProps(context) {
   //
   const globals = await getGlobalProps();
 
-  const redirect = _find(globals?.redirection?.redirects, {
-    origin: `/posts/${context.params.slug[0]}/`,
-  });
+  if (Array.isArray(context.params.slug)) {
+    const redirect = _find(globals?.redirection?.redirects, {
+      origin: `/posts/${context.params.slug[0]}/`,
+    });
 
-  if (redirect) {
-    return {
-      redirect: {
-        destination: redirect.target,
-        statusCode: redirect.code,
-      },
-    };
+    if (redirect) {
+      return {
+        redirect: {
+          destination: redirect.target,
+          statusCode: redirect.code,
+        },
+      };
+    }
   }
 
   const indexProps = await staticPropHelper(

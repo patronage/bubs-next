@@ -84,17 +84,19 @@ export async function getStaticProps({
 }) {
   const globals = await getGlobalProps();
 
-  const redirect = _find(globals?.redirection?.redirects, {
-    origin: `/${params.slug[0]}/`,
-  });
+  if (Array.isArray(params.slug)) {
+    const redirect = _find(globals?.redirection?.redirects, {
+      origin: `/${params.slug[0]}/`,
+    });
 
-  if (redirect) {
-    return {
-      redirect: {
-        destination: redirect.target,
-        statusCode: redirect.code,
-      },
-    };
+    if (redirect) {
+      return {
+        redirect: {
+          destination: redirect.target,
+          statusCode: redirect.code,
+        },
+      };
+    }
   }
 
   // if your homepage doesn't come from WP, you need this to custom render and not get a 404
