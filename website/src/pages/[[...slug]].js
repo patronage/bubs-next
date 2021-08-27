@@ -7,6 +7,7 @@ import {
   getGlobalProps,
   getAllContentWithSlug,
 } from 'lib/wordpress';
+import _find from 'lodash/find';
 
 import { GlobalsProvider } from '../contexts/GlobalsContext';
 
@@ -82,6 +83,19 @@ export async function getStaticProps({
   previewData,
 }) {
   const globals = await getGlobalProps();
+
+  const redirect = _find(globals?.redirection?.redirects, {
+    origin: `/${params.slug[0]}/`,
+  });
+
+  if (redirect) {
+    return {
+      redirect: {
+        destination: redirect.target,
+        statusCode: redirect.code,
+      },
+    };
+  }
 
   // if your homepage doesn't come from WP, you need this to custom render and not get a 404
   // next doesn't let you have index.js and [[...slug.js]]
