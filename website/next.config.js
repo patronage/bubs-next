@@ -23,11 +23,11 @@ module.exports = withBundleAnalyzer({
     return [
       {
         source: '/(.*)sitemap.xml',
-        destination: '/api/sitemap',
+        destination: '/api/upstream-proxy',
       },
       {
         source: '/feed',
-        destination: '/api/sitemap',
+        destination: '/api/upstream-proxy',
       },
     ];
   },
