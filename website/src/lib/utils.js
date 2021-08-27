@@ -6,6 +6,11 @@ export function trimTrailingSlash(str) {
   return str.replace(/\/$/, '');
 }
 
+/**
+ * Lightweight determination if filename is a static asset. Avoids external deps.
+ * @param {string} fileName Name of the path or file being requested
+ * @returns {bool}
+ */
 export function isStaticFile(fileName) {
   if (!fileName.includes('.')) {
     return false;
