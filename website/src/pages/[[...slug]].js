@@ -1,6 +1,7 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
+import { isStaticFile } from 'lib/utils';
 import {
   getContent,
   getGlobalProps,
@@ -101,6 +102,14 @@ export async function getStaticProps({
 
   if (params.slug?.length) {
     slug += params.slug.join('/');
+  }
+
+  // To reduce unnecessary load on Wordpress, don't query GraphQL for common static files.
+  // This prevents things like favicons, device icons.
+  if (slug && isStaticFile(slug)) {
+    return {
+      notFound: true,
+    };
   }
 
   const data = await getContent(slug, preview, previewData);
