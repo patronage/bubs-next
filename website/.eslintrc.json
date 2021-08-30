@@ -5,13 +5,13 @@
     "es6": true,
     "node": true
   },
-  "plugins": ["prettier", "react", "import"],
+  "plugins": ["react", "import"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@next/next/recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
