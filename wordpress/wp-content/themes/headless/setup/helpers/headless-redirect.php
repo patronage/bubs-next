@@ -2,7 +2,6 @@
 
 function headless_redirect(){
   global $headless_domain;
-  $preview_secret = defined('WORDPRESS_PREVIEW_SECRET') ? WORDPRESS_PREVIEW_SECRET : '';
 
   $post_type = get_post_type(get_the_ID());
   $slug = str_replace(home_url(), '', get_permalink(get_the_ID()));
@@ -21,9 +20,13 @@ function headless_redirect(){
         ]
       );
 
+      $auth_code = wpe_headless_generate_authentication_code(
+        wp_get_current_user()
+      );
+
       $preview_id = is_array( $revisions ) && ! empty( $revisions ) ? array_values( $revisions )[0] : null;
 
-      $redirect = WORDPRESS_PREVIEW_DOMAIN . '/api/preview/?secret=' . $preview_secret . '&id=' . get_the_ID() . '&preview_id=' . $preview_id;
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&id=' . get_the_ID() . '&preview_id=' . $preview_id;
       return $redirect;
     }
   }
@@ -31,10 +34,24 @@ function headless_redirect(){
   // else do standard redirect tree
 
   if ($slug) {
-    $redirect = WORDPRESS_PREVIEW_DOMAIN . $slug;
+    if ( current_user_can( 'edit_posts' ) ) {
+      $auth_code = wpe_headless_generate_authentication_code(
+        wp_get_current_user()
+      );
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug;
+    } else {
+      $redirect = $headless_domain . $slug;
+    }
   } else {
     $path = $_SERVER['REQUEST_URI'];
-    $redirect = WORDPRESS_PREVIEW_DOMAIN . $path;
+    if ( current_user_can( 'edit_posts' ) ) {
+      $auth_code = wpe_headless_generate_authentication_code(
+        wp_get_current_user()
+      );
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path;
+    } else {
+      $redirect = $headless_domain . $path;
+    }
   }
 
   return $redirect;

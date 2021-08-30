@@ -1,20 +1,29 @@
+import { authorize } from 'lib/auth';
 import { getContentTypes, getPreviewContent } from 'lib/wordpress';
 
 export default async function preview(req, res) {
-  const { secret, id, preview_id } = req.query;
+  let accessToken;
+  const { code, id, preview_id, path, slug } = req.query;
 
-  // Check the secret and next parameters
-  // This secret should only be known by this API route
-  if (
-    !id ||
-    !process.env.WORDPRESS_PREVIEW_SECRET ||
-    secret !== process.env.WORDPRESS_PREVIEW_SECRET
-  ) {
+  if (!id) {
+    return res.status(401).json({ message: 'Invalid request' });
+  }
+
+  if (req.previewData.token) {
+    accessToken = req.previewData.token;
+  } else if (code) {
+    const result = await authorize(decodeURIComponent(code));
+    accessToken = result.access_token;
+  } else {
     return res.status(401).json({ message: 'Invalid token' });
   }
 
   // Fetch WordPress to check if the provided `id` exists
-  const post = await getPreviewContent(id);
+  const post = await getPreviewContent(
+    id,
+    'DATABASE_ID',
+    accessToken,
+  );
 
   // If the post doesn't exist prevent preview mode from being enabled
   if (!post) {
@@ -22,7 +31,7 @@ export default async function preview(req, res) {
   }
 
   // Get the content types to help build preview URLs
-  const contentTypesArray = await getContentTypes();
+  const contentTypesArray = await getContentTypes(accessToken);
   const contentTypes = {};
 
   for (const contentType of contentTypesArray) {
@@ -30,14 +39,20 @@ export default async function preview(req, res) {
   }
 
   // Enable Preview Mode by setting the cookies
-  res.setPreviewData({
-    post: {
-      uri: post.uri,
-      id: post.databaseId,
-      status: post.status,
-      type: post.contentType.node.name,
+  res.setPreviewData(
+    {
+      post: {
+        uri: post.uri,
+        id: post.databaseId,
+        status: post.status,
+        type: post.contentType.node.name,
+      },
+      token: accessToken,
     },
-  });
+    {
+      maxAge: 60 * 60,
+    },
+  );
 
   let Location = post.uri;
   const typePath = contentTypes[post.contentType.node.name];
@@ -54,6 +69,10 @@ export default async function preview(req, res) {
     Location = `/${typePath}/${preview_id}`;
   } else if (preview_id) {
     Location = `/${preview_id}`;
+  } else if (slug) {
+    Location = `/${slug}`;
+  } else if (path) {
+    Location = `/${path}`;
   }
 
   // Redirect to the path from the fetched post

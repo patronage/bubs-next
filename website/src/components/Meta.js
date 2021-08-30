@@ -26,7 +26,7 @@ export default function Meta({ title, description, image, seo }) {
       width: 1200,
       height: 628,
     });
-  } else if (globals.seo.openGraph?.defaultImage?.sourceUrl) {
+  } else if (globals?.seo.openGraph?.defaultImage?.sourceUrl) {
     imageUrl = nextLoader({
       src: globals.seo.openGraph.defaultImage.sourceUrl,
       width: 1200,
