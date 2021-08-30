@@ -7,7 +7,6 @@ import {
   getGlobalProps,
   getAllContentWithSlug,
 } from 'lib/wordpress';
-import _find from 'lodash/find';
 
 import { GlobalsProvider } from '../contexts/GlobalsContext';
 
@@ -99,9 +98,9 @@ export async function getStaticProps({
   const globals = await getGlobalProps();
 
   if (Array.isArray(params.slug)) {
-    const redirect = _find(globals?.redirection?.redirects, {
-      origin: `/${params.slug[0]}/`,
-    });
+    const redirect = globals?.redirection?.redirects.find(
+      (row) => row.origin === `/${params.slug[0]}/`,
+    );
 
     if (redirect) {
       return {

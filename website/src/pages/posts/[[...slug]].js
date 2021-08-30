@@ -4,7 +4,6 @@ import PostArchive from 'components/post/PostArchive';
 import { GlobalsProvider } from 'contexts/GlobalsContext';
 import { staticPropHelper, staticPathGenerator } from 'lib/archive';
 import { getContent, getGlobalProps } from 'lib/wordpress';
-import _find from 'lodash/find';
 import { useRouter } from 'next/router';
 
 function PostsSinglePage({ post, globals, preview }) {
@@ -64,9 +63,9 @@ export async function getStaticProps(context) {
   const globals = await getGlobalProps();
 
   if (Array.isArray(context.params.slug)) {
-    const redirect = _find(globals?.redirection?.redirects, {
-      origin: `/posts/${context.params.slug[0]}/`,
-    });
+    const redirect = globals?.redirection?.redirects.find(
+      (row) => row.origin === `/posts/${context.params.slug[0]}/`,
+    );
 
     if (redirect) {
       return {
@@ -104,8 +103,6 @@ export async function getStaticProps(context) {
       context.preview,
       context.previewData,
     );
-
-    console.log('contentNode', context.params.slug[0], contentNode);
 
     return {
       props: {
