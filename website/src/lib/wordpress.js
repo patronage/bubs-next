@@ -494,6 +494,16 @@ export async function getGlobalProps() {
       }
     }
 
+    fragment GlobalOptions on RootQuery {
+      acfOptionsThemeSettings {
+        acfGlobalOptions {
+          footer {
+            fieldGroupName
+            footerCopyright
+          }
+        }
+      }
+    }
     fragment Redirects on RootQuery {
       redirection {
         redirects {
@@ -505,21 +515,11 @@ export async function getGlobalProps() {
       }
     }
 
-    # fragment GlobalOptions on RootQuery {
-    #   themeSettings {
-    #     acfGlobalOptions {
-    #       fieldGroupName
-    #       newsletterButton
-    #       newsletterHeading
-    #     }
-    #   }
-    # }
-
     query AllGlobals {
       ...Menus
       ...SEO
       ...Redirects
-      # ...GlobalOptions
+      ...GlobalOptions
     }
   `;
 

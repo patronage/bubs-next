@@ -98,7 +98,15 @@ export default function Footer() {
                 ))}
               </ul>
             )}
-            <p>&copy; copyright {new Date().getFullYear()}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html:
+                  globals?.acfOptionsThemeSettings?.acfGlobalOptions
+                    ?.footer?.footerCopyright,
+              }}
+            >
+              {/*&copy; copyright {new Date().getFullYear()}{' '}*/}
+            </p>
           </div>
         </div>
 
