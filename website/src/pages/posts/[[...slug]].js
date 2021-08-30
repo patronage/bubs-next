@@ -61,6 +61,22 @@ export async function getStaticProps(context) {
   // Generate props for Post Index page
   //
   const globals = await getGlobalProps();
+
+  if (Array.isArray(context.params.slug)) {
+    const redirect = globals?.redirection?.redirects.find(
+      (row) => row.origin === `/posts/${context.params.slug[0]}/`,
+    );
+
+    if (redirect) {
+      return {
+        redirect: {
+          destination: redirect.target,
+          statusCode: redirect.code,
+        },
+      };
+    }
+  }
+
   const indexProps = await staticPropHelper(
     context,
     'POST',
@@ -87,8 +103,6 @@ export async function getStaticProps(context) {
       context.preview,
       context.previewData,
     );
-
-    console.log('contentNode', context.params.slug[0], contentNode);
 
     return {
       props: {

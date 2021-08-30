@@ -1,6 +1,7 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
+import { isStaticFile } from 'lib/utils';
 import {
   getContent,
   getGlobalProps,
@@ -80,7 +81,36 @@ export async function getStaticProps({
   preview = false,
   previewData,
 }) {
+  let slug = '/';
+
+  if (params.slug?.length) {
+    slug += params.slug.join('/');
+  }
+
+  // To reduce unnecessary load on Wordpress, don't query GraphQL for common static files.
+  // This prevents things like favicons, device icons.
+  if (slug && isStaticFile(slug)) {
+    return {
+      notFound: true,
+    };
+  }
+
   const globals = await getGlobalProps();
+
+  if (Array.isArray(params.slug)) {
+    const redirect = globals?.redirection?.redirects.find(
+      (row) => row.origin === `/${params.slug[0]}/`,
+    );
+
+    if (redirect) {
+      return {
+        redirect: {
+          destination: redirect.target,
+          statusCode: redirect.code,
+        },
+      };
+    }
+  }
 
   // if your homepage doesn't come from WP, you need this to custom render and not get a 404
   // next doesn't let you have index.js and [[...slug.js]]
@@ -95,12 +125,6 @@ export async function getStaticProps({
         isHome: true,
       },
     };
-  }
-
-  let slug = '/';
-
-  if (params.slug?.length) {
-    slug += params.slug.join('/');
   }
 
   const data = await getContent(slug, preview, previewData);

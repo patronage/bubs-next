@@ -504,10 +504,21 @@ export async function getGlobalProps() {
         }
       }
     }
+    fragment Redirects on RootQuery {
+      redirection {
+        redirects {
+          matchType
+          code
+          target
+          origin
+        }
+      }
+    }
 
     query AllGlobals {
       ...Menus
       ...SEO
+      ...Redirects
       ...GlobalOptions
     }
   `;
