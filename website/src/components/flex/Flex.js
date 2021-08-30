@@ -58,7 +58,7 @@ const Flex = ({ sections }) => {
 
     // Pass the flex index to the section so we can prioritize
     // image loading for first sections, etc.
-    section.index === i;
+    section.index = i;
 
     // get ID if passed in
     let slug = '';

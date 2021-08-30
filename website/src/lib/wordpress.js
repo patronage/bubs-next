@@ -1,16 +1,11 @@
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
 
-async function fetchAPI(query, { variables } = {}) {
+async function fetchAPI(query, { variables } = {}, token) {
   const headers = { 'Content-Type': 'application/json' };
 
-  if (
-    process.env.WORDPRESS_AUTH_REFRESH_TOKEN &&
-    variables?.preview
-  ) {
-    headers[
-      'Authorization'
-    ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
+  if (variables?.preview && token) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
 
   // console.log('API', WORDPRESS_API_URL);
@@ -98,7 +93,10 @@ let fragmentCategories = /* GraphQL */ `
   }
 `;
 
-export async function getContentTypes() {
+/**
+ * Get post types and paths for preview mode redirects.
+ */
+export async function getContentTypes(token) {
   const query = /* GraphQL */ `
     query ContentTypes {
       contentTypes {
@@ -110,14 +108,26 @@ export async function getContentTypes() {
     }
   `;
 
-  const data = await fetchAPI(query, {
-    variables: { preview: true },
-  });
+  const data = await fetchAPI(
+    query,
+    {
+      variables: { preview: true },
+    },
+    token,
+  );
 
   return data?.contentTypes?.nodes;
 }
 
-export async function getPreviewContent(id, idType = 'DATABASE_ID') {
+/**
+ * To assist with Preview Mode, this will grab status for content by DB id
+ * (needed for revisions, unpublished content)
+ */
+export async function getPreviewContent(
+  id,
+  idType = 'DATABASE_ID',
+  token,
+) {
   const query = /* GraphQL */ `
     query PreviewContent($id: ID!, $idType: ContentNodeIdTypeEnum!) {
       contentNode(id: $id, idType: $idType) {
@@ -134,9 +144,13 @@ export async function getPreviewContent(id, idType = 'DATABASE_ID') {
     }
   `;
 
-  const data = await fetchAPI(query, {
-    variables: { id, idType, preview: true },
-  });
+  const data = await fetchAPI(
+    query,
+    {
+      variables: { id, idType, preview: true },
+    },
+    token,
+  );
 
   return data.contentNode;
 }
@@ -149,9 +163,8 @@ export async function getPreviewContent(id, idType = 'DATABASE_ID') {
  * only that post type instead of getting posts from any CPT
  */
 export async function getAllContentWithSlug(contentType) {
-  const data = await fetchAPI(
-    /* GraphQL */
-    `${
+  const query = /* GraphQL */ `
+    ${
       contentType
         ? 'query AllContent($contentType: ContentTypeEnum!) '
         : 'query AllContent'
@@ -166,25 +179,25 @@ export async function getAllContentWithSlug(contentType) {
         }
       }
     }
-  `,
-    {
-      variables: {
-        contentType,
-      },
+  `;
+
+  const data = await fetchAPI(query, {
+    variables: {
+      contentType,
     },
-  );
-  return data;
+  });
+  return data?.contentNodes;
 }
 
 /**
  * Get fields for single page regardless of post type.
  */
 export async function getContent(slug, preview, previewData) {
-  const postPreview = preview && previewData?.post;
-
   if (preview) {
     // Get the content types to help build preview URLs
-    const contentTypesArray = await getContentTypes();
+    const contentTypesArray = await getContentTypes(
+      previewData?.token,
+    );
     const contentTypes = {};
 
     for (const contentType of contentTypesArray) {
@@ -214,10 +227,6 @@ export async function getContent(slug, preview, previewData) {
       slug += '?preview=true';
     }
   }
-
-  // @todo remove?
-  const isDraft = postPreview?.status === 'draft';
-  const isRevision = postPreview?.status === 'publish';
 
   let query = /* GraphQL */ `
     query GetContent($slug: ID!, $preview: Boolean) {
@@ -311,9 +320,13 @@ export async function getContent(slug, preview, previewData) {
   `;
 
   // console.log('query for getContent', query);
-  const data = await fetchAPI(query, {
-    variables: { slug, preview: !!preview },
-  });
+  const data = await fetchAPI(
+    query,
+    {
+      variables: { slug, preview: !!preview },
+    },
+    previewData?.token,
+  );
 
   // console.log('data', data);
   return data;
@@ -438,7 +451,6 @@ export async function getCategories() {
 
 /**
  * Global Props
- * (Might merge into other queries via fragment)
  * */
 export async function getGlobalProps() {
   let fragmentMenu = /* GraphQL */ `

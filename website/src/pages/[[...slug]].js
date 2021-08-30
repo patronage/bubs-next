@@ -115,7 +115,7 @@ export async function getStaticProps({
     props: {
       globals: {
         ...globals,
-        pageOptions: data.post?.acfPageOptions || null,
+        pageOptions: data.contentNode?.acfPageOptions || null,
       },
       preview: preview || false,
       post: data.contentNode,
