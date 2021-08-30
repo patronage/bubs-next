@@ -31,4 +31,17 @@ module.exports = withBundleAnalyzer({
       },
     ];
   },
+
+  // For some projects, /wp-content upload paths still need to resolve
+  // Proxy the resource up to Wordpress. Uncomment to enable.
+  /*async redirects() {
+    return [
+      {
+        source: '/wp-content/uploads/:path*',
+        destination:
+          'https://bubsnext.wpengine.com/wp-content/uploads/:path*',
+        permanent: true,
+      },
+    ];
+  },*/
 });

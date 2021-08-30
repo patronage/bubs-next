@@ -494,6 +494,17 @@ export async function getGlobalProps() {
       }
     }
 
+    fragment Redirects on RootQuery {
+      redirection {
+        redirects {
+          matchType
+          code
+          target
+          origin
+        }
+      }
+    }
+
     # fragment GlobalOptions on RootQuery {
     #   themeSettings {
     #     acfGlobalOptions {
@@ -507,6 +518,7 @@ export async function getGlobalProps() {
     query AllGlobals {
       ...Menus
       ...SEO
+      ...Redirects
       # ...GlobalOptions
     }
   `;
