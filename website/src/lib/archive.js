@@ -59,8 +59,7 @@ export async function staticPathGenerator(type = 'post_type') {
       }
     } else {
       // Post type archive
-      const { contentNodes } = await getAllContentWithSlug('POST');
-      const allPosts = contentNodes;
+      const allPosts = await getAllContentWithSlug('POST');
       paths.push({ params: { slug: [] } }); // Index Page
       const posts = allPosts.nodes || [];
 

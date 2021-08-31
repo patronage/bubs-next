@@ -4,17 +4,8 @@
  *   _URL = domain plus https
  *
  *  Required in config:
- *    * VERCEL_DOMAIN
  *    * WORDPRESS_DOMAIN
  */
-
-export const VERCEL_DOMAIN = process.env.VERCEL_DOMAIN;
-
-export const VERCEL_URL = VERCEL_DOMAIN
-  ? VERCEL_DOMAIN.includes('localhost')
-    ? 'http://' + VERCEL_DOMAIN
-    : 'https://' + VERCEL_DOMAIN
-  : '';
 
 export const WORDPRESS_DOMAIN = process.env.WORDPRESS_DOMAIN;
 

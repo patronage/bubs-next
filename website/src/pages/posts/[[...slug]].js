@@ -62,7 +62,7 @@ export async function getStaticProps(context) {
   //
   const globals = await getGlobalProps();
 
-  if (Array.isArray(context.params.slug)) {
+  if (Array.isArray(context.params.slug) && Array.isArray(globals?.redirection?.redirects)) {
     const redirect = globals?.redirection?.redirects.find(
       (row) => row.origin === `/posts/${context.params.slug[0]}/`,
     );

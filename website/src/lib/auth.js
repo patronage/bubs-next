@@ -1,5 +1,4 @@
-import { trimTrailingSlash } from 'lib/utils';
-const WORDPRESS_URL = trimTrailingSlash(process.env.WORDPRESS_URL);
+import { WORDPRESS_URL } from './constants';
 const API_CLIENT_SECRET = process.env.WORDPRESS_HEADLESS_SECRET;
 
 export async function authorize(code) {

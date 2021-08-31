@@ -97,8 +97,8 @@ export async function getStaticProps({
 
   const globals = await getGlobalProps();
 
-  if (Array.isArray(params.slug)) {
-    const redirect = globals?.redirection?.redirects.find(
+  if (Array.isArray(params.slug) && Array.isArray(globals?.redirection?.redirects) ) {
+    const redirect = globals?.redirection?.redirects?.find(
       (row) => row.origin === `/${params.slug[0]}/`,
     );
 
