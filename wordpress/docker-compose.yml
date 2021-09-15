@@ -31,7 +31,7 @@ services:
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENV', 'development');
-        define('WORDPRESS_AUTH_SECRET', 'bubs-next-wp-auth-secret-key');
-        define('WORDPRESS_HEADLESS_SECRET', 'bubs-next-headless-secret-key');
+        define('HEADLESS_AUTH_SECRET', 'bubs-next-wp-auth-secret-key');
+        define('HEADLESS_API_SECRET', 'bubs-next-headless-secret-key');
 volumes:
   db_data: {}
