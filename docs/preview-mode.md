@@ -22,9 +22,9 @@ Our goal with implementing this was to use built in Next.js and WordPress functi
 
 1. On your production/staging WordPress (which isn't versioned and on WP Engine requires SFTP/SSH) open `wp-config.php`, scroll to the bottom, and add two variables which help configure preview mode. These are used to help secure the authentication tokens therefore need to be randomly generated for each project. [You can get a strong random key from GRC's passwords page.](https://www.grc.com/passwords.htm) Make sure both values are different.
    `define('HEADLESS_AUTH_SECRET', 'bubs-next-wp-auth-secret-key');`
-   `define('HEADLESS_SECRET', 'bubs-next-headless-secret-key');`
+   `define('HEADLESS_API_SECRET', 'bubs-next-headless-secret-key');`
 
-2. Save the value of `WORDPRESS_HEADLESS_SECRET` to the Vercel environment variable that correlates to `HEADLESS_SECRET` you just edited. Set `WORDPRESS_DOMAIN` to the root URL of the Wordpress instance (without /graphql)
+2. Save `HEADLESS_API_SECRET` to Vercel as an environment variable, this is needed to authenticate API calls to WordPress to securely generate the logged in user's access token to activate preview mode. `HEADLESS_AUTH_SECRET` only lives inside WordPress to encrypt the access token, DO NOT copy/use this value outside of the setting in `wp-config.php`. Set `WORDPRESS_DOMAIN` to the root URL of the Wordpress instance (without /graphql)
 
 3. Open `wordpress/wp-content/headless/functions.php` and edit the values for `$preview_domain` for staging and production. The staging URL can be also be set from within the Wordpress dashboard under `Headless Settings` menu item, but make sure a generic preview URL is selected as a fallback.
 

@@ -1,5 +1,5 @@
 import { WORDPRESS_URL } from './constants';
-const API_CLIENT_SECRET = process.env.WORDPRESS_HEADLESS_SECRET;
+const API_CLIENT_SECRET = process.env.HEADLESS_API_SECRET;
 
 export async function authorize(code) {
   if (!WORDPRESS_URL) {
