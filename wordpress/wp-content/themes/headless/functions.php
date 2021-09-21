@@ -7,6 +7,7 @@
 // Load WP Config files
 //
 
+$site_name = '';
 $headless_domain = ''; // leave blank;
 $production_headless_domain = 'https://bubs-next.vercel.app';
 $staging_wp_host = 'bubsnexts.wpengine.com';
@@ -60,13 +61,12 @@ include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
 include_once 'setup/helpers/admin-env.php';
 include_once 'setup/helpers/auth.php';
+include_once 'setup/helpers/google-login-cookies.php';
 include_once 'setup/helpers/headless-redirect.php';
 #include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/menus.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
-
-
 
 // Security Settings
 // include_once 'setup/helpers/google-login-force.php';
