@@ -6,6 +6,14 @@ export function trimTrailingSlash(str) {
   return str.replace(/\/$/, '');
 }
 
+export function trimLeadingSlash(str) {
+  if (!str) {
+    return str;
+  }
+
+  return str.replace(/^\/+/, '');
+}
+
 /**
  * Lightweight determination if filename is a static asset. Avoids external deps.
  * @param {string} fileName Name of the path or file being requested
