@@ -9,14 +9,11 @@ const securityHeaders = [{
   key: 'X-Content-Type-Options',
   value: 'nosniff'
 }, {
-  key: 'X-Frame-Options',
-  value: 'SAMEORIGIN'
-}, {
   key: 'Content-Security-Policy',
   value: 'upgrade-insecure-requests'
 }, {
   key: 'X-XSS-Protection',
-  value: '1; mode=block'
+  value: '1'
 }];
 
 module.exports = withBundleAnalyzer({
