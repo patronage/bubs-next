@@ -7,8 +7,10 @@ $password_protected = true;
 $graphcdn_purge_api = 'http://host.docker.internal:3000/api/graphcdn/'; // Docker to host computer endpoint
 // END CONFIG //
 
-if ( defined('HEADLESS_DOMAIN') && WP_HOST != 'localhost' ) {
-  $graphcdn_purge_api = HEADLESS_DOMAIN . '/api/graphcdn/';
+global $headless_domain;
+
+if ( isset($headless_domain) && WP_HOST != 'localhost' ) {
+  $graphcdn_purge_api = $headless_domain . '/api/graphcdn/';
 }
 
 // Actions to apply purge on
