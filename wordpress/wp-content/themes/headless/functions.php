@@ -13,7 +13,6 @@ $staging_wp_host = 'bubsnexts.wpengine.com';
 $staging_headless_domain = 'https://bubs-next-git-staging-patronage.vercel.app';
 $local_domain = 'http://localhost:3000';
 
-
 // Determine the hosting environment we're in
 if ( defined('WP_ENV') && WP_ENV == "development" ) {
   define('WP_HOST', 'localhost');
@@ -63,7 +62,7 @@ include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
 include_once 'setup/helpers/admin-env.php';
 //include_once 'setup/helpers/cloudinary.php';
-#include_once 'setup/helpers/webhooks.php';
+include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/menus.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
@@ -73,6 +72,7 @@ include_once 'setup/helpers/headless-redirect.php';
 // Security Settings
 // include_once 'setup/helpers/google-login-force.php';
 // include_once 'setup/helpers/password-rotation-wpe.php';
+include_once 'setup/helpers/google-login-cookies.php';
 include_once 'setup/helpers/xmlrpc-disable.php';
 
 // Wordpress Theme Support Config
