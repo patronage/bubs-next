@@ -5,7 +5,7 @@ function headless_redirect(){
   $preview_secret = defined('WORDPRESS_PREVIEW_SECRET') ? WORDPRESS_PREVIEW_SECRET : '';
 
   $post_type = get_post_type(get_the_ID());
-  $slug = str_replace(home_url(), '', get_permalink(get_the_ID()));
+  $slug = ltrim(str_replace(home_url(), '', get_permalink(get_the_ID())), '/');
   $redirect = '';
   // check if preview and user has edit ability.
   // if so, redirect to preview path
