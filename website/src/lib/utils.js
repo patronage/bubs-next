@@ -1,9 +1,17 @@
 export function trimTrailingSlash(str) {
-  if (!str) {
+  if (!str || str === '/' ) {
     return str;
   }
 
   return str.replace(/\/$/, '');
+}
+
+export function trimLeadingSlash(str) {
+  if (!str) {
+    return str;
+  }
+
+  return str.replace(/^\/+/, '');
 }
 
 /**
