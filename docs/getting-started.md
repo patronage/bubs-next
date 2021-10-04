@@ -17,7 +17,8 @@ A few customization steps we reccomend for any site:
 - Update the image whitelist domains in `website/next.config.js`
 - If your project is a private repo, go into `wordpress/.gitignore`, and comment out the first section assuming your project is private. This will check in all WordPress plugin source. If you are a public repo you can optionally adjust the `.gitignore` to only hide private deps.
 - If your project is a private repo, you can add shared keys in `wordpress/composer.json` to make it easier for other devs to get started. For example `{%PLUGIN_ACF_KEY}` can be converted to a fixed key. Alternatively, you can set an ENV variable and leave this private.
-- Update the `WORDPRESS_DB_NAME` env variable stored in `wordpress/docker-compose.yml` so that a new DB is created for the project.
+- Update the `WORDPRESS_DB_NAME` env variable stored in `wordpress/docker-compose.yml` so that a new DB is created for the project. Also update the `WORDPRESS_DB_NAME` variable in `wordpress/_build/db.sh`.
+- Update `.env.sample` so that new developers are able to base their `.env.local` off project specific values.
 
 ## Running Next
 
