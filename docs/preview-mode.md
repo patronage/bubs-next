@@ -28,6 +28,7 @@ define('HEADLESS_API_SECRET', 'bubs-next-headless-secret-key');
 
 2. Save `HEADLESS_API_SECRET` to Vercel as an environment variable, this is needed to authenticate API calls to WordPress to securely generate the logged in user's access token to activate preview mode. `HEADLESS_AUTH_SECRET` only lives inside WordPress to encrypt the access token, DO NOT copy/use this value outside of the setting in `wp-config.php`. Set `WORDPRESS_DOMAIN` to the root URL of the Wordpress instance (without /graphql)
 
-3. Open `wordpress/wp-content/headless/functions.php` and edit the values for `$preview_domain` for staging and production. The staging URL can be also be set from within the Wordpress dashboard under `Headless Settings` menu item, but make sure a generic preview URL is selected as a fallback.
+3. Open `wordpress/wp-content/headless/functions.php` and edit the values for `$preview_domain` for production. 
+Within staging, where we often use Vercel preview builds with different URLs, the Preview URL can be set in the Appearance > Customization section in the theme, under the "Headless" options heading. 
 
 4. Preview mode should now work. You can test by logging into Wordpress admin, creating a post (but don't publish!) and then click "Preview". If it all works, you should be able to view your post with a black bar on the top of the page indicating preview mode is enabled.
