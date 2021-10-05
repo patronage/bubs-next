@@ -62,6 +62,7 @@ include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
 include_once 'setup/helpers/admin-env.php';
 //include_once 'setup/helpers/cloudinary.php';
+include_once 'setup/helpers/images.php';
 include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/menus.php';
 include_once 'setup/helpers/wpgraphql.php';
