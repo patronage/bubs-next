@@ -1,0 +1,88 @@
+import { flexHero } from './flexHero';
+import { flexMedia } from './flexMedia';
+import { flexWysiwygContent } from './flexWysiwygContent';
+import pageOptions from './fragmentPageOptions';
+import seo from './fragmentSeo';
+
+export const queryContent = /* GraphQL */ `
+  query GetContent($slug: ID!, $preview: Boolean) {
+    contentNode(id: $slug, idType: URI, asPreview: $preview) {
+      __typename
+      id
+      databaseId
+      isPreview
+      link
+      slug
+      uri
+      date
+      template {
+        ... on Template_Flex {
+          acfFlex {
+            fieldGroupName
+            flexContent {
+              ${flexHero()}
+              ${flexMedia()}
+              ${flexWysiwygContent()}
+            }
+          }
+        }
+      }
+      ... on NodeWithTitle {
+        title
+      }
+      ... on NodeWithFeaturedImage {
+        featuredImage {
+          node {
+            caption
+            sourceUrl
+            mediaDetails {
+              height
+              width
+            }
+          }
+        }
+      }
+      ... on NodeWithTemplate {
+        template {
+          __typename
+          templateName
+        }
+      }
+      ... on NodeWithAuthor {
+        authorId
+        author {
+          node {
+            id
+            name
+            nicename
+            lastName
+          }
+        }
+      }
+      ... on NodeWithExcerpt {
+        excerpt
+      }
+      ... on Page {
+        isFrontPage
+        content
+        ${seo}
+        ${pageOptions}
+      }
+      ... on Post {
+        content
+        ${seo}
+        ${pageOptions}
+      }
+      ... on PressRelease {
+        content
+        ${seo}
+        # $ {pageOptions}
+      }
+      ... on Action {
+        content
+        ${seo}
+        # $ {pageOptions}
+      }
+    }
+  }
+`;
