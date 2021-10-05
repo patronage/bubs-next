@@ -38,7 +38,7 @@ function headless_redirect(){
       $auth_code = wpe_headless_generate_authentication_code(
         wp_get_current_user()
       );
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug;
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug . '&id=' . get_the_ID();
     } else {
       $redirect = $headless_domain . $slug;
     }
@@ -48,7 +48,7 @@ function headless_redirect(){
       $auth_code = wpe_headless_generate_authentication_code(
         wp_get_current_user()
       );
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path;
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path . '&id=' . get_the_ID();
     } else {
       $redirect = $headless_domain . $path;
     }

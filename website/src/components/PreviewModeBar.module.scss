@@ -1,7 +1,5 @@
 .bar {
-  position: sticky;
   z-index: 1000;
-  top: 0;
   width: 100%;
   padding: 15px 0;
   background-color: #000;
@@ -12,4 +10,14 @@
   a {
     color: #fff;
   }
+}
+
+.top {
+  position: sticky;
+  top: 0;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0;
 }
