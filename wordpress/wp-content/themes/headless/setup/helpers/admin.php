@@ -43,6 +43,10 @@ function lower_wpseo_priority() {
 }
 add_filter( 'wpseo_metabox_prio', 'lower_wpseo_priority' );
 
+//
+// ACF
+//
+
 // Hide ACF in production to ensure version controlled JSON is truth
 // http://awesomeacf.com/snippets/hide-the-acf-admin-menu-item-on-selected-sites/
 function awesome_acf_hide_acf_admin() {
