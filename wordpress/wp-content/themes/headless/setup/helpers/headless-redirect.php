@@ -4,7 +4,7 @@ function headless_redirect(){
   global $headless_domain;
 
   $post_type = get_post_type(get_the_ID());
-  $slug = str_replace(home_url(), '', get_permalink(get_the_ID()));
+  $slug = ltrim(str_replace(home_url(), '', get_permalink(get_the_ID())), '/');
   $redirect = '';
   // check if preview and user has edit ability.
   // if so, redirect to preview path
