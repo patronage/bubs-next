@@ -1,17 +1,21 @@
 import cx from 'classnames';
 import { WORDPRESS_DOMAIN } from 'lib/constants';
 import { useState, useEffect } from 'react';
+import { BsInfoCircle } from 'react-icons/bs';
 import styles from './PreviewModeBar.module.scss';
 
 const WORDPRESS_EDIT_URL =
   process.env.WORDPRESS_EDIT_URL ||
   `https://${WORDPRESS_DOMAIN}/wp-admin/post.php?action=edit`;
 
-export default function PreviewModeBar({ postId, position = 'top' }) {
+export default function PreviewModeBar({
+  postId,
+  position = 'bottom',
+}) {
   const [redirect, setRedirect] = useState('/api/exit-preview');
   let positionClassName = styles['top'];
 
-  if ( position === 'bottom' ) {
+  if (position === 'bottom') {
     positionClassName = styles['bottom'];
   }
 
@@ -30,6 +34,9 @@ export default function PreviewModeBar({ postId, position = 'top' }) {
       <div className="container">
         <div className="row">
           <div className="col text-center">
+            <span className={styles.icon}>
+              <BsInfoCircle />
+            </span>
             You are viewing this site in Preview Mode.{' '}
             {postId && (
               <>
