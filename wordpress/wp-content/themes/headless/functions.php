@@ -62,6 +62,7 @@ include_once 'setup/helpers/auth.php';
 include_once 'setup/helpers/dashboard-preview.php';
 include_once 'setup/helpers/headless-redirect.php';
 include_once 'setup/helpers/menus.php';
+include_once 'setup/helpers/permalinks.php';
 include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
