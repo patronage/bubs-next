@@ -1,5 +1,16 @@
 <?php
 
+
+function build_preview_link() {
+  global $headless_domain;
+
+  $auth_code = wpe_headless_generate_authentication_code(
+    wp_get_current_user()
+  );
+
+  return $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code);
+}
+
 function headless_redirect(){
   global $headless_domain;
 
