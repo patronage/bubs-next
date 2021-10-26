@@ -1,6 +1,5 @@
 import GlobalsContext from 'contexts/GlobalsContext';
 import { META } from 'lib/constants';
-import { nextLoader } from 'lib/image-loaders';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
 import { useContext } from 'react';
@@ -8,8 +7,12 @@ import { useContext } from 'react';
 export default function Meta({ title, description, image, seo }) {
   const globals = useContext(GlobalsContext);
 
+  // if passing in a title string, append default append if defined in META.
+  let generatedTitle = title ? `${title} ${META.titleAppend}` : '';
+
+  // populate SEO settings with either our SEO values if present, otherwise passed in specifics
   let seoSettings = {
-    title: seo?.title || title ? `${title} ${META.titleAppend}` : '',
+    title: seo?.title || generatedTitle,
     description: seo?.metaDesc || description,
     openGraph: {
       title: seo?.title || title,
@@ -17,21 +20,21 @@ export default function Meta({ title, description, image, seo }) {
     },
   };
 
+  // check for passed in image from SEO object or image param. Otherwise check for global fallback
   let imageUrl;
 
-  // check for passed in image from SEO object or image param. Otherwise check for global fallback
   if (seo?.opengraphImage?.sourceUrl || image) {
-    imageUrl = nextLoader({
-      src: seo?.opengraphImage?.sourceUrl || image,
-      width: 1200,
-      height: 628,
-    });
+    imageUrl = seo?.opengraphImage?.sourceUrl || image;
   } else if (globals?.seo.openGraph?.defaultImage?.sourceUrl) {
-    imageUrl = nextLoader({
-      src: globals.seo.openGraph.defaultImage.sourceUrl,
-      width: 1200,
-      height: 628,
-    });
+    imageUrl = globals.seo.openGraph.defaultImage.sourceUrl;
+  }
+
+  // if relative, make absolute so that social tools don't complain
+  if (
+    imageUrl.indexOf('http://') === 0 ||
+    imageUrl.indexOf('https://') === 0
+  ) {
+    imageUrl = META.url + imageUrl;
   }
 
   if (imageUrl) {
