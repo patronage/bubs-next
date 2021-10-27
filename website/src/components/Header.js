@@ -73,6 +73,7 @@ export default function Header() {
                               }),
                             ])}
                             onClick={handleClose}
+                            target={item.target}
                           >
                             {item.label}
                           </a>
@@ -100,6 +101,7 @@ export default function Header() {
                                         },
                                       ),
                                     ])}
+                                    target={item.target}
                                     onClick={handleClose}
                                   >
                                     {item.label}
@@ -141,6 +143,7 @@ export default function Header() {
                     return styles[className];
                   }),
                 )}
+                target={item.target}
               >
                 {item.label}
                 {item.children.length > 0 && (
@@ -155,7 +158,12 @@ export default function Header() {
                 {item.children.map((item, i) => (
                   <li className="list-inline-item" key={i}>
                     <Link href={item.path}>
-                      <a className={styles.child}>{item.label}</a>
+                      <a
+                        className={styles.child}
+                        target={item.target}
+                      >
+                        {item.label}
+                      </a>
                     </Link>
                   </li>
                 ))}

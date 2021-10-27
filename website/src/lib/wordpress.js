@@ -461,6 +461,8 @@ export async function getGlobalProps() {
       parentId
       url
       path
+      target
+      cssClasses
     }
 `;
 
