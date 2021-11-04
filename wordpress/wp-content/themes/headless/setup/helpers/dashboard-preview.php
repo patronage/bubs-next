@@ -37,6 +37,6 @@ function preview_mode_widget() {
 // Add preview mode iframe
 add_action( 'in_admin_footer', function() {
   if (function_exists('build_preview_link')) {
-    echo "<iframe src=\"" . build_preview_link() . "\" style=\"width:1px:height:1px;opacity:0;\"></iframe>";
+    echo "<iframe src=\"" . build_preview_link() . "\" style=\"width:1px;height:1px;opacity:0;\"></iframe>";
   }
 });
