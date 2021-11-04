@@ -32,11 +32,7 @@ function preview_mode_widget() {
       <li><a href="<?php echo $headless_domain ?>/api/exit-preview" target="_blank">Disable preview mode</a></li>
     </ul>
   </div>
+  <? if (function_exists('build_preview_link')) {
+    echo "<iframe src=\"" . build_preview_link() . "\" style=\"width:1px:height:1px;opacity:0;\"></iframe>";
+  }?>
 <?php }
-
-// Add preview mode iframe
-add_action( 'in_admin_footer', function() {
-  if (function_exists('build_preview_link')) {
-    echo "<iframe src=\"" . build_preview_link() . "\" style=\"width:1px;height:1px;opacity:0;\"></iframe>";
-  }
-});
