@@ -37,9 +37,10 @@ export default function PreviewModeBar({
             <span className={styles.icon}>
               <BsInfoCircle />
             </span>
-            You are viewing this site in Preview Mode.{' '}
+            You are viewing this site in Preview Mode
             {postId && (
               <>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
                 <a
                   href={`${WORDPRESS_EDIT_URL}&post=${postId}`}
                   target="_blank"
@@ -50,7 +51,7 @@ export default function PreviewModeBar({
                 &nbsp;&nbsp;|&nbsp;&nbsp;
               </>
             )}
-            <a href={redirect}>Exit Preview Mode</a>
+            <a href={redirect}>Exit</a>
           </div>
         </div>
       </div>
