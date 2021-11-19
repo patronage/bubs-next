@@ -15,7 +15,8 @@
     "stylelint:fix": "npx stylelint '**/*.scss' --fix",
     "eslint": "npx eslint '**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "npx eslint '**/*.{js,jsx,ts,tsx}' --fix",
-    "analyze": "cross-env ANALYZE=true yarn build"
+    "analyze": "cross-env ANALYZE=true yarn build",
+    "prepare": "cd .. && husky install website/.husky && chmod ug+x website/.husky/* || true"
   },
   "author": "Patronage.org",
   "license": "private",
@@ -53,12 +54,6 @@
     "stylelint-config-standard": "^24.0.0",
     "stylelint-prettier": "^2.0.0",
     "stylelint-scss": "^4.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "post-merge": "./.githooks/post-merge.sh"
-    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
