@@ -55,12 +55,6 @@
     "stylelint-prettier": "^1.2.0",
     "stylelint-scss": "^3.20.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "post-merge": "./.githooks/post-merge.sh"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
     "*.{css,scss}": "stylelint --fix"
