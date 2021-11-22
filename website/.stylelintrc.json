@@ -19,6 +19,7 @@
     "scss/no-global-function-names": null,
     "scss/at-extend-no-missing-placeholder": null,
     "declaration-block-no-redundant-longhand-properties": null,
+    "color-function-notation": "legacy",
     "at-rule-empty-line-before": [
       "always",
       {
