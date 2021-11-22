@@ -7,6 +7,19 @@ import { useContext } from 'react';
 export default function Meta({ title, description, image, seo }) {
   const globals = useContext(GlobalsContext);
 
+  // make sure image is absolute
+  function imagePath(imageUrl) {
+    // if relative, make absolute so that twitter doesn't complain
+    if (
+      imageUrl.indexOf('http://') === -1 &&
+      imageUrl.indexOf('https://') === -1
+    ) {
+      imageUrl = META.url + imageUrl;
+    }
+
+    return imageUrl;
+  }
+
   // if passing in a title string, append default append if defined in META.
   let generatedTitle = title ? `${title} ${META.titleAppend}` : '';
 
@@ -29,18 +42,10 @@ export default function Meta({ title, description, image, seo }) {
     imageUrl = globals.seo.openGraph.defaultImage.sourceUrl;
   }
 
-  // if relative, make absolute so that social tools don't complain
-  if (
-    imageUrl.indexOf('http://') === 0 ||
-    imageUrl.indexOf('https://') === 0
-  ) {
-    imageUrl = META.url + imageUrl;
-  }
-
   if (imageUrl) {
     seoSettings.openGraph.images = [
       {
-        url: META.url + imageUrl,
+        url: imagePath(imageUrl),
         width: 1200,
         height: 628,
       },
