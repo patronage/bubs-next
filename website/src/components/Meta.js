@@ -28,8 +28,9 @@ export default function Meta({ title, description, image, seo }) {
     title: seo?.title || generatedTitle,
     description: seo?.metaDesc || description,
     openGraph: {
-      title: seo?.title || title,
-      description: seo?.opengraphDescription || seo?.metaDesc,
+      title: seo?.opengraphTitle || seo?.title || title,
+      description:
+        seo?.opengraphDescription || seo?.metaDesc || description,
     },
   };
 
@@ -80,6 +81,27 @@ export default function Meta({ title, description, image, seo }) {
           sizes="180x180"
         />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        {seo?.twitterTitle && (
+          <meta
+            property="twitter:title"
+            content={seo.twitterTitle}
+            key="meta_twitter_title"
+          />
+        )}
+        {seo?.twitterDescription && (
+          <meta
+            property="twitter:description"
+            content={seo.twitterDescription}
+            key="meta_twitter_description"
+          />
+        )}
+        {seo?.twitterImage?.sourceUrl && (
+          <meta
+            property="twitter:image"
+            content={imagePath(seo.twitterImage.sourceUrl)}
+            key="meta_twitter_image"
+          />
+        )}
       </Head>
       <NextSeo {...seoSettings} />
     </>
