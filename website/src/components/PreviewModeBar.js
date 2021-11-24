@@ -1,12 +1,12 @@
 import cx from 'classnames';
-import { WORDPRESS_DOMAIN } from 'lib/constants';
+import { WORDPRESS_URL } from 'lib/constants';
 import { useState, useEffect } from 'react';
 import { BsInfoCircle } from 'react-icons/bs';
 import styles from './PreviewModeBar.module.scss';
 
 const WORDPRESS_EDIT_URL =
   process.env.WORDPRESS_EDIT_URL ||
-  `https://${WORDPRESS_DOMAIN}/wp-admin/post.php?action=edit`;
+  `${WORDPRESS_URL}/wp-admin/post.php?action=edit`;
 
 export default function PreviewModeBar({
   postId,
