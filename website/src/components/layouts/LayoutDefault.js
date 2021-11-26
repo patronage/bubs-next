@@ -20,7 +20,7 @@ export default function LayoutDefault({
         image={image}
         seo={seo}
       />
-      {preview && <PreviewModeBar postId={postId} position="top" />}
+      {preview && <PreviewModeBar postId={postId} />}
       <Header />
       {children}
       <Footer />
