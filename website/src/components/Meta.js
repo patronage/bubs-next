@@ -1,5 +1,5 @@
 import GlobalsContext from 'contexts/GlobalsContext';
-import { META, WORDPRESS_DOMAIN, WORDPRESS_URL } from 'lib/constants';
+import { META, WORDPRESS_URL } from 'lib/constants';
 import { trimTrailingSlash } from 'lib/utils';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
@@ -61,16 +61,13 @@ export default function Meta({ title, description, image, seo }) {
     ];
   }
 
-  // defaults are fine, only set noindex or nofollow if explicit
+  // set noindex or nofollow if explicitly defined in Yoast
   if (seo?.metaRobotsNoindex == 'noindex') {
     seoSettings.noindex = true;
   }
   if (seo?.metaRobotsNofollow == 'nofollow') {
     seoSettings.nofollow = true;
   }
-
-  // console.log('seoSettings', JSON.stringify(seoSettings, null, 2));
-  // console.log('seo', JSON.stringify(seo, null, 2));
 
   return (
     <>
@@ -82,13 +79,17 @@ export default function Meta({ title, description, image, seo }) {
         />
         <meta charSet="utf-8" key="meta_charset" />
         {/* favicons */}
-        {/* <link rel="icon" href="/cropped-favicon-32x32.png" sizes="32x32" /> */}
-        <link
-          rel="apple-touch-icon"
-          href="/apple-touch-icon.png"
-          sizes="180x180"
-        />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        {META.icon32 && (
+          <link rel="icon" href={META.icon32} sizes="32x32" />
+        )}
+        {META.iconApple && (
+          <link
+            rel="apple-touch-icon"
+            href={META.iconApple}
+            sizes="180x180"
+          />
+        )}
+        {/* twitter specific meta if defined */}
         {seo?.twitterTitle && (
           <meta
             property="twitter:title"
@@ -111,6 +112,7 @@ export default function Meta({ title, description, image, seo }) {
           />
         )}
       </Head>
+      {/* pass customized SEO object to NextSeo to render all other tags */}
       <NextSeo {...seoSettings} />
     </>
   );
