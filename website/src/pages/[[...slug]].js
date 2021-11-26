@@ -12,7 +12,6 @@ import { GlobalsProvider } from '../contexts/GlobalsContext';
 
 export default function Page({
   post,
-  postId,
   preview,
   isHome,
   globals,
@@ -45,7 +44,7 @@ export default function Page({
         <LayoutDefault
           preview={preview}
           seo={post?.seo}
-          postId={postId}
+          postId={post?.databaseId}
           title={post?.title}
         >
           <Flex sections={flexSections} />
@@ -57,7 +56,7 @@ export default function Page({
   return (
     <GlobalsProvider globals={globals}>
       <LayoutDefault
-        postId={postId}
+        postId={post?.databaseId}
         seo={post?.seo}
         preview={preview}
         title={post?.title}
@@ -97,8 +96,10 @@ export async function getStaticProps({
 
   const globals = await getGlobalProps();
 
-  if (Array.isArray(params.slug) && Array.isArray(globals?.redirection?.redirects) ) {
-
+  if (
+    Array.isArray(params.slug) &&
+    Array.isArray(globals?.redirection?.redirects)
+  ) {
     // check for redirect. remove trailing slashes from each to normalize
     const redirect = globals?.redirection?.redirects?.find(
       (row) =>

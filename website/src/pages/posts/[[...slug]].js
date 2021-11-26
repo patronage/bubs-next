@@ -9,7 +9,11 @@ import { useRouter } from 'next/router';
 function PostsSinglePage({ post, globals, preview }) {
   return (
     <GlobalsProvider globals={globals}>
-      <LayoutDefault title={post?.title} preview={preview}>
+      <LayoutDefault
+        title={post?.title}
+        preview={preview}
+        postId={post?.databaseId}
+      >
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -62,7 +66,10 @@ export async function getStaticProps(context) {
   //
   const globals = await getGlobalProps();
 
-  if (Array.isArray(context.params.slug) && Array.isArray(globals?.redirection?.redirects)) {
+  if (
+    Array.isArray(context.params.slug) &&
+    Array.isArray(globals?.redirection?.redirects)
+  ) {
     const redirect = globals?.redirection?.redirects.find(
       (row) => row.origin === `/posts/${context.params.slug[0]}/`,
     );

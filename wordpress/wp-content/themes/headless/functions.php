@@ -13,6 +13,7 @@ $production_headless_domain = 'https://bubs-next.vercel.app';
 $staging_wp_host = 'bubsnexts.wpengine.com';
 $staging_headless_domain = 'https://bubs-next-git-staging-patronage.vercel.app';
 $local_domain = 'http://localhost:3000';
+$docs_link = ''; // set to a path if you have a site/document for editor instructions
 
 // Determine the hosting environment we're in
 if ( defined('WP_ENV') && WP_ENV == "development" ) {
@@ -58,9 +59,11 @@ include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
 include_once 'setup/helpers/admin-env.php';
 include_once 'setup/helpers/auth.php';
-include_once 'setup/helpers/webhooks.php';
+include_once 'setup/helpers/dashboard-preview.php';
 include_once 'setup/helpers/headless-redirect.php';
 include_once 'setup/helpers/menus.php';
+include_once 'setup/helpers/permalinks.php';
+include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
 
