@@ -15,6 +15,8 @@ The primary way we tackle this is to combine the [WordPress Yoast SEO plugin](ht
 
 Inside of our [Meta component](../website/src/components/Meta.js), we merge together defaults defined in `lib/constants.js` and merge in passed in yoast data pulled from graphql via globals context.
 
+An important variable to set is the `META.url` to the production domain. This is used to rewrite relative images and relative links from sitemaps and feeds so that those are only indexed from your production URL.
+
 ## Sitemaps and RSS Feeds
 
 One approach to sitemaps is to [generate them in Next](https://www.npmjs.com/package/next-sitemap). You can similarly create a feed using [some custom code](https://ashleemboyer.com/how-i-added-an-rss-feed-to-my-nextjs-site) and the feed npm package.

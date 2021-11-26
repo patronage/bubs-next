@@ -21,6 +21,7 @@ module.exports = withBundleAnalyzer({
 
   async rewrites() {
     return [
+      // these two rules are used to locally serve (and rewrite urls) from WP
       {
         source: '/(.*)sitemap.xml',
         destination: '/api/upstream-proxy',
@@ -29,19 +30,11 @@ module.exports = withBundleAnalyzer({
         source: '/feed',
         destination: '/api/upstream-proxy',
       },
-    ];
-  },
-
-  // For some projects, /wp-content upload paths still need to resolve
-  // Proxy the resource up to Wordpress. Uncomment to enable.
-  /*async redirects() {
-    return [
+      // resolve relative links to WP upload assets
       {
         source: '/wp-content/uploads/:path*',
-        destination:
-          'https://bubsnext.wpengine.com/wp-content/uploads/:path*',
-        permanent: true,
+        destination: `https://${process.env.WORDPRESS_DOMAIN}/wp-content/uploads/:path*`,
       },
     ];
-  },*/
+  },
 });

@@ -1,5 +1,6 @@
 import GlobalsContext from 'contexts/GlobalsContext';
-import { META } from 'lib/constants';
+import { META, WORDPRESS_DOMAIN, WORDPRESS_URL } from 'lib/constants';
+import { trimTrailingSlash } from 'lib/utils';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
 import { useContext } from 'react';
@@ -9,12 +10,19 @@ export default function Meta({ title, description, image, seo }) {
 
   // make sure image is absolute
   function imagePath(imageUrl) {
-    // if relative, make absolute so that twitter doesn't complain
+    // if enabled rewrite WordPress image paths to local (origin often has noindex tags)
+    if (META.proxyWordPressImages && WORDPRESS_URL) {
+      let newUrl = imageUrl.replace(WORDPRESS_URL, '');
+      imageUrl = newUrl;
+    }
+    // if root relative, make absolute so that twitter doesn't complain
     if (
       imageUrl.indexOf('http://') === -1 &&
-      imageUrl.indexOf('https://') === -1
+      imageUrl.indexOf('https://') === -1 &&
+      META.url &&
+      imageUrl.startsWith('/')
     ) {
-      imageUrl = META.url + imageUrl;
+      imageUrl = trimTrailingSlash(META.url) + imageUrl;
     }
 
     return imageUrl;
@@ -76,7 +84,7 @@ export default function Meta({ title, description, image, seo }) {
         {/* favicons */}
         {/* <link rel="icon" href="/cropped-favicon-32x32.png" sizes="32x32" /> */}
         <link
-          rel="icon"
+          rel="apple-touch-icon"
           href="/apple-touch-icon.png"
           sizes="180x180"
         />
