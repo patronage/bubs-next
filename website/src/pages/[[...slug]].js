@@ -1,7 +1,12 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
-import { isStaticFile, trimTrailingSlash } from 'lib/utils';
+import {
+  trimTrailingSlash,
+  trimLeadingSlash,
+  isStaticFile,
+  isUrlAbsolute,
+} from 'lib/utils';
 import {
   getContent,
   getGlobalProps,
@@ -100,22 +105,23 @@ export async function getStaticProps({
     Array.isArray(params.slug) &&
     Array.isArray(globals?.redirection?.redirects)
   ) {
-    // check for redirect. remove trailing slashes from each to normalize
+    // check for redirect. remove trailing/leading slashes from each to normalize
     const redirect = globals?.redirection?.redirects?.find(
       (row) =>
-        trimTrailingSlash(row.origin) === trimTrailingSlash(slug),
+        trimTrailingSlash(trimLeadingSlash(row.origin)) ===
+        trimTrailingSlash(trimLeadingSlash(slug)),
     );
 
     if (redirect) {
-      // check for absolute, otherwise make relative with normalized slashes
+      // check for absolute, otherwise make relative with proper slashes
       let destination;
-      if (
-        redirect.target.indexOf('http://') > 0 ||
-        redirect.target.indexOf('http://')
-      ) {
-        destination = trimTrailingSlash(redirect.target);
+
+      if (isUrlAbsolute(redirect.target)) {
+        destination = redirect.target;
       } else {
-        destination = `${redirect.target}/`;
+        destination = `/${trimTrailingSlash(
+          trimLeadingSlash(redirect.target),
+        )}/`;
       }
 
       return {
