@@ -121,7 +121,7 @@ export async function getStaticProps({
       return {
         redirect: {
           destination: destination,
-          statusCode: redirect.code || 307,
+          statusCode: redirect.statusCode || 307,
         },
       };
     }
