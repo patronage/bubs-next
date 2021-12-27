@@ -3,6 +3,7 @@ import PostArchive from 'components/post/PostArchive';
 
 import { GlobalsProvider } from 'contexts/GlobalsContext';
 import { staticPropHelper, staticPathGenerator } from 'lib/archive';
+import checkRedirects from 'lib/checkRedirects';
 import { getContent, getGlobalProps } from 'lib/wordpress';
 import { useRouter } from 'next/router';
 
@@ -61,27 +62,28 @@ function Blog(props) {
 }
 
 export async function getStaticProps(context) {
+  let uri = '/posts/';
+
+  if (context.params.slug?.length) {
+    uri += context.params.slug.join('/');
+  }
   //
   // Generate props for Post Index page
   //
   const globals = await getGlobalProps();
 
-  if (
-    Array.isArray(context.params.slug) &&
-    Array.isArray(globals?.redirection?.redirects)
-  ) {
-    const redirect = globals?.redirection?.redirects.find(
-      (row) => row.origin === `/posts/${context.params.slug[0]}/`,
-    );
+  // Check for redirects first
+  const redirect = checkRedirects(
+    uri,
+    globals?.redirection?.redirects,
+  );
 
-    if (redirect) {
-      return {
-        redirect: {
-          destination: redirect.target,
-          statusCode: redirect.code,
-        },
-      };
-    }
+  if (
+    typeof redirect === 'object' &&
+    redirect?.destination &&
+    redirect?.statusCode
+  ) {
+    return { redirect: redirect };
   }
 
   const indexProps = await staticPropHelper(
