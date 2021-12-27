@@ -66,6 +66,9 @@
     "react/display-name": 1,
 
     // React Hooks
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+
+    // Next
+    "@next/next/no-page-custom-font": "off"
   }
 }
