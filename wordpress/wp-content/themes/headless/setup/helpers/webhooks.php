@@ -33,8 +33,8 @@ if ($headless_webhooks_redirects_redirection){
 
 function purge_redirection() {
   purge_post('redirects');
-  remove_action('redirection_redirect_deleted', 'purge_redirects', 10,2);
-  remove_action('redirection_redirect_updated', 'purge_redirects', 10,2);
+  remove_action('redirection_redirect_deleted', 'purge_redirection', 10,2);
+  remove_action('redirection_redirect_updated', 'purge_redirection', 10,2);
 }
 
 // check if yoast_redirects enabled
