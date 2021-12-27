@@ -2,6 +2,7 @@ import {
   trimTrailingSlash,
   trimLeadingSlash,
   isUrlAbsolute,
+  isUrlAnchor,
 } from 'lib/utils';
 
 export default function checkRedirects(slug, redirects) {
@@ -19,6 +20,10 @@ export default function checkRedirects(slug, redirects) {
 
       if (isUrlAbsolute(redirect.target)) {
         destination = redirect.target;
+      } else if (isUrlAnchor(redirect.target)) {
+        destination = `/${trimTrailingSlash(
+          trimLeadingSlash(redirect.target),
+        )}`;
       } else {
         destination = `/${trimTrailingSlash(
           trimLeadingSlash(redirect.target),

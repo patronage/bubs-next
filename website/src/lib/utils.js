@@ -18,6 +18,10 @@ export function isUrlAbsolute(url) {
   return url.indexOf('://') > 0 || url.indexOf('//') === 0;
 }
 
+export function isUrlAnchor(url) {
+  return url.indexOf('#') > 0;
+}
+
 /**
  * Lightweight determination if filename is a static asset. Avoids external deps.
  * @param {string} fileName Name of the path or file being requested
