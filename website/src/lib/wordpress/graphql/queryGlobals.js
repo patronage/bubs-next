@@ -43,8 +43,6 @@ const globalOptions = /* GraphQL */ `
       fieldGroupName
       footer {
         footerCopyright
-        copyrightAppend
-        copyrightPrepend
       }
     }
   }
