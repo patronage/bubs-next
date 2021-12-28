@@ -15,6 +15,14 @@ $staging_headless_domain = 'https://bubs-next-git-staging-patronage.vercel.app';
 $local_domain = 'http://localhost:3000';
 $docs_link = ''; // set to a path if you have a site/document for editor instructions
 
+// webhook config
+$headless_webhooks_password_protected = true;
+$headless_webhooks_graphcdn_purge_api = 'http://host.docker.internal:3000/api/graphcdn/'; // Docker to host computer endpoint
+$headless_webhooks_acf_options = ['acf-options-theme-settings'];
+$headless_webhooks_post_types = ['page', 'post'];
+$headless_webhooks_redirects_redirection = true;
+$headless_webhooks_redirects_yoast = false;
+
 // Determine the hosting environment we're in
 if ( defined('WP_ENV') && WP_ENV == "development" ) {
   define('WP_HOST', 'localhost');
