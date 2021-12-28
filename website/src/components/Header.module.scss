@@ -1,4 +1,4 @@
-@import 'styles/_scaffold';
+@import 'styles/scaffold';
 
 .header {
   padding-top: 30px;
@@ -47,6 +47,7 @@
   background: rgba($primary, 1);
   color: $white;
   opacity: 0;
+
   // transition: all 0.5s ease-in-out;
   // transition: opacity 1.35s ease-in-out;
   transition: opacity 1s ease-in-out;

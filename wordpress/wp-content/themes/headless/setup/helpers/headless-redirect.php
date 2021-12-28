@@ -1,10 +1,21 @@
 <?php
 
+
+function build_preview_link() {
+  global $headless_domain;
+
+  $auth_code = wpe_headless_generate_authentication_code(
+    wp_get_current_user()
+  );
+
+  return $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code);
+}
+
 function headless_redirect(){
   global $headless_domain;
 
   $post_type = get_post_type(get_the_ID());
-  $slug = str_replace(home_url(), '', get_permalink(get_the_ID()));
+  $slug = ltrim(str_replace(home_url(), '', get_permalink(get_the_ID())), '/');
   $redirect = '';
   // check if preview and user has edit ability.
   // if so, redirect to preview path
@@ -38,7 +49,7 @@ function headless_redirect(){
       $auth_code = wpe_headless_generate_authentication_code(
         wp_get_current_user()
       );
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug;
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug . '&id=' . get_the_ID();
     } else {
       $redirect = $headless_domain . $slug;
     }
@@ -48,7 +59,7 @@ function headless_redirect(){
       $auth_code = wpe_headless_generate_authentication_code(
         wp_get_current_user()
       );
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path;
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path . '&id=' . get_the_ID();
     } else {
       $redirect = $headless_domain . $path;
     }

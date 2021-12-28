@@ -15,6 +15,7 @@
                 "class": "",
                 "id": ""
             },
+            "show_in_graphql": 1,
             "layouts": {
                 "layout_5f4f372374fe8": {
                     "key": "layout_5f4f372374fe8",
@@ -227,7 +228,10 @@
             },
             "button_label": "Add Section",
             "min": "",
-            "max": ""
+            "max": "",
+            "hide_collapse": 0,
+            "collapse_all_flexible": 1,
+            "btn-icon-only": 0
         }
     ],
     "location": [
@@ -251,9 +255,7 @@
     "description": "",
     "show_in_graphql": 1,
     "graphql_field_name": "acfFlex",
-    "map_graphql_types_from_location_rules": 1,
-    "graphql_types": [
-        "Template_Flex"
-    ],
-    "modified": 1626982168
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1633383182
 }
