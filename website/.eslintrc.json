@@ -7,20 +7,12 @@
   },
   "plugins": ["react", "import"],
   "extends": [
+    "next",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:@next/next/recommended",
     "prettier"
   ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true // enable linting for jsx files
-    },
-    "ecmaVersion": 11,
-    "sourceType": "module"
-  },
   "settings": {
     "react": {
       "version": "detect"
