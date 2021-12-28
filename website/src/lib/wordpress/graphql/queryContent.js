@@ -22,7 +22,7 @@ export function queryContent(preview) {
               fieldGroupName
               flexContent {
                 ${flexHero()}
-                ${flexMedia()}
+                ${/*flexMedia()*/ ''}
                 ${flexWysiwygContent()}
               }
             }
@@ -74,15 +74,17 @@ export function queryContent(preview) {
           ${preview ? '' : seo}
           ${pageOptions}
         }
-        ... on PressRelease {
+        ${
+          /*... on PressRelease {
           content
           ${preview ? '' : seo}
-          # $ {pageOptions}
+          # ${pageOptions}
         }
         ... on Action {
           content
           ${preview ? '' : seo}
-          # $ {pageOptions}
+          # ${pageOptions}
+        }*/ ''
         }
       }
     }

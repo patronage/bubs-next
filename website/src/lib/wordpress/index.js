@@ -11,10 +11,10 @@ async function fetchAPI(query, { variables } = {}, token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  // console.log('API', WORDPRESS_API_URL);
-  // console.log('-------');
-  // console.log('variables', variables);
-  // console.log('query', query);
+  console.log('API', WORDPRESS_API_URL);
+  console.log('-------');
+  console.log('variables', variables);
+  console.log('query', typeof query, query);
   const res = await fetch(WORDPRESS_API_URL, {
     method: 'POST',
     headers,
@@ -170,7 +170,7 @@ export async function getContent(slug, preview, previewData) {
     }
   }
 
-  let query = queryContent;
+  let query = queryContent();
 
   const data = await fetchAPI(
     query,
@@ -199,6 +199,8 @@ export async function getPosts({
   taxonomyTerms = null,
 }) {
   let query = queryPosts(taxonomyType, taxonomyTerms);
+
+  console.log('queryPosts', typeof query, query);
 
   // console.log('query', query);
   const data = await fetchAPI(query, {
