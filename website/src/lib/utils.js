@@ -1,5 +1,5 @@
 export function trimTrailingSlash(str) {
-  if (!str || str === '/' ) {
+  if (!str || str === '/') {
     return str;
   }
 
@@ -12,6 +12,14 @@ export function trimLeadingSlash(str) {
   }
 
   return str.replace(/^\/+/, '');
+}
+
+export function isUrlAbsolute(url) {
+  return url.indexOf('://') > 0 || url.indexOf('//') === 0;
+}
+
+export function isUrlAnchor(url) {
+  return url.indexOf('#') > 0;
 }
 
 /**

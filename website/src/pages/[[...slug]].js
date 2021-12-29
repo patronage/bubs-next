@@ -1,7 +1,8 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
-import { isStaticFile, trimTrailingSlash } from 'lib/utils';
+import checkRedirects from 'lib/checkRedirects';
+import { isStaticFile } from 'lib/utils';
 import {
   getContent,
   getGlobalProps,
@@ -96,35 +97,18 @@ export async function getStaticProps({
 
   const globals = await getGlobalProps();
 
+  // Check for redirects first
+  const redirect = checkRedirects(
+    slug,
+    globals?.redirection?.redirects,
+  );
+
   if (
-    Array.isArray(params.slug) &&
-    Array.isArray(globals?.redirection?.redirects)
+    typeof redirect === 'object' &&
+    redirect?.destination &&
+    redirect?.statusCode
   ) {
-    // check for redirect. remove trailing slashes from each to normalize
-    const redirect = globals?.redirection?.redirects?.find(
-      (row) =>
-        trimTrailingSlash(row.origin) === trimTrailingSlash(slug),
-    );
-
-    if (redirect) {
-      // check for absolute, otherwise make relative with normalized slashes
-      let destination;
-      if (
-        redirect.target.indexOf('http://') > 0 ||
-        redirect.target.indexOf('http://')
-      ) {
-        destination = trimTrailingSlash(redirect.target);
-      } else {
-        destination = `${redirect.target}/`;
-      }
-
-      return {
-        redirect: {
-          destination: destination,
-          statusCode: redirect.code || 307,
-        },
-      };
-    }
+    return { redirect: redirect };
   }
 
   // if your homepage doesn't come from WP, you need this to custom render and not get a 404

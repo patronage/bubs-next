@@ -10,5 +10,6 @@
     "source.fixAll.eslint": true,
     // For Stylelint
     "source.fixAll.stylelint": true
-  }
+  },
+  "eslint.workingDirectories": ["website"]
 }
