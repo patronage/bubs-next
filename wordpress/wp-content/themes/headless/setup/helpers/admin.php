@@ -29,17 +29,6 @@ function set_post_order_in_admin( $wp_query ) {
 }
 add_filter('pre_get_posts', 'set_post_order_in_admin' );
 
-// Don't wrap images attached to WYSIWYG's with links
-//
-function bubs_imagelink_setup() {
-    $image_set = get_option( 'image_default_link_type' );
-
-    if ($image_set !== 'none') {
-        update_option('image_default_link_type', 'none');
-    }
-}
-add_action('admin_init', 'bubs_imagelink_setup', 10);
-
 //
 // Yoast
 //
@@ -57,19 +46,6 @@ add_filter( 'wpseo_metabox_prio', 'lower_wpseo_priority' );
 //
 // ACF
 //
-
-// custom image sizes (used to provide thumnail sizes for ACF)
-add_image_size( 'Three By One', 375, 125, true );
-add_image_size( 'Three By Two', 180, 120, true );
-add_image_size( 'Hero Image', 400, 179, true );
-
-// Allows upload to Media Library with these file types
-function custom_mime_types($mimes) {
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
-}
-add_filter('upload_mimes', 'custom_mime_types');
-
 
 // Hide ACF in production to ensure version controlled JSON is truth
 // http://awesomeacf.com/snippets/hide-the-acf-admin-menu-item-on-selected-sites/
