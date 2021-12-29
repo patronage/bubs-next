@@ -11,10 +11,10 @@ async function fetchAPI(query, { variables } = {}, token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  console.log('API', WORDPRESS_API_URL);
-  console.log('-------');
-  console.log('variables', variables);
-  console.log('query', typeof query, query);
+  // console.log('API', WORDPRESS_API_URL);
+  // console.log('-------');
+  // console.log('variables', variables);
+  // console.log('query', typeof query, query);
   const res = await fetch(WORDPRESS_API_URL, {
     method: 'POST',
     headers,

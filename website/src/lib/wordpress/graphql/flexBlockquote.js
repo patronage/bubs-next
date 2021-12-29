@@ -1,6 +1,6 @@
 import sectionOptions from './fragmentSectionOptions';
 
-export function FlexBlockquote(template = 'Flex') {
+export function flexBlockquote(template = 'Flex') {
   const fragment = /* GraphQL */ `
     ... on Template_${template}_Acfflex_FlexContent_Blockquote {
       fieldGroupName
