@@ -121,58 +121,6 @@
                     "min": "",
                     "max": ""
                 },
-                "layout_5f4f45a3bd39d": {
-                    "key": "layout_5f4f45a3bd39d",
-                    "name": "stats_carousel",
-                    "label": "Stats Carousel",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_5f4f45a3bd39e",
-                            "label": "Stats Carousel",
-                            "name": "stats_carousel",
-                            "type": "clone",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "clone": [
-                                "group_5f4f3b6730ae8"
-                            ],
-                            "display": "seamless",
-                            "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
-                        },
-                        {
-                            "key": "field_5f4f45a3bd39f",
-                            "label": "Section Options",
-                            "name": "section_options",
-                            "type": "clone",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "clone": [
-                                "group_5f4f44ad969e5"
-                            ],
-                            "display": "seamless",
-                            "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
                 "layout_5f4f45c376b6d": {
                     "key": "layout_5f4f45c376b6d",
                     "name": "wysiwyg_content",
@@ -257,5 +205,5 @@
     "graphql_field_name": "acfFlex",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1633383182
+    "modified": 1640795194
 }

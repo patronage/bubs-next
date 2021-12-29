@@ -34,7 +34,9 @@ const Flex = ({ sections }) => {
     }
 
     // certain sections we want no padding, we just want the el (e.g. a full width image)
-    let noPaddingSections = ['page_Acfflex_FlexContent_Hero'];
+    let noPaddingSections = [
+      'Template_Flex_Acfflex_FlexContent_Hero',
+    ];
 
     if (noPaddingSections.includes(section.fieldGroupName)) {
       paddingTop = false;
