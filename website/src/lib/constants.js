@@ -26,4 +26,7 @@ export const META = {
   url: 'https://bubs.patronage.org',
   twitterHandle: '@patronageorg',
   siteName: 'Bubs by Patronage',
+  proxyWordPressImages: true,
+  icon32: '',
+  iconApple: '/apple-touch-icon.png',
 };

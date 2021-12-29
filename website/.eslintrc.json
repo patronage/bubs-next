@@ -7,20 +7,12 @@
   },
   "plugins": ["react", "import"],
   "extends": [
+    "next",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:@next/next/recommended",
     "prettier"
   ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true // enable linting for jsx files
-    },
-    "ecmaVersion": 11,
-    "sourceType": "module"
-  },
   "settings": {
     "react": {
       "version": "detect"
@@ -66,6 +58,9 @@
     "react/display-name": 1,
 
     // React Hooks
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+
+    // Next
+    "@next/next/no-page-custom-font": "off"
   }
 }

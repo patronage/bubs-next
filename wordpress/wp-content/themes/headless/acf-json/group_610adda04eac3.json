@@ -1,6 +1,6 @@
 {
     "key": "group_610adda04eac3",
-    "title": "Shared: Global Options",
+    "title": "Options: Global Options",
     "fields": [
         {
             "key": "field_610adfe5960e6",
@@ -62,5 +62,5 @@
     "graphql_field_name": "acfGlobalOptions",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1628102769
+    "modified": 1640795236
 }

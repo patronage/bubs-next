@@ -5,6 +5,11 @@ export async function authorize(code) {
   if (!WORDPRESS_URL) {
     throw Error('WORDPRESS_URL not defined');
   }
+
+  if (!API_CLIENT_SECRET) {
+    throw Error('HEADLESS_API_SECRET not defined');
+  }
+
   const response = await fetch(
     `${WORDPRESS_URL}/wp-json/wpac/v1/authorize`,
     {

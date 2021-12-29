@@ -36,16 +36,16 @@ export default function Footer() {
   let hideNav = false;
   // let hideSearch = false;
 
-  if (globals.pageOptions?.footerStyle == 'basic') {
+  if (globals?.pageOptions?.footerStyle == 'basic') {
     hideNav = true;
     // hideSearch = true;
     // hideSignup = true;
     hideSocial = true;
-  } else if (globals.pageOptions?.footerStyle == 'custom') {
-    hideNav = globals.pageOptions?.hideNav;
-    // hideSearch = globals.pageOptions?.hideSearch;
-    // hideSignup = globals.pageOptions?.hideSignup;
-    hideSocial = globals.pageOptions?.hideSocial;
+  } else if (globals?.pageOptions?.footerStyle == 'custom') {
+    hideNav = globals?.pageOptions?.hideNav;
+    // hideSearch = globals?.pageOptions?.hideSearch;
+    // hideSignup = globals?.pageOptions?.hideSignup;
+    hideSocial = globals?.pageOptions?.hideSocial;
   }
 
   return (
