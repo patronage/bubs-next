@@ -1,5 +1,5 @@
+import { flexBlockquote } from './flexBlockquote';
 import { flexHero } from './flexHero';
-import { flexMedia } from './flexMedia';
 import { flexWysiwygContent } from './flexWysiwygContent';
 import pageOptions from './fragmentPageOptions';
 import seo from './fragmentSeo';
@@ -21,8 +21,8 @@ export function queryContent(preview) {
             acfFlex {
               fieldGroupName
               flexContent {
+                ${flexBlockquote()}
                 ${flexHero()}
-                ${flexMedia()}
                 ${flexWysiwygContent()}
               }
             }
