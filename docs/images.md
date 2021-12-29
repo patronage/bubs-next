@@ -1,6 +1,6 @@
 # Images
 
-One of the biggest performance wins for Next comes from the [next/image](https://nextjs.org/docs/api-reference/next/image) component co-authored with Google which encourages best practices like image dimensions and by default.
+One of the biggest performance wins for Next comes from the [next/image](https://nextjs.org/docs/api-reference/next/image) component co-authored with Google which encourages best practices like responsive loading via srcset, lazy loading, and more.
 
 Additionally, bundled is [automatic image optimization](https://nextjs.org/docs/basic-features/image-optimization) via an API for resizing and serving images in WebP format without a need for third party services.
 
@@ -20,7 +20,7 @@ Say an image is in a container, or in a column with a known max width, you can s
 
 ### Bootstrap Sizing
 
-Inside of `next.config.js`, we include common ratios that match the [Bootstrap grid](https://getbootstrap.com/docs/5.1/layout/grid/#grid-tiers). This gives a little better support for generating images that
+Inside of `next.config.js`, we include common ratios that match the [Bootstrap grid](https://getbootstrap.com/docs/5.1/layout/grid/#grid-tiers).
 
 ## WordPress Image Sizing
 
@@ -32,13 +32,13 @@ Inside of our headless theme is an `images.php` file that allows you to set thes
 
 ### Social Thumbnail Ratio
 
-We've set a default thumbnail ratio that corresponds to Facebook's reccomend image dimensions of 1200 x 628. This default thumbmnail is also used to power your yoast open graph meta tags by default. This can be customized, and editors can add custom graphics, but we find that this default thumbnail is typically all that is populated, so we wanted it to be social friendly by default.
+We've set a default thumbnail ratio that corresponds to Facebook's recommended image dimensions of 1200 x 628. This default thumbmnail is also used to power your yoast open graph meta tags by default. This can be customized, and editors can add custom graphics, but we find that this default thumbnail is typically all that is populated, so we wanted it to be social friendly by default.
 
 ### Additional Aspect Ratios
 
-Additional aspect ratios can be defined in `images.php`. Anything that gets added can then be retrived via graphql, for example: `sourceUrl(size: SOCIAL)`. Be careful when setting these not to expect consistent output -- if an uploaded file is smaller than one of the provided dimensions, Facebook won't
+Additional aspect ratios can be defined in `images.php`. Anything that gets added can then be retrived via graphql, for example: `sourceUrl(size: SOCIAL)`. Be careful when setting these not to expect consistent output -- if an uploaded file is smaller than one of the provided dimensions, WordPress won't force an exact ratio.
 
-#@ Image Retrieval
+### Image Retrieval and local dev
 
 In the past we struggled with managing/accessing images in different environments, but by developing against content on our production site, this is largely solved.
 
@@ -62,5 +62,5 @@ Inside of `lib/image-loaders` we include a call to load in a [custom image loade
 
 Future things we're looking into that we might add:
 
-- low quality blue images: https://github.com/patronage/bubs-next/issues/110
+- low quality blur images: https://github.com/patronage/bubs-next/issues/110
 - extracting images from WP wysiwyg and rendering them: https://github.com/patronage/bubs-next/issues/8
