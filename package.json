@@ -1,7 +1,7 @@
 {
   "name": "bubs-next",
   "main": "index.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "release:pre": "standard-version --prerelease",
