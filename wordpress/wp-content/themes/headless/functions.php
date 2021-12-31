@@ -9,7 +9,7 @@
 
 $site_name = '';
 $headless_domain = ''; // leave blank;
-$production_headless_domain = 'https://bubs-next.vercel.app';
+$production_headless_domain = 'https://bubs.patronage.org';
 $staging_wp_host = 'bubsnexts.wpengine.com';
 $staging_headless_domain = 'https://bubs-next-git-staging-patronage.vercel.app';
 $local_domain = 'http://localhost:3000';
