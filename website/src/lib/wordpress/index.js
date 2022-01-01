@@ -136,6 +136,7 @@ export async function getAllContentWithSlug(contentType) {
  * Get fields for single page regardless of post type.
  */
 export async function getContent(slug, preview, previewData) {
+  let draft = false;
   if (preview) {
     // Get the content types to help build preview URLs
     const contentTypesArray = await getContentTypes(
@@ -159,6 +160,7 @@ export async function getContent(slug, preview, previewData) {
 
     // wordpress requires a different slug structure for various post types
     if (slug !== '/' && !isNaN(Number(lastSegment))) {
+      draft = true;
       if (postType === 'post') {
         slug = `/?p=${lastSegment}`;
       } else if (secondLastSegment) {
@@ -171,7 +173,7 @@ export async function getContent(slug, preview, previewData) {
     }
   }
 
-  let query = queryContent();
+  let query = queryContent(draft);
 
   const data = await fetchAPI(
     query,
