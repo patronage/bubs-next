@@ -52,7 +52,7 @@ export default function PreviewModeBar({
                   href={
                     isRevision
                       ? `${WORDPRESS_REVISION_URL}&revision=${postId}`
-                      : `${WORDPRESS_EDIT_URL}&post=${postId}`
+                      : `${WORDPRESS_EDIT_URL}?post=${postId}`
                   }
                   target="_blank"
                   rel="noreferrer"
