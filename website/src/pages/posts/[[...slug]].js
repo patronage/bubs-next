@@ -14,6 +14,7 @@ function PostsSinglePage({ post, globals, preview }) {
         title={post?.title}
         preview={preview}
         postId={post?.databaseId}
+        isRevision={post?.isPreview}
       >
         <div className="container">
           <div className="row">
