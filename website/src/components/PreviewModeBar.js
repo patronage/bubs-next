@@ -15,7 +15,7 @@ const WORDPRESS_REVISION_URL =
 export default function PreviewModeBar({
   postId,
   position = 'bottom',
-  revision,
+  isRevision,
 }) {
   const [redirect, setRedirect] = useState('/api/exit-preview');
   let positionClassName = styles['top'];
@@ -50,7 +50,7 @@ export default function PreviewModeBar({
               <>
                 <a
                   href={
-                    revision
+                    isRevision
                       ? `${WORDPRESS_REVISION_URL}&revision=${postId}`
                       : `${WORDPRESS_EDIT_URL}&post=${postId}`
                   }
