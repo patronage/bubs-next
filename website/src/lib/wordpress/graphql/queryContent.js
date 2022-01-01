@@ -4,7 +4,7 @@ import { flexWysiwygContent } from './flexWysiwygContent';
 import pageOptions from './fragmentPageOptions';
 import seo from './fragmentSeo';
 
-export function queryContent(preview) {
+export function queryContent(draft) {
   const query = /* GraphQL */ `
     query GetContent($slug: ID!, $preview: Boolean) {
       contentNode(id: $slug, idType: URI, asPreview: $preview) {
@@ -66,12 +66,12 @@ export function queryContent(preview) {
         ... on Page {
           isFrontPage
           content
-          ${preview ? '' : seo}
+          ${draft ? '' : seo}
           ${pageOptions}
         }
         ... on Post {
           content
-          ${preview ? '' : seo}
+          ${draft ? '' : seo}
           ${pageOptions}
         }
       }
