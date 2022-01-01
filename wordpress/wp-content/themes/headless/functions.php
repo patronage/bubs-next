@@ -28,10 +28,10 @@ if ( defined('WP_ENV') && WP_ENV == "development" ) {
   define('WP_HOST', 'localhost');
   $headless_domain = $local_domain;
 } else if ( function_exists('is_wpe') ) {
+  $preview_domain = get_theme_mod('headless_preview_url');
+
   if ( strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false ) {
     define('WP_HOST', 'staging');
-    $preview_domain = get_theme_mod('headless_preview_url');
-
     if ($preview_domain) {
       $headless_domain = rtrim($preview_domain, '/');
     } else {
@@ -39,7 +39,11 @@ if ( defined('WP_ENV') && WP_ENV == "development" ) {
     }
   } else {
     define('WP_HOST', 'production');
-    $headless_domain = $production_headless_domain;
+    if ($preview_domain) {
+      $headless_domain = rtrim($preview_domain, '/');
+    } else {
+      $headless_domain = $production_headless_domain;
+    }
   }
 }
 
