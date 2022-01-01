@@ -15,7 +15,7 @@ if ( strpos($user_agent, 'WPEBot') ) {
 }
 
 $redirect = headless_redirect();
-echo $redirect;
-// return wp_redirect( $redirect, 307 );
+// echo $redirect;
+return wp_redirect( $redirect, 307 );
 
 ?>
