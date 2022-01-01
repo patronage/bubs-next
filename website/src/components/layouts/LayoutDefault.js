@@ -10,6 +10,7 @@ export default function LayoutDefault({
   image,
   seo,
   postId,
+  isRevision,
   preview,
 }) {
   return (
@@ -20,7 +21,9 @@ export default function LayoutDefault({
         image={image}
         seo={seo}
       />
-      {preview && <PreviewModeBar postId={postId} />}
+      {preview && (
+        <PreviewModeBar postId={postId} isRevision={isRevision} />
+      )}
       <Header />
       {children}
       <Footer />

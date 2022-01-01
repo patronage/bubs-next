@@ -8,9 +8,14 @@ const WORDPRESS_EDIT_URL =
   process.env.WORDPRESS_EDIT_URL ||
   `${WORDPRESS_URL}/wp-admin/post.php?action=edit`;
 
+const WORDPRESS_REVISION_URL =
+  process.env.WORDPRESS_REVISION_URL ||
+  `${WORDPRESS_URL}/wp-admin/revision.php`;
+
 export default function PreviewModeBar({
   postId,
   position = 'bottom',
+  revision,
 }) {
   const [redirect, setRedirect] = useState('/api/exit-preview');
   let positionClassName = styles['top'];
@@ -18,6 +23,8 @@ export default function PreviewModeBar({
   if (position === 'bottom') {
     positionClassName = styles['bottom'];
   }
+
+  // postId is either a string or a number. If string, that means the post is not published yet, and we get a URI like: `?page_id=3&preview=true&revision_id=58`
 
   useEffect(() => {
     if (typeof location !== 'undefined') {
@@ -38,11 +45,15 @@ export default function PreviewModeBar({
               <BsInfoCircle />
             </span>
             You are viewing this site in Preview Mode
+            &nbsp;&nbsp;|&nbsp;&nbsp;
             {postId && (
               <>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
                 <a
-                  href={`${WORDPRESS_EDIT_URL}&post=${postId}`}
+                  href={
+                    revision
+                      ? `${WORDPRESS_REVISION_URL}&revision=${postId}`
+                      : `${WORDPRESS_EDIT_URL}&post=${postId}`
+                  }
                   target="_blank"
                   rel="noreferrer"
                 >
