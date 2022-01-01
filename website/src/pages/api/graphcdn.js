@@ -47,12 +47,14 @@ export default async function handler(req, res) {
   try {
     const response = await purgeAllPosts();
 
+    // eslint-disable-next-line no-console
     console.log('CDN data', response.data);
 
     if (!response.data._purgeAll) {
       throw 'CDN Failure';
     }
 
+    // eslint-disable-next-line no-console
     console.log('Purge Success');
 
     return res.status(200).end('Purge Success');

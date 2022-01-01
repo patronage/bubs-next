@@ -129,10 +129,6 @@ export async function getStaticProps({
   }
 
   const data = await getContent(slug, preview, previewData);
-  console.log(
-    'getContent results',
-    JSON.stringify(data.contentNode?.content, null, 2),
-  );
 
   if (!preview && !data?.contentNode?.slug) {
     return {

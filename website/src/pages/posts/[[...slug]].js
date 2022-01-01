@@ -123,6 +123,7 @@ export async function getStaticProps(context) {
       revalidate: 60,
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 
