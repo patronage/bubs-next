@@ -32,7 +32,6 @@ async function fetchAPI(query, { variables } = {}, token) {
     console.error(JSON.stringify(json.errors, null, 2));
     throw new Error('Failed to fetch API');
   }
-  console.log('graphql results', JSON.stringify(json.data, null, 2));
   return json.data;
 }
 
