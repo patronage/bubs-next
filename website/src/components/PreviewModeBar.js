@@ -45,7 +45,7 @@ export default function PreviewModeBar({
               <BsInfoCircle />
             </span>
             You are viewing this site in Preview Mode
-            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <span className="d-inline-block ps-1 pe-1">|</span>
             {postId && (
               <>
                 <a
@@ -59,7 +59,7 @@ export default function PreviewModeBar({
                 >
                   Edit
                 </a>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <span className="d-inline-block ps-1 pe-1">|</span>
               </>
             )}
             <a href={redirect}>Exit</a>
