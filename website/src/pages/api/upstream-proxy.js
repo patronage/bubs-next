@@ -5,7 +5,7 @@ import _replace from 'lodash/replace';
 // Global regex search allows replacing all URLs
 const HOSTNAME_REGEX = new RegExp(WORDPRESS_URL, 'g');
 
-export default async function (req, res) {
+export default async function proxy(req, res) {
   const upstreamRes = await fetch(`${WORDPRESS_URL}${req.url}`);
   let content = await upstreamRes.text();
 
