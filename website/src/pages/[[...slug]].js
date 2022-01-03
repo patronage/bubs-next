@@ -46,6 +46,7 @@ export default function Page({
           preview={preview}
           seo={post?.seo}
           postId={post?.databaseId}
+          isRevision={post?.isPreview}
           title={post?.title}
         >
           <Flex sections={flexSections} />
@@ -58,6 +59,7 @@ export default function Page({
     <GlobalsProvider globals={globals}>
       <LayoutDefault
         postId={post?.databaseId}
+        isRevision={post?.isPreview}
         seo={post?.seo}
         preview={preview}
         title={post?.title}

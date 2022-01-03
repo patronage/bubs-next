@@ -40,7 +40,7 @@ export default async function preview(req, res) {
 
   // Fetch WordPress to check if the provided `id` exists
   const post = await getPreviewContent(
-    id,
+    preview_id || id,
     'DATABASE_ID',
     accessToken,
   );

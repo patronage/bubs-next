@@ -14,6 +14,7 @@ function PostsSinglePage({ post, globals, preview }) {
         title={post?.title}
         preview={preview}
         postId={post?.databaseId}
+        isRevision={post?.isPreview}
       >
         <div className="container">
           <div className="row">
@@ -122,6 +123,7 @@ export async function getStaticProps(context) {
       revalidate: 60,
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
   }
 

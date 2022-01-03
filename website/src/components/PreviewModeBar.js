@@ -4,13 +4,10 @@ import { useState, useEffect } from 'react';
 import { BsInfoCircle } from 'react-icons/bs';
 import styles from './PreviewModeBar.module.scss';
 
-const WORDPRESS_EDIT_URL =
-  process.env.WORDPRESS_EDIT_URL ||
-  `${WORDPRESS_URL}/wp-admin/post.php?action=edit`;
-
 export default function PreviewModeBar({
   postId,
   position = 'bottom',
+  isRevision,
 }) {
   const [redirect, setRedirect] = useState('/api/exit-preview');
   let positionClassName = styles['top'];
@@ -18,6 +15,8 @@ export default function PreviewModeBar({
   if (position === 'bottom') {
     positionClassName = styles['bottom'];
   }
+
+  // postId is either a string or a number. If string, that means the post is not published yet, and we get a URI like: `?page_id=3&preview=true&revision_id=58`
 
   useEffect(() => {
     if (typeof location !== 'undefined') {
@@ -38,17 +37,21 @@ export default function PreviewModeBar({
               <BsInfoCircle />
             </span>
             You are viewing this site in Preview Mode
+            <span className="d-inline-block ps-1 pe-1">|</span>
             {postId && (
               <>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
                 <a
-                  href={`${WORDPRESS_EDIT_URL}&post=${postId}`}
+                  href={
+                    isRevision
+                      ? `${WORDPRESS_URL}/wp-admin/revision.php?revision=${postId}`
+                      : `${WORDPRESS_URL}/wp-admin/post.php?action=edit&post=${postId}`
+                  }
                   target="_blank"
                   rel="noreferrer"
                 >
                   Edit
                 </a>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <span className="d-inline-block ps-1 pe-1">|</span>
               </>
             )}
             <a href={redirect}>Exit</a>

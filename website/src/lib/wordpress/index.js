@@ -30,7 +30,6 @@ async function fetchAPI(query, { variables } = {}, token) {
     console.error(JSON.stringify(json.errors, null, 2));
     throw new Error('Failed to fetch API');
   }
-  // console.log("graphql results", JSON.stringify(json.data, null, 2));
   return json.data;
 }
 
@@ -135,6 +134,7 @@ export async function getAllContentWithSlug(contentType) {
  * Get fields for single page regardless of post type.
  */
 export async function getContent(slug, preview, previewData) {
+  let draft = false;
   if (preview) {
     // Get the content types to help build preview URLs
     const contentTypesArray = await getContentTypes(
@@ -158,6 +158,7 @@ export async function getContent(slug, preview, previewData) {
 
     // wordpress requires a different slug structure for various post types
     if (slug !== '/' && !isNaN(Number(lastSegment))) {
+      draft = true;
       if (postType === 'post') {
         slug = `/?p=${lastSegment}`;
       } else if (secondLastSegment) {
@@ -170,7 +171,7 @@ export async function getContent(slug, preview, previewData) {
     }
   }
 
-  let query = queryContent();
+  let query = queryContent(draft);
 
   const data = await fetchAPI(
     query,
@@ -200,9 +201,6 @@ export async function getPosts({
 }) {
   let query = queryPosts(taxonomyType, taxonomyTerms);
 
-  console.log('queryPosts', typeof query, query);
-
-  // console.log('query', query);
   const data = await fetchAPI(query, {
     variables: {
       contentTypes,
@@ -216,7 +214,6 @@ export async function getPosts({
       taxonomyTerms,
     },
   });
-  // console.log('data', JSON.stringify(data, null, 2));
 
   return data;
 }
