@@ -4,14 +4,6 @@ import { useState, useEffect } from 'react';
 import { BsInfoCircle } from 'react-icons/bs';
 import styles from './PreviewModeBar.module.scss';
 
-const WORDPRESS_EDIT_URL =
-  process.env.WORDPRESS_EDIT_URL ||
-  `${WORDPRESS_URL}/wp-admin/post.php?action=edit`;
-
-const WORDPRESS_REVISION_URL =
-  process.env.WORDPRESS_REVISION_URL ||
-  `${WORDPRESS_URL}/wp-admin/revision.php`;
-
 export default function PreviewModeBar({
   postId,
   position = 'bottom',
@@ -51,8 +43,8 @@ export default function PreviewModeBar({
                 <a
                   href={
                     isRevision
-                      ? `${WORDPRESS_REVISION_URL}?revision=${postId}`
-                      : `${WORDPRESS_EDIT_URL}&post=${postId}`
+                      ? `${WORDPRESS_URL}/wp-admin/revision.php?revision=${postId}`
+                      : `${WORDPRESS_URL}/wp-admin/post.php?action=edit&post=${postId}`
                   }
                   target="_blank"
                   rel="noreferrer"
