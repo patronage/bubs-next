@@ -8,11 +8,11 @@ export default async function preview(req, res) {
   const { code, id, preview_id, path, slug } = req.query;
 
   // Get Auth Token
-  if (req.previewData.token) {
-    accessToken = req.previewData.token;
-  } else if (code) {
+  if (code) {
     const result = await authorize(decodeURIComponent(code));
     accessToken = result.access_token;
+  } else if (req.previewData.token) {
+    accessToken = req.previewData.token;
   } else {
     return res.status(401).json({ message: 'Invalid token' });
   }
