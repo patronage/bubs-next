@@ -148,7 +148,7 @@ export async function getStaticProps({
         data.contentNode?.template?.acfFlex?.flexContent || null,
       template: data.contentNode?.template?.templateName || null,
     },
-    revalidate: 10,
+    revalidate: 60,
   };
 }
 
