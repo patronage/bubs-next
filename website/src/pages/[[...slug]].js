@@ -1,6 +1,7 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
+import { GlobalsProvider } from 'contexts/GlobalsContext';
 import checkRedirects from 'lib/checkRedirects';
 import { isStaticFile } from 'lib/utils';
 import {
@@ -8,8 +9,6 @@ import {
   getGlobalProps,
   getAllContentWithSlug,
 } from 'lib/wordpress';
-
-import { GlobalsProvider } from '../contexts/GlobalsContext';
 
 export default function Page({
   post,
