@@ -9,15 +9,15 @@ The major advantage of Next is you can have both, infinitely scalable edge cache
 The two slight drawbacks we've seen running Next + wp-graphql sites in production are:
 
 - ACF flex queries can be pretty heavy. We've seen ~1000 page sites with complex ACF and several post types take 2 - 5 seconds to return data on a dedicated server (though this has gotten better as of [version 1.6](https://github.com/wp-graphql/wp-graphql/issues/1873))
-- With short revalidation times, the background SWR requests will chew through Vercel's function execution time sitting there just waiting for origin response. If you try and solve with a longer revalidation time, you'll get editor confusion. Preview Mode can help editors see content, but they expect published content to show up for logged out users quickly.
+- With short revalidation times, the background SWR requests will chew through Vercel's function execution time sitting there just waiting for origin response. If you try and solve with a longer revalidation time, you'll get editor confusion. [Preview Mode](preview-mode.md) can help editors see content, but they expect published content to show up for logged out users quickly.
 
-To address these, we've incorporated and recommend adding graphql caching via GraphCDN. This allows cached queries to return in < 20 ms, which is great for things like global menus and options which are called on every page. We've also added support for cache invalidation on publish, which allows you to keep content on the edge longer. All this allows us to have 60 second revalidate time on the Next side, with much longer graphql caches that cut origin requests by 90%+.
+To address these, we've incorporated and recommend adding graphql caching via [GraphCDN](https://graphcdn.io/). This allows cached queries to return in < 20 ms, which is great for things like global menus and options which are called on every page. We've also added support for cache invalidation on publish, which allows you to keep content on the edge longer. All this allows us to have 60 second revalidate time on the Next side, with much longer graphql caches that cut origin requests by 90%+.
 
 ## Enabling GraphCDN
 
 To enable, you'll create a new account/service here: [https://graphcdn.io/](https://graphcdn.io/).
 
-During setup, you’ll be asked if your app has authenticated users. Our reccomendation (and how our defaults are configured) is not to check the box, and to have authenticated requests go directly to the origin, while only public requests go through their CDN.
+During setup, you’ll be asked if your app has authenticated users. Our reccomendation (and how our defaults are configured) is not to check the box, and to have authenticated requests go directly to the origin, while only public requests go through their CDN. This is accomplished by setting [bypass headers](https://docs.graphcdn.io/docs/bypass-headers) on all authenticated requests.
 
 When setting up, you'll need to point to your existing endpoint. We recommend turning on GraphQL introspection ([see security consideration](https://www.wpgraphql.com/docs/security/#introspection-disabled-by-default)), even if only temporarily. This will let the CDN store a copy of your schema.
 
@@ -28,6 +28,8 @@ In the future we might document advanced configuration, but the default rule to 
 To enable locally for testing, set the `WORDPRESS_API_URL` env variable in your `.env.local` to the graphql endpoint.
 
 To enable in production, change the same env variable via Vercel's ENV settings.
+
+To bypass the CDN for authenticated requests, set a bypass header for `x-preview-token`.
 
 ## Purging on publish with webhooks
 
@@ -56,9 +58,3 @@ You can try for example running a query, confirming successful `HIT` cache statu
 Something we're keeping our eye on is the ability to invalidate the vercel edge cache via the same webhook we use to invalidate GraphCDN. This will allow us to lengthen the amount of time Vercel uses before revalidating.
 
 [https://nextjs.org/blog/next-9-5#stable-incremental-static-regeneration](https://nextjs.org/blog/next-9-5#stable-incremental-static-regeneration)
-
-> Up next, we will be working on a supplemental RFC to address two additional incremental static generation capabilities:
-
-- Re-generating and invalidating multiple pages at once (like your blog index and a certain blog post)
-- Re-generating by listening to events (like CMS webhooks), ahead of user traffic
-  >
