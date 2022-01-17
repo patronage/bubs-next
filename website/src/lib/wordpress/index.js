@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
-import { queryContent } from 'lib/wordpress/graphql/queryContent';
-import { queryGlobals } from 'lib/wordpress/graphql/queryGlobals';
-import { queryPosts } from 'lib/wordpress/graphql/queryPosts';
+import { queryContent } from './graphql/queryContent';
+import { queryGlobals } from './graphql/queryGlobals';
+import { queryPosts } from './graphql/queryPosts';
 
 async function fetchAPI(query, { variables } = {}, token) {
   const headers = { 'Content-Type': 'application/json' };
