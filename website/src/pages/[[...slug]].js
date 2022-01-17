@@ -13,31 +13,10 @@ import {
 export default function Page({
   post,
   preview,
-  isHome,
   globals,
   template,
   flexSections,
 }) {
-  // check if homepage
-  // you can remove this if you've defined a homepage in wordpress
-  if (isHome) {
-    return (
-      <GlobalsProvider globals={globals}>
-        <LayoutDefault title="" preview={preview}>
-          <section className="section-padded">
-            <div className="container">
-              <div className="row">
-                <div className="col">
-                  <h3>Home Page</h3>
-                </div>
-              </div>
-            </div>
-          </section>
-        </LayoutDefault>
-      </GlobalsProvider>
-    );
-  }
-
   if (template === 'Flex') {
     return (
       <GlobalsProvider globals={globals}>
@@ -110,21 +89,6 @@ export async function getStaticProps({
     redirect?.statusCode
   ) {
     return { redirect: redirect };
-  }
-
-  // if your homepage doesn't come from WP, you need this to custom render and not get a 404
-  // next doesn't let you have index.js and [[...slug.js]]
-  if (!params.slug?.length) {
-    return {
-      props: {
-        preview,
-        globals: {
-          ...globals,
-          pageOptions: null,
-        },
-        isHome: true,
-      },
-    };
   }
 
   const data = await getContent(slug, preview, previewData);
