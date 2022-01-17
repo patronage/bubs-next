@@ -1,14 +1,17 @@
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
-import { queryContent } from 'lib/wordpress/graphql/queryContent';
-import { queryGlobals } from 'lib/wordpress/graphql/queryGlobals';
-import { queryPosts } from 'lib/wordpress/graphql/queryPosts';
+import { queryContent } from './graphql/queryContent';
+import { queryGlobals } from './graphql/queryGlobals';
+import { queryPosts } from './graphql/queryPosts';
 
 async function fetchAPI(query, { variables } = {}, token) {
   const headers = { 'Content-Type': 'application/json' };
 
   if (variables?.preview && token) {
     headers['Authorization'] = `Bearer ${token}`;
+    // for authenticated requests, hit origin and bypass CDN caching
+    // https://docs.graphcdn.io/docs/bypass-headers
+    headers['x-preview-token'] = '1';
   }
 
   // console.log('API', WORDPRESS_API_URL);
