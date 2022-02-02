@@ -22,14 +22,14 @@ module.exports = withBundleAnalyzer({
   async rewrites() {
     return [
       // these two rules are used to locally serve (and rewrite urls) from WP
-      {
-        source: '/(.*)sitemap.xml',
-        destination: '/api/upstream-proxy',
-      },
-      {
-        source: '/feed',
-        destination: '/api/upstream-proxy',
-      },
+//       {
+//         source: '/(.*)sitemap.xml',
+//         destination: '/api/upstream-proxy',
+//       },
+//       {
+//         source: '/feed',
+//         destination: '/api/upstream-proxy',
+//       },
       // resolve relative links to WP upload assets
       {
         source: '/wp-content/uploads/:path*',
