@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   db:
-    image: mysql:5.7
+    image: mariadb
     ports:
       - "3307:3306"
     volumes:
@@ -17,7 +17,7 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:5.7.0
+    image: wordpress:5.9.0
     ports:
       - "8000:80"
     volumes:
