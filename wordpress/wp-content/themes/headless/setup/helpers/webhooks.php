@@ -64,7 +64,8 @@ function vercel_jwt() {
   curl_setopt($ch, CURLOPT_URL, $headless_webhooks_graphcdn_purge_api);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_HEADER, 1);
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+  curl_setopt($ch, CURLOPT_POSTREDIR, 1);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, "_vercel_password=preview");
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
