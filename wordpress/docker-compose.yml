@@ -17,7 +17,7 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:5.9.0
+    image: wordpress:5.9.1
     ports:
       - "8000:80"
     volumes:
