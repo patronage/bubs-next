@@ -51,7 +51,6 @@
     "php": ">=7.3",
     "composer/installers": "^1.8",
     "advanced-custom-fields/advanced-custom-fields-pro": "5.12",
-    "roots/wordpress": "5.7.0",
     "wpackagist-plugin/acf-repeater-flexible-content-collapser": "1.2.4",
     "wpackagist-plugin/classic-editor": "1.6.2",
     "wpackagist-plugin/duplicate-post": "4.4",
