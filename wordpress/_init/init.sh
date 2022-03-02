@@ -4,10 +4,10 @@ rm -rf ./wp-content/plugins/!(composer-libs)
 
 
 # clean composer before copying
-rm -rf ./composer/wp/wp-config-sample.php
-rm -rf ./composer/wp/wp-content/
-mv -n ./composer/wp/* ./composer
-rm -rf ./composer/wp/
+# rm -rf ./composer/wp/wp-config-sample.php
+# rm -rf ./composer/wp/wp-content/
+# mv -n ./composer/wp/* ./composer
+# rm -rf ./composer/wp/
 
 # copy everything over
 cp -R ./composer/* ./
