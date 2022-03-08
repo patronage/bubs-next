@@ -35,14 +35,14 @@ if ( defined('WP_ENV') && WP_ENV == "development" ) {
     if ($preview_domain) {
       $headless_domain = rtrim($preview_domain, '/');
     } else {
-      $headless_domain = $staging_headless_domain;
+      $headless_domain = rtrim($staging_headless_domain, '/');
     }
   } else {
     define('WP_HOST', 'production');
     if ($preview_domain) {
       $headless_domain = rtrim($preview_domain, '/');
     } else {
-      $headless_domain = $production_headless_domain;
+      $headless_domain = rtrim($production_headless_domain, '/');
     }
   }
 }

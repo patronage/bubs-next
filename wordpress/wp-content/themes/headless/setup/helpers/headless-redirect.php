@@ -15,11 +15,12 @@ function headless_redirect(){
   global $headless_domain;
 
   $post_type = get_post_type(get_the_ID());
-  $slug = ltrim(str_replace(home_url(), '', get_permalink(get_the_ID())), '/');
+  $url = get_permalink(get_the_ID());
+  $slug = parse_url($url, PHP_URL_PATH);
   $redirect = '';
+
   // check if preview and user has edit ability.
   // if so, redirect to preview path
-
   if ( is_preview() ) {
     if ( current_user_can( 'edit_posts' ) ) {
       $revisions = wp_get_post_revisions(
@@ -43,7 +44,6 @@ function headless_redirect(){
   }
 
   // else do standard redirect tree
-
   if ($slug) {
     if ( current_user_can( 'edit_posts' ) ) {
       $auth_code = wpe_headless_generate_authentication_code(
