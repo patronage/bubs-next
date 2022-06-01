@@ -96,6 +96,8 @@ export async function getStaticProps({
   if (!preview && !data?.contentNode?.slug) {
     return {
       notFound: true,
+      revalidate: 60,
+      props: {},
     };
   }
 
