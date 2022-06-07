@@ -9,6 +9,6 @@
     "release:dry": "standard-version --dry-run --infile docs/CHANGELOG.md --no-verify"
   },
   "devDependencies": {
-    "standard-version": "^9.3.2"
+    "standard-version": "^9.5.0"
   }
 }
