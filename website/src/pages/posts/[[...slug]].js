@@ -132,6 +132,8 @@ export async function getStaticProps(context) {
   //
   return {
     notFound: true,
+    revalidate: 60,
+    props: {},
   };
 }
 
