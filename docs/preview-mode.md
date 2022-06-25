@@ -35,9 +35,7 @@ _On WP Engine, these values aren't version controlled so you'll need to SFTP or 
 
 3. Set `WORDPRESS_DOMAIN` to the root URL of the Wordpress instance (without /graphql)
 
-4. Open `wordpress/wp-content/headless/functions.php` and edit the values for `$preview_domain` for production.
-
-5. Preview mode should now work. You can test by logging into Wordpress admin, creating a post (but don't publish!) and then click "Preview". If it all works, you should be able to view your post with a black bar on the top of the page indicating preview mode is enabled.
+4. Preview mode should now work. You can test by logging into Wordpress admin, creating a post (but don't publish!) and then click "Preview". If it all works, you should be able to view your post with a black bar on the top of the page indicating preview mode is enabled.
 
 ## Preview Instances
 
@@ -47,4 +45,4 @@ Sometimes we want a staging WordPress where we can test changes there.
 
 Vercel supports per branch env variables, which allows us to setup a combination of WP backend and Next front-end for a specific branch. You'll want to set the `WORDPRESS_DOMAIN` and `WORDPRESS_API_URL` variables to point to your staging WordPress. The `HEADLESS_AUTH_SECRET` and `HEADLESS_API_SECRET` can be the same values on both production and staging.
 
-To tie together your staging WordPress with your preview frontend, you need to set one variable in WordPress. Inside of WordPress, go to Appearance > Customization section in the theme. Under the "Headless" options heading, you can set the URL for your preview instance.
+To tie together your staging WordPress with your preview frontend, you need to set one variable in WordPress. Inside of WordPress, go to Settings => General and set the Site Address (URL) to the URL for your preview instance.
