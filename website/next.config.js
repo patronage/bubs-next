@@ -19,18 +19,36 @@ module.exports = withBundleAnalyzer({
     ],
   },
 
+  async redirects() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/sitemap_index.xml',
+        permanent: false,
+      },
+    ];
+  },
+
   async rewrites() {
     return [
-      // these two rules are used to locally serve (and rewrite urls) from WP
-//       {
-//         source: '/(.*)sitemap.xml',
-//         destination: '/api/upstream-proxy',
-//       },
-//       {
-//         source: '/feed',
-//         destination: '/api/upstream-proxy',
-//       },
-      // resolve relative links to WP upload assets
+      // these three rules are used to locally serve (and rewrite urls) from WP
+      {
+        source: '/(.*)sitemap.xml',
+        destination: '/api/upstream-proxy',
+      },
+      {
+        source: '/sitemap(.*).xml',
+        destination: '/api/upstream-proxy',
+      },
+      {
+        source: '/feed',
+        destination: '/api/upstream-proxy',
+      },
+      // generate an ENV specific robots.txt
+      {
+        source: '/robots.txt',
+        destination: '/api/robots',
+      },
       {
         source: '/wp-content/uploads/:path*',
         destination: `https://${process.env.WORDPRESS_DOMAIN}/wp-content/uploads/:path*`,

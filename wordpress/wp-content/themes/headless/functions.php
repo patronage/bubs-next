@@ -9,9 +9,7 @@
 
 $site_name = '';
 $headless_domain = ''; // leave blank;
-$production_headless_domain = 'https://bubs.patronage.org';
 $staging_wp_host = 'bubsnexts.wpengine.com';
-$staging_headless_domain = 'https://bubs-next-git-staging-patronage.vercel.app';
 $local_domain = 'http://localhost:3000';
 $docs_link = ''; // set to a path if you have a site/document for editor instructions
 
@@ -27,31 +25,21 @@ $headless_webhooks_redirects_yoast = false;
 if ( defined('WP_ENV') && WP_ENV == "development" ) {
   define('WP_HOST', 'localhost');
   $headless_domain = $local_domain;
-} else if ( function_exists('is_wpe') ) {
-  $preview_domain = get_theme_mod('headless_preview_url');
+} else {
+  $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
 
   if ( strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false ) {
     define('WP_HOST', 'staging');
-    if ($preview_domain) {
-      $headless_domain = rtrim($preview_domain, '/');
-    } else {
-      $headless_domain = rtrim($staging_headless_domain, '/');
-    }
   } else {
     define('WP_HOST', 'production');
-    if ($preview_domain) {
-      $headless_domain = rtrim($preview_domain, '/');
-    } else {
-      $headless_domain = rtrim($production_headless_domain, '/');
-    }
   }
 }
 
 // Theme Options
 function bubs_theme_options($wp_customize)
 {
-    include_once 'setup/theme-options/headless.php';
-    $wp_customize->remove_section('custom_css');
+  include_once 'setup/theme-options/headless.php';
+  $wp_customize->remove_section('custom_css');
 }
 
 add_action('customize_register', 'bubs_theme_options');
@@ -75,7 +63,13 @@ include_once 'setup/helpers/dashboard-preview.php';
 include_once 'setup/helpers/headless-redirect.php';
 include_once 'setup/helpers/images.php';
 include_once 'setup/helpers/menus.php';
-include_once 'setup/helpers/permalinks.php';
+
+// Only load permalinks rewriting file if not on a sitemap
+$uri = $_SERVER['REQUEST_URI'];
+if (strpos($uri, 'sitemap.xml') == false) {
+  include_once 'setup/helpers/permalinks.php';
+}
+
 include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
