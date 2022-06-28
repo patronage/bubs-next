@@ -14,8 +14,10 @@ function build_preview_link() {
 function headless_redirect(){
   global $headless_domain;
 
-  $post_type = get_post_type(get_the_ID());
-  $url = get_permalink(get_the_ID());
+  // don't use get_the_id(), as that will return the first post id
+  // https://developer.wordpress.org/reference/functions/get_the_id/#comment-3767
+  $id = get_queried_object_id();
+  $url = get_permalink($id);
   $slug = parse_url($url, PHP_URL_PATH);
   $redirect = '';
 
@@ -24,7 +26,7 @@ function headless_redirect(){
   if ( is_preview() ) {
     if ( current_user_can( 'edit_posts' ) ) {
       $revisions = wp_get_post_revisions(
-        get_the_ID(),
+        $id,
         [
           'posts_per_page' => 1,
           'fields'         => 'ids',
@@ -38,7 +40,7 @@ function headless_redirect(){
 
       $preview_id = is_array( $revisions ) && ! empty( $revisions ) ? array_values( $revisions )[0] : null;
 
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&id=' . get_the_ID() . '&preview_id=' . $preview_id;
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&id=' . $id . '&preview_id=' . $preview_id;
       return $redirect;
     }
   }
@@ -49,7 +51,7 @@ function headless_redirect(){
       $auth_code = wpe_headless_generate_authentication_code(
         wp_get_current_user()
       );
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug . '&id=' . get_the_ID();
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug . '&id=' . $id;
     } else {
       $redirect = $headless_domain . $slug;
     }
@@ -59,7 +61,7 @@ function headless_redirect(){
       $auth_code = wpe_headless_generate_authentication_code(
         wp_get_current_user()
       );
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path . '&id=' . get_the_ID();
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path . '&id=' . $id;
     } else {
       $redirect = $headless_domain . $path;
     }
