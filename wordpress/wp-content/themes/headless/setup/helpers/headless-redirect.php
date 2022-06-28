@@ -17,6 +17,7 @@ function headless_redirect(){
   // don't use get_the_id(), as that will return the first post id
   // https://developer.wordpress.org/reference/functions/get_the_id/#comment-3767
   $id = get_queried_object_id();
+  $url = get_permalink($id);
   $slug = parse_url($url, PHP_URL_PATH);
   $redirect = '';
 
