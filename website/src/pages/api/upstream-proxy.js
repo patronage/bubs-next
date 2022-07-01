@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_URL, META } from 'lib/constants';
+import { trimTrailingSlash } from 'lib/utils';
 import _replace from 'lodash/replace';
 
 // Global regex search allows replacing all URLs
@@ -40,7 +41,11 @@ export default async function proxy(req, res) {
 
   // Pathnames where URLs within need to be replaced
   if (req.url.includes('sitemap') || req.url.includes('/feed/')) {
-    content = _replace(content, HOSTNAME_REGEX, META.url);
+    content = _replace(
+      content,
+      HOSTNAME_REGEX,
+      trimTrailingSlash(META.url),
+    );
   }
 
   if (req.url.includes('sitemap')) {
