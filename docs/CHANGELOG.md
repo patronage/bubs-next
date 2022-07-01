@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/patronage/bubs-next/compare/v1.1.0...v1.2.0) (2022-07-01)
+
+
+### Bug Fixes
+
+* if preview auth code present, refresh token ([6bb552c](https://github.com/patronage/bubs-next/commit/6bb552c79d3bcb3f8715095194b0422aa813a7d2))
+* logged out redirect to headless domain was sending broken link ([#208](https://github.com/patronage/bubs-next/issues/208)) ([a479422](https://github.com/patronage/bubs-next/commit/a479422047e08aa0979b3b0bf6607f6a8a04e714))
+* preview mode bugs with preview on unpublished posts ([#193](https://github.com/patronage/bubs-next/issues/193)) ([64d875f](https://github.com/patronage/bubs-next/commit/64d875fe2c19103e45d28bc36fab16dfff1f5f4f))
+* revalidate so pages can be published/unpublished ([#213](https://github.com/patronage/bubs-next/issues/213)) ([02ad07b](https://github.com/patronage/bubs-next/commit/02ad07bd77fd9ba0e6412cfad6d3e2a9f7b5b695)), closes [#201](https://github.com/patronage/bubs-next/issues/201)
+
 ## 1.1.0 (2021-12-30)
 
 ### Features
