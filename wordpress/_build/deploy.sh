@@ -50,7 +50,7 @@ function wpe_deploy() {
     git remote rm ${TARGET}
     git remote add ${TARGET} ${REMOTE}
     cd ..
-    
+
     # check if master exists on remote
     if is_in_remote ${TARGET} "master"; then
         echo "WP engine ready for deploy, proceeding"
@@ -93,8 +93,8 @@ else
     fi
 
     if [ `git branch --list deploy` ]; then
-       echo "Branch deploy already exists, deleting then continuing"
-       git branch -D deploy
+        echo "Branch deploy already exists, deleting then continuing"
+        git branch -D deploy
     fi
 
     # save current branch to a variable
