@@ -2,7 +2,6 @@
 shopt -s extglob
 rm -rf ./wp-content/plugins/!(composer-libs)
 
-
 # clean composer before copying
 # rm -rf ./composer/wp/wp-config-sample.php
 # rm -rf ./composer/wp/wp-content/
@@ -14,6 +13,9 @@ cp -R ./composer/* ./
 # remove unwanted defaults
 rm -rf wp-content/plugins/akismet/
 rm -rf wp-content/plugins/hello.php
+
+# remove bad files
+rm wp-content/plugins/wp-stateless/vendor/symfony/console/Resources/bin/hiddeninput.exe
 
 # init files if they don't exist
 mkdir -p wp-content/mu-plugins
