@@ -19,9 +19,15 @@ Inside of the constants file, you'll want to set per site values like site name 
 
 ## Sitemaps and RSS Feeds
 
-One approach to sitemaps is to [generate them in Next](https://www.npmjs.com/package/next-sitemap). You can similarly create a feed using [some custom code](https://ashleemboyer.com/how-i-added-an-rss-feed-to-my-nextjs-site) and the feed npm package.
+One approach to sitemaps is to [generate them in Next](https://www.npmjs.com/package/next-sitemap). Another is create a feed using [some custom code](https://ashleemboyer.com/how-i-added-an-rss-feed-to-my-nextjs-site) and the feed npm package.
 
-We find however that WordPress already does a great job at this, including specific support for features like Google News indexing through a variety of well tested plugins. We've therefore implemented a lightweight proxy that grabs sitemap files from WordPress, serving them on your domain direct to search engines. Inside of [next.config.js](../website/next.config.js) we set a couple rewrites that point any requests to `*sitemap.xml` or `feed*` and retrieve them from the WordPress origin. We rewrite any absolute links so that they point to your next.js public domain.
+We find however that WordPress and Yoast already does a great job at this, including specific support for features like Google News indexing through a variety of well tested plugins. We've therefore implemented a lightweight proxy that grabs sitemap files from WordPress, serving them on your domain direct to search engines. Inside of [next.config.js](../website/next.config.js) we set a couple rewrites that point any requests to `*sitemap.xml` or `feed*` and retrieve them from the WordPress origin. We rewrite any absolute links so that they point to your next.js public domain as set in the META object inside of constants.js.
+
+## Robots.txt
+
+We have a simple API function that checks the `VERCEL_ENV` variable and denies search engines if not on production. This will keep all preview branches from being indexed.
+
+If for some reason you want your production ENV to also disallow robots, then you can set a `NOINDEX` env.
 
 ## Further reading
 
