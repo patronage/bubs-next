@@ -9,7 +9,7 @@ WORDPRESS_DB_HOST="127.0.0.1"
 WORDPRESS_DB_PORT=3307
 WORDPRESS_DB_USER="root"
 WORDPRESS_DB_PASSWORD="somewordpress"
-WORDPRESS_DB_NAME=${COMPOSE_PROJECT_NAME:-wordpress}
+WORDPRESS_DB_NAME=${COMPOSE_PROJECT_NAME:-bubsnext}
 
 ## Ideally these would work without having to hardcode above
 ## instead coming from docker ENV
