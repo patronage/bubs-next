@@ -10,7 +10,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: bubsnext
+      MYSQL_DATABASE: ${COMPOSE_PROJECT_NAME:-bubsnext}
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
 
@@ -27,7 +27,7 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: somewordpress
-      WORDPRESS_DB_NAME: bubsnext
+      WORDPRESS_DB_NAME: ${COMPOSE_PROJECT_NAME:-bubsnext}
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENV', 'development');
