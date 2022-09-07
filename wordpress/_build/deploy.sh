@@ -1,9 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
 ## Per Project Variables -- CUSTOMIZE THESE FIRST
-PRODUCTION_REMOTE="git@git.wpengine.com:production/bubsnext.git"
-STAGING_REMOTE="git@git.wpengine.com:production/bubsnexts.git"
-DEVELOPMENT_REMOTE="git@git.wpengine.com:production/bubsnextd.git"
+
+## env export, with unset at end of script
+if [ -f ".env" ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+PRODUCTION_REMOTE="git@git.wpengine.com:production/${COMPOSE_WPE_PRODUCTION}.git"
+STAGING_REMOTE="git@git.wpengine.com:production/${COMPOSE_WPE_STAGING}.git"
+DEVELOPMENT_REMOTE="git@git.wpengine.com:production/${COMPOSE_WPE_DEVELOPMENT}.git"
 GIT_EMAIL="hello+bubs@patronage.org"
 GIT_NAME="Bubs Deploy"
 
@@ -93,8 +98,8 @@ else
     fi
 
     if [ `git branch --list deploy` ]; then
-        echo "Branch deploy already exists, deleting then continuing"
-        git branch -D deploy
+       echo "Branch deploy already exists, deleting then continuing"
+       git branch -D deploy
     fi
 
     # save current branch to a variable
@@ -158,4 +163,8 @@ else
     else
         error_exit "Something went wrong with the deploy."
     fi
+fi
+
+if [ -f ".env" ]; then
+  unset $(grep -v '^#' .env | sed -E 's/(.*)=.*/\1/' | xargs)
 fi
