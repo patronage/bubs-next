@@ -70,6 +70,7 @@ if (strpos($uri, 'sitemap.xml') == false) {
   include_once 'setup/helpers/permalinks.php';
 }
 
+include_once 'setup/helpers/role-super-editor.php';
 include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
@@ -85,4 +86,3 @@ include_once 'setup/helpers/xmlrpc-disable.php';
 
 add_theme_support('post-thumbnails');
 add_theme_support('menus');
-
