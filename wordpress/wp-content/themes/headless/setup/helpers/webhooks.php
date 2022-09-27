@@ -19,10 +19,20 @@ if ( $headless_webhooks_graphcdn_purge_api ) {
   add_action('acf/save_post', 'purge_options', 10, 2);
   add_action('wp_update_nav_menu', 'purge_menu', 10, 2);
 
-  // Loop through post types and add actions
-  foreach ( $headless_webhooks_post_types as $post_type ) {
-    add_action('publish_' . $post_type, 'purge_post', 10, 2);
-  }
+  $statuses_to_skip = array('auto-draft', 'inherit');
+
+  add_action('transition_post_status', function ($new_status, $old_status, $post) use ($statuses_to_skip, $headless_webhooks_post_types) {
+    if ($new_status != $old_status && !in_array($new_status, $statuses_to_skip)  && in_array($post->post_type, $headless_webhooks_post_types)) {
+      purge_post($post->ID);
+    }
+  }, 10, 3);
+
+  add_action('pre_post_update', function ($post_id, $data) {
+    $cur_post = get_post($post_id);
+    if ($cur_post->post_password != $data['post_password']) {
+      purge_post($post_id);
+    }
+  }, 10, 2);
 }
 
 // check if redirection is enabled
