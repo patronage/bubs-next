@@ -24,14 +24,19 @@
       "command": "chmod -R 777 wordpress/wp-content/themes/headless/acf-json"
     },
     {
-      "label": "Wordpress DB Export",
+      "label": "Wordpress DB Export Production",
       "type": "shell",
-      "command": "cd wordpress && bash _build/db.sh export"
+      "command": "cd ./ && bash _build/db.sh export production"
+    },
+    {
+      "label": "Wordpress DB Export Staging",
+      "type": "shell",
+      "command": "cd ./ && bash _build/db.sh export staging"
     },
     {
       "label": "Wordpress DB Import",
       "type": "shell",
-      "command": "cd wordpress && bash _build/db.sh import"
+      "command": "cd ./ && bash _build/db.sh import"
     },
     {
       "label": "Wordpress Dev",

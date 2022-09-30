@@ -1,16 +1,21 @@
-#!/bin/sh
-
-## Per Project Variables -- CUSTOMIZE THESE FIRST
-
 ## env export, with unset at end of script
 if [ -f ".env" ]; then
   export $(grep -v '^#' .env | xargs)
+else
+  echo ".env file required, please copy from the .env.sample"
+  exit 1;
 fi
+
+
+## Per Project Variables -- CUSTOMIZE THESE FIRST IN .ENV
 PRODUCTION_REMOTE="git@git.wpengine.com:production/${COMPOSE_WPE_PRODUCTION}.git"
 STAGING_REMOTE="git@git.wpengine.com:production/${COMPOSE_WPE_STAGING}.git"
 DEVELOPMENT_REMOTE="git@git.wpengine.com:production/${COMPOSE_WPE_DEVELOPMENT}.git"
-GIT_EMAIL="hello+bubs@patronage.org"
-GIT_NAME="Bubs Deploy"
+WORDPRESS_DB_NAME=${COMPOSE_PROJECT_NAME:-wordpress}
+
+# Defined in .env
+# GIT_EMAIL="hello+bubs@patronage.org"
+# GIT_NAME="Bubs Deploy"
 
 # read txt files with list of files to include/exclude
 function get_array {
