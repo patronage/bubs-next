@@ -7,6 +7,7 @@
 // spacing
 // we set spacing in 10px increments, allowing up to 10, e.g. p-10.
 // we also enable negative spacers
+$enable-negative-margins: true;
 $spacer-px: 10px;
 $spacer: rem-calc(10px);
 $spacers: (
@@ -24,7 +25,6 @@ $spacers: (
 );
 $section-padding: 80px;
 $section-padding-mobile: 40px;
-$enable-negative-margins: true;
 
 // type
 $font-sans: 'Source Sans Pro', sans-serif;
