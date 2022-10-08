@@ -10,6 +10,7 @@ rm -rf ./wp-content/plugins/!(composer-libs)
 
 # copy everything over
 cp -R ./composer/* ./
+
 # remove unwanted defaults
 rm -rf wp-content/plugins/akismet/
 rm -rf wp-content/plugins/hello.php
