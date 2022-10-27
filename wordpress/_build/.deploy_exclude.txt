@@ -2,6 +2,7 @@ _build/
 _data/
 _init/
 .editorconfig
+.env
 .gitignore
 .npmrc
 .nvmrc

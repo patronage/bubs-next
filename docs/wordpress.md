@@ -15,7 +15,15 @@ Inside of the WordPress folder is a docker-commpose.yml file that will spin up a
 
 The VS Code task `WordPress Docker Recreate` can be run from the task runner as an alias to get your container started.
 
-Inside of the WordPress folder you'll find a .env.sample. You'll want to copy that to .env, and setup a unique database name for the project.
+Inside of the WordPress folder you'll find a .env. You'll want to configure your name for the project, and any WP Engine deployment targets. This variables are used in the db.sh script to manage imports/exports of your database, and deploy.sh which deploys to WP Engine.
+
+## Exporting and Importing database
+
+If you want to pull down your DB from production to mirror locally, there is a DB import script accessible via the "Wordpress DB Import" task that will run and import the latest version of a database file that exists inside of `wordpress/_data`. After importing, it will run a `local.sql` file that resets a few variables and resets the admin login to `admin:password` for ease of local dev. You can customize local.sql to make additional overides if you want that are project specific.
+
+Your wordpress admin will be viewable at /wp-login.php, and you can use the username: `admin` and password: `password`.
+
+To help with exports, we also have tasks "Wordpress DB Export" for both production and staging that will save the latest DB to the \_data folder. You will need a local version of [WP CLI](https://wp-cli.org/) in order for this to work. You can quickly install by running `brew install wp-cli` if you use use homebrew.
 
 ## Managing WP deps with Composer
 
@@ -30,12 +38,6 @@ To update plugins, you can update their versions in the composer.json file, and 
 When you want to update wordpress core, you need to update the `wordpress/docker-compose.yml` file for Docker users. Then run `Wordpress Docker Recreate` task to rebuild your local container.
 
 Also update `composer.json` so that non-docker users get the updated WP version.
-
-## WordPress DB
-
-If you want to pull down your DB from production to mirror locally, there is a DB import script that will run and import the latest version of a database file that exists inside of `wordpress/_data`. After importing, it will run a `local.sql` file that resets a few variables and resets the admin login to `admin:password` for ease of local dev. You can customize local.sql to make additional ovverides if you want that are project specific.
-
-This script can be run via the VS Code task `Wordpress DB Import`
 
 ## Theme
 

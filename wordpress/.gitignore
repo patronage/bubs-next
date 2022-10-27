@@ -6,6 +6,9 @@ composer.lock
 
 #### JTS RULES
 
+# checkin WP env (no secrets, local configs)
+!.env
+
 # development-environment
 tmp/
 wp-content/themes/timber/dev/

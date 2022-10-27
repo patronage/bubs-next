@@ -24,9 +24,14 @@
       "command": "chmod -R 777 wordpress/wp-content/themes/headless/acf-json"
     },
     {
-      "label": "Wordpress DB Export",
+      "label": "Wordpress DB Export Production",
       "type": "shell",
-      "command": "cd wordpress && bash _build/db.sh export"
+      "command": "cd wordpress && bash _build/db.sh export production"
+    },
+    {
+      "label": "Wordpress DB Export Staging",
+      "type": "shell",
+      "command": "cd wordpress && bash _build/db.sh export staging"
     },
     {
       "label": "Wordpress DB Import",
@@ -46,22 +51,22 @@
     {
       "label": "Wordpress Composer Install",
       "type": "shell",
-      "command": "cd wordpress && composer install"
+      "command": "cd wordpress && composer install --ignore-platform-reqs"
     },
     {
       "label": "Wordpress Composer Update",
       "type": "shell",
-      "command": "cd wordpress && composer update"
+      "command": "cd wordpress && composer update --ignore-platform-reqs"
     },
     {
       "label": "WP Engine Deploy Production",
       "type": "shell",
-      "command": "cd wordpress && sh _build/deploy.sh production"
+      "command": "cd wordpress && bash _build/deploy.sh production"
     },
     {
       "label": "WP Engine Deploy Staging",
       "type": "shell",
-      "command": "cd wordpress && sh _build/deploy.sh staging"
+      "command": "cd wordpress && bash _build/deploy.sh staging"
     }
   ]
 }
