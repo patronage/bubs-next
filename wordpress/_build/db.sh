@@ -102,6 +102,38 @@ function db_export() {
   fi
 }
 
+function media_export() {
+  local TARGET=${1}
+
+  if [ "$TARGET" = "staging" ]; then
+    SSH_TARGET=$STAGING_SSH
+  elif [ "$TARGET" = "development" ]; then
+    SSH_TARGET=$DEVELOPMENT_SSH
+  else
+    SSH_TARGET=$PRODUCTION_SSH
+    PROJECT=$COMPOSE_WPE_PRODUCTION
+  fi
+
+  # We don't need all thumbnails, just the original files
+  EXCLUDE_REGEX="*[0-9]*x[0-9]*\.[a-zA-Z0-9]*"
+
+  echo "connecting to $SSH_TARGET"
+
+  status=$(ssh -o BatchMode=yes -o ConnectTimeout=5 $SSH_TARGET echo ok 2>&1)
+
+  if [[ $status == ok ]] ; then
+    echo "auth ok, proceeding with media export"
+    rsync -rlD -vz --size-only --exclude=$EXCLUDE_REGEX $SSH_TARGET:sites/$PROJECT/wp-content/uploads/ ./wp-content/uploads/
+    echo "export complete";
+  elif [[ $status == "Permission denied"* ]] ; then
+    echo no_auth
+  elif [[ $status == "Host key verification failed"* ]] ; then
+    echo "host key not yet verified, please run: ssh $SSH_TARGET then try again"
+  else
+    echo "SSH couldn't connect, please check that environments are defined in your .env, and your SSH key is added to WP Engine"
+  fi
+}
+
 CALLED_FUNCTION=${1}
 TARGET=${2}
 
@@ -111,6 +143,9 @@ if [ "$CALLED_FUNCTION" = "export" ]; then
 elif [ "$CALLED_FUNCTION" = "import" ]; then
   echo "running DB import script"
   db_import
+elif [ "$CALLED_FUNCTION" = "media" ]; then
+  echo "running media export script"
+  media_export
 else
   error_exit "Specify a DB task (export or import)"
 fi
