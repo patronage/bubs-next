@@ -11,11 +11,11 @@ We rely on Docker for this, and below are some details on getting up and running
 
 ## Docker
 
-Inside of the WordPress folder is a docker-commpose.yml file that will spin up a basic WordPress image with a MariaDB database (this is better for Apple Silicon Macbooks).
+Inside of the WordPress folder is a docker-compose.yml file that will spin up a basic WordPress image with a MariaDB database (this is better for Apple Silicon Macbooks than MySQL).
 
 The VS Code task `WordPress Docker Recreate` can be run from the task runner as an alias to get your container started.
 
-Inside of the WordPress folder you'll find a .env. You'll want to configure your name for the project, and any WP Engine deployment targets. This variables are used in the db.sh script to manage imports/exports of your database, and deploy.sh which deploys to WP Engine.
+Inside of the WordPress folder you'll find a .env. You'll want to configure your name for the project, and any WP Engine deployment targets. This variables are used in the db.sh script to manage imports/exports of your database, and deploy.sh which deploys to WP Engine. This file is set to be committed, as it typically doesn't contain secrets. But if that changes, make sure you take precaution to keep secrets out of git.
 
 ## Exporting and Importing database
 
@@ -25,6 +25,12 @@ Your wordpress admin will be viewable at /wp-login.php, and you can use the user
 
 To help with exports, we also have tasks "Wordpress DB Export" for both production and staging that will save the latest DB to the \_data folder. You will need a local version of [WP CLI](https://wp-cli.org/) in order for this to work. You can quickly install by running `brew install wp-cli` if you use use homebrew.
 
+## Working with Images
+
+The "WordPress Media export" task can be used to download images from your production site and save them locally. This is not required, but can be useful if you want to test image resizing or manipulation locally.
+
+Note that we have also configured .htaccess on Docker to grab images from the production server if they are not found locally. This can be useful if you don't want to download all of the images from the production site, or if you want to use the latest version of the images from the production site.
+
 ## Managing WP deps with Composer
 
 We tend to checkin our WP plugins to github if using a private repo. However for this open source repo, we don't. You'll want to remove those lines from the top of .gitignore inside the wordpress folder.
@@ -33,11 +39,15 @@ If the plugins are not checked in, you'll need to install them with the VS Code 
 
 To update plugins, you can update their versions in the composer.json file, and then run the VS Code task `Wordpress Composer Update` task to install Wordpress Deps.
 
+### Local Plugins
+
+When you run Composer, an "init" task will be executed that copies a few files if they do not exist. These files are gitignored to avoid committing them to the repository.
+
+One of these files is local-plugins.php, which can be used to enable or disable plugins that you want to configure differently on your local development environment compared to production. For example we enable debug plugins that we ignore on production to be enabled locally.
+
 ## New version of WordPresss
 
 When you want to update wordpress core, you need to update the `wordpress/docker-compose.yml` file for Docker users. Then run `Wordpress Docker Recreate` task to rebuild your local container.
-
-Also update `composer.json` so that non-docker users get the updated WP version.
 
 ## Theme
 
