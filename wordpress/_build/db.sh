@@ -107,8 +107,10 @@ function media_export() {
 
   if [ "$TARGET" = "staging" ]; then
     SSH_TARGET=$STAGING_SSH
+    PROJECT=$COMPOSE_WPE_STAGING
   elif [ "$TARGET" = "development" ]; then
     SSH_TARGET=$DEVELOPMENT_SSH
+    PROJECT=$COMPOSE_WPE_DEVELOPMENT
   else
     SSH_TARGET=$PRODUCTION_SSH
     PROJECT=$COMPOSE_WPE_PRODUCTION
