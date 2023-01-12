@@ -15,6 +15,7 @@ WORDPRESS_DB_NAME=${COMPOSE_PROJECT_NAME:-wordpress}
 PRODUCTION_SSH="${COMPOSE_WPE_PRODUCTION}@${COMPOSE_WPE_PRODUCTION}.ssh.wpengine.net"
 STAGING_SSH="${COMPOSE_WPE_STAGING}@${COMPOSE_WPE_STAGING}.ssh.wpengine.net"
 DEVELOPMENT_SSH="${COMPOSE_WPE_DEVELOPMENT}@${COMPOSE_WPE_STAGING}.ssh.wpengine.net"
+SQL_EXCLUDED_TABLES="${SQL_EXCLUDED_TABLES}"
 
 # handle script errors, exit and kick you to working branch
 function error_exit {
@@ -90,7 +91,7 @@ function db_export() {
     else
       mkdir -p _data
       filename=$(date +'%Y-%m-%d-%H-%M-%S').sql.zip
-      wp db export --add-drop-table --ssh=$SSH_TARGET - | gzip > _data/$(date +'%Y-%m-%d-%H-%M-%S').sql.gz
+      wp db export --add-drop-table --exclude_tables=$SQL_EXCLUDED_TABLES --ssh=$SSH_TARGET - | gzip > _data/$(date +'%Y-%m-%d-%H-%M-%S').sql.gz
       echo "export complete";
     fi
   elif [[ $status == "Permission denied"* ]] ; then
