@@ -79,8 +79,7 @@
     "vendor-dir": "wp-content/plugins/composer-libs",
     "allow-plugins": {
       "ffraenz/private-composer-installer": true,
-      "composer/installers": true,
-      "roots/wordpress-core-installer": true
+      "composer/installers": true
     }
   },
   "minimum-stability": "dev",
