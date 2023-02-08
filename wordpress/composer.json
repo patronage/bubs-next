@@ -17,7 +17,7 @@
       "type": "package",
       "package": {
         "name": "advanced-custom-fields/advanced-custom-fields-pro",
-        "version": "5.12.2",
+        "version": "6.0.7",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
@@ -50,7 +50,7 @@
   "require": {
     "php": ">=7.3",
     "composer/installers": "^1.8",
-    "advanced-custom-fields/advanced-custom-fields-pro": "5.12.2",
+    "advanced-custom-fields/advanced-custom-fields-pro": "6.0.7",
     "wpackagist-plugin/acf-repeater-flexible-content-collapser": "1.2.6",
     "wpackagist-plugin/classic-editor": "1.6.2",
     "wpackagist-plugin/duplicate-post": "4.5",
@@ -68,7 +68,7 @@
     "wpackagist-plugin/wordpress-seo": "20.1",
     "wpackagist-plugin/wp-graphql": "1.13.8",
     "wpackagist-plugin/wp-stateless": "3.2.2",
-    "wp-graphql/wp-graphql-acf": "0.5.3",
+    "wp-graphql/wp-graphql-acf": "0.6.1",
     "wp-graphql/wp-graphql-tax-query": "0.1.0",
     "ashhitch/wp-graphql-yoast-seo": "4.22.0",
     "ashhitch/wp-graphql-redirection": "^0.0.3"
