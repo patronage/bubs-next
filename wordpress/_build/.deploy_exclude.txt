@@ -1,6 +1,7 @@
 _build/
 _data/
 _init/
+.htaccess
 .editorconfig
 .env
 .gitignore

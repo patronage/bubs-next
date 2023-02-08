@@ -84,8 +84,7 @@ if ( defined( 'WP_ENV' ) && WP_ENV == "development" ) {
     new Disable_Plugins_When_Local_Dev( array(
         'hello.php',
         'object-cache.php',
-        'absolute-privacy/absolute_privacy.php',
-        'google_apps_login/google_apps_login.php'
+        'google-apps-login/google_apps_login.php'
     ));
 
     // enable

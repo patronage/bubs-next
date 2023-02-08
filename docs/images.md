@@ -48,6 +48,8 @@ If you're developing against local WordPress graphql, things will work similarly
 
 The only thing you need to make sure you've done is whitelisted local and public image locations in `next.config.js`.
 
+If you need to export your images, locally, see the `Wordpress` docs for details on how to export.
+
 ### Elastic Storage
 
 The one thing we've run into is large sites with increasingly large images storage requirements. On cloud hosts, this storage is often surprisingly limited.

@@ -1,0 +1,28 @@
+# CUSTOM
+<IfModule mod_rewrite.c>
+
+    ## Rewrite images if they don't exist locally
+    ## Allows us to pull staging server SQL and use same images
+    ## This isn't meant to be deployed, so make sure it's excluded
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^wp-content/uploads/(.*)$ https://bubsnext.wpengine.com/wp-content/uploads/$1 [L]
+
+    # Simple 404 for missing files
+    <FilesMatch "(\.jpe?g|gif|png|bmp|ico)$">
+      ErrorDocument 404 "File Not Found"
+    </FilesMatch>
+
+</IfModule>
+# END CUSTOM
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+    ## Remove index.php from all URLs
+    RewriteEngine On
+    RewriteBase /
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
