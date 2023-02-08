@@ -1,4 +1,4 @@
-# BEGIN CUSTOM
+# CUSTOM
 <IfModule mod_rewrite.c>
 
     ## Rewrite images if they don't exist locally

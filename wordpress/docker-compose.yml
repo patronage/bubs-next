@@ -34,5 +34,11 @@ services:
         define('WP_ENV', 'development');
         define('HEADLESS_AUTH_SECRET', 'bubs-next-wp-auth-secret-key');
         define('HEADLESS_API_SECRET', 'bubs-next-headless-secret-key');
+        define('WP_LOCAL_DEV', true);
+        define('WP_THEME', 'timber');
+        define('WP_DEBUG_LOG', true );
+        define('WP_DEBUG_DISPLAY', false);
+        @ini_set('display_errors', 0);
+
 volumes:
   db_data: {}
