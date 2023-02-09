@@ -134,6 +134,26 @@ export async function getAllContentWithSlug(contentType) {
 }
 
 /**
+ * Determine if the given pathname is a contentnode before attempting to query for it
+ * @param {*} slug pathname from URL
+ * @returns
+ */
+export async function getNodeType(slug) {
+  const query = /* GraphQL */ `
+    query getNodeType($slug: String!) {
+      nodeByUri(uri: $slug) {
+        isContentNode
+        isTermNode
+      }
+    }
+  `;
+
+  const data = await fetchAPI(query, { variables: { slug } });
+
+  return data;
+}
+
+/**
  * Get fields for single page regardless of post type.
  */
 export async function getContent(slug, preview, previewData) {

@@ -6,6 +6,7 @@ import checkRedirects from 'lib/checkRedirects';
 import { isStaticFile } from 'lib/utils';
 import {
   getContent,
+  getNodeType,
   getGlobalProps,
   getAllContentWithSlug,
 } from 'lib/wordpress';
@@ -89,6 +90,15 @@ export async function getStaticProps({
     redirect?.statusCode
   ) {
     return { redirect: redirect };
+  }
+
+  // To reduce the amount of Stellate errors, don't try to query contentNode if the item isn't one
+  const {
+    nodeByUri: { isContentNode },
+  } = await getNodeType(slug);
+
+  if (!isContentNode) {
+    return { notFound: true };
   }
 
   const data = await getContent(slug, preview, previewData);
