@@ -7,7 +7,7 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
+    restart: "no"
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
       MYSQL_DATABASE: ${COMPOSE_PROJECT_NAME:-bubsnext}
@@ -23,7 +23,7 @@ services:
     volumes:
       - ./wp-content:/var/www/html/wp-content
       - ./.htaccess:/var/www/html/.htaccess
-    restart: always
+    restart: "no"
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: root
