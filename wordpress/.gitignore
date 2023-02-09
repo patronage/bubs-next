@@ -59,6 +59,11 @@ wp-includes/
 wp-content/themes/*
 !wp-content/themes/headless/
 
+#### WordPress Core Plugins we don't typically use
+wp-content/plugins/akismet/
+wp-content/plugins/hello.php
+
+
 #### WPENGINE BELOW HERE
 
 *~
