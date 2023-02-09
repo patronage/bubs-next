@@ -61,10 +61,10 @@ function wpe_deploy() {
   git remote add ${TARGET} ${REMOTE}
   cd ..
 
-  # check if master exists on remote
-  if is_in_remote ${TARGET} "master"; then
+  # check if main exists on remote
+  if is_in_remote ${TARGET} "main"; then
     echo "WP engine ready for deploy, proceeding"
-    git push -u ${TARGET} `git subtree split --prefix wordpress deploy`:master --force
+    git push -u ${TARGET} `git subtree split --prefix wordpress deploy`:main --force
     echo "Returning to working branch."
     git stash
     git checkout ${BRANCH}
@@ -76,7 +76,7 @@ function wpe_deploy() {
     git init
     git add . && git commit --no-verify -am "comment"
     git remote add ${TARGET} ${REMOTE}
-    git push -f ${TARGET} master
+    git push -f ${TARGET} main
     echo "Remote ready, cleaning up"
     cd ..
     rm -rf tmp
