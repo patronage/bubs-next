@@ -13,7 +13,6 @@ if ( strpos($user_agent, 'WPEBot') ) {
   http_response_code(200);
   exit();
 }
-
 $redirect = headless_redirect();
 // echo $redirect;
 return wp_redirect( $redirect, 307 );
