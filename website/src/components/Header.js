@@ -11,11 +11,11 @@ export default function Header() {
   const globals = useContext(GlobalsContext);
   const [navOpen, setNavOpen] = useState(false);
 
-  function handleHamburgerClick(event) {
+  function handleHamburgerClick() {
     setNavOpen(!navOpen);
   }
 
-  function handleClose(event) {
+  function handleClose() {
     setNavOpen(false);
   }
 
@@ -51,13 +51,8 @@ export default function Header() {
                   <ul className="list-unstyled">
                     {headerNav.map((item, i) => (
                       <li key={i}>
-                        <Link href={item.path} prefetch={false}>
-                          <a
-                            className={cx(['text-nowrap'])}
-                            onClick={handleClose}
-                          >
-                            {item.label}
-                          </a>
+                        <Link href={item.path} prefetch={false} className={cx(['text-nowrap'])} onClick={handleClose}>
+                          {item.label}
                         </Link>
                       </li>
                     ))}
@@ -90,7 +85,7 @@ export default function Header() {
           <div className="col">
             {META.siteName && (
               <div className={styles.logo}>
-                <Link href="/" passHref>
+                <Link href="/">
                   {META.siteName}
                 </Link>
               </div>

@@ -20,6 +20,7 @@ const FlexHero = (props) => {
       {props.heroImage?.sourceUrl && (
         <div className={styles['hero-image']}>
           <Image
+            alt=""
             src={props.heroImage.sourceUrl}
             width={props.heroImage.mediaDetails.width}
             height={props.heroImage.mediaDetails.height}

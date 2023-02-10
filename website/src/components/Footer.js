@@ -65,15 +65,15 @@ export default function Footer() {
           >
             {footerNav.map((item, i) => (
               <div key={i}>
-                <Link href={item.path}>
-                  <a className={styles.topLevel}>{item.label}</a>
+                <Link href={item.path} className={styles.topLevel}>
+                  {item.label}
                 </Link>
                 {item.children && item.children.length > 0 && (
                   <ul className="list-unstyled">
                     {item.children.map((item, i) => (
                       <li key={i}>
                         <Link href={item.path}>
-                          <a>{item.label}</a>
+                          {item.label}
                         </Link>
                       </li>
                     ))}
@@ -91,7 +91,7 @@ export default function Footer() {
                 {secondaryNav.map((item, i) => (
                   <li className="list-inline-item" key={i}>
                     <Link href={item.path} prefetch={false}>
-                      <a>{item.label}</a>
+                      {item.label}
                     </Link>
                     <span className={styles.divider}>|</span>
                   </li>
