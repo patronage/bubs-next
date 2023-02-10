@@ -93,11 +93,8 @@ export async function getStaticProps({
   }
 
   // To reduce the amount of Stellate errors, don't try to query contentNode if the item isn't one
-  const {
-    nodeByUri: { isContentNode },
-  } = await getNodeType(slug);
-
-  if (!isContentNode) {
+  const { nodeByUri } = await getNodeType(slug);
+  if (!nodeByUri?.isContentNode) {
     return { notFound: true };
   }
 
