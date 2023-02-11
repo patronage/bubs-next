@@ -29,6 +29,8 @@ We have a simple API function that checks the `VERCEL_ENV` variable and denies s
 
 If for some reason you want your production ENV to also disallow robots, then you can set a `NOINDEX` env.
 
+Wordpress has a robots.txt file we've set to noindex in order to ensure that the WordPress headless theme is not indexed. We do have an exception for the uploads folder. Twitter in particular won't serve images if they are disallowed in robots.txt.
+
 ## Further reading
 
 - [Lighthouse SEO audits](https://web.dev/lighthouse-seo/)
