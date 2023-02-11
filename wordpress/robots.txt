@@ -1,0 +1,4 @@
+# api server shouldn't be indexed, but images can be
+User-agent: *
+Allow: /wp-content/uploads/
+Disallow: /
