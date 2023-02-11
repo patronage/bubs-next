@@ -19,7 +19,15 @@ function headless_redirect(){
   $id = get_queried_object_id();
   $url = get_permalink($id);
   $slug = parse_url($url, PHP_URL_PATH);
+  $path = $_SERVER['REQUEST_URI'];
   $redirect = '';
+
+  // if a 404 quickly fail and send to headless domain to handle
+  // if we don't, WP will return info on a post we don't want (e.g. the most recent post)
+  if (is_404()) {
+    $redirect = $headless_domain . $path;
+    return $redirect;
+  }
 
   // check if preview and user has edit ability.
   // if so, redirect to preview path
