@@ -36,7 +36,7 @@
     "widont": "0.3.3"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "12.1.6",
+    "@next/bundle-analyzer": "13.1.6",
     "babel-eslint": "10.1.0",
     "cross-env": "7.0.3",
     "eslint": "8.17.0",
