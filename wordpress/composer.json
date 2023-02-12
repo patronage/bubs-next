@@ -64,6 +64,7 @@
     "wpackagist-plugin/safe-svg": "2.0.3",
     "wpackagist-plugin/simple-history": "3.4.0",
     "wpackagist-plugin/so-clean-up-wp-seo": "3.14.13",
+    "wpackagist-plugin/stellate": "0.1.2",
     "wpackagist-plugin/term-management-tools": "2.0.1",
     "wpackagist-plugin/wordpress-seo": "20.1",
     "wpackagist-plugin/wp-graphql": "1.13.8",
