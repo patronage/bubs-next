@@ -1,47 +1,32 @@
 <?php
 //
-// enable graphql secret key for draft page preview
+// Enable customizations for WPGraphQL here
 //
-
-// docs: https://github.com/wp-graphql/wp-graphql-jwt-authentication#install-activate--setup
-// salt generator: https://api.wordpress.org/secret-key/1.1/salt/
+// Example: increase the amount of posts that can be returned in a query
 //
-
-// if a public repo, uncomment the next line, and
-// copy this filter and save in wpgraphql-jwt.php
-// include_once 'wpgraphql-jwt.php';
-
-// if a private repo, uncomment and set here
-// add_filter( 'graphql_jwt_auth_secret_key', function() {
-//     return 'changeme';
-// });
-
+//   add_filter( 'graphql_connection_max_query_amount', function( $amount, $source, $args, $context, $info ) {
+//     return 1000;
+//   }, 10, 5 );
 //
-// Add ACF to Page Templates
+// Example: Add a JSON response to GraphQL to cache API responses along with graphql
 //
-
-// Workaround until this is fixed in a future version:
-// https://github.com/wp-graphql/wp-graphql-acf/issues/76
-
-/*function expose_acf_to_graphql_only($result, $rule, $screen, $field_group) {
-  if ( !is_graphql_http_request() ) {
-    return $result;
-  }
-
-  // ACF GraphQL Field Name
-  $page_template_acf_groups = [ 'acfFlex' ];
-
-  // Add other post types here
-  $post_types = [ 'page', 'post' ];
-
-  if (
-    in_array( $field_group['graphql_field_name'], $page_template_acf_groups ) &&
-    in_array( $screen['post_type'], $post_types )
-  ) {
-    return true;
-  }
-
-  return $result;
-}
-
-add_filter('acf/location/rule_match', 'expose_acf_to_graphql_only', 10, 4);*/
+//    function getAPI() {
+//      return [
+//          'type' => 'String',
+//          'description' => 'API Response',
+//          'resolve' => function ($post_model, $args, $context, $info) {
+//              // This ID is for the actual ACF fields and can be found by var_dumping $post_model to find your field
+//              $formID = $post_model['field_63d06c8f955a5_field_63d06955536e5'];
+//
+//              if ($formID) {
+//                  $rawResponse = file_get_contents("https://example.com/resource/" . $formID );
+//                  return $rawResponse;
+//              }
+//
+//              return null;
+//          }
+//      ];
+//    }
+//
+//    register_graphql_field('Template_Flex_Acfflex_FlexContent_ApiFlex', 'apiResults', getAPI());
+//

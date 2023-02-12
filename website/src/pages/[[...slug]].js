@@ -10,13 +10,10 @@ import {
   getAllContentWithSlug,
 } from 'lib/wordpress';
 
-export default function Page({
-  post,
-  preview,
-  globals,
-  template,
-  flexSections,
-}) {
+export default function Page({ post, preview, globals }) {
+  const flexSections = post?.template?.acfFlex?.flexContent || null;
+  const template = post?.template?.templateName || null;
+
   if (template === 'Flex') {
     return (
       <GlobalsProvider globals={globals}>
@@ -109,9 +106,6 @@ export async function getStaticProps({
       },
       preview: preview || false,
       post: data.contentNode,
-      flexSections:
-        data.contentNode?.template?.acfFlex?.flexContent || null,
-      template: data.contentNode?.template?.templateName || null,
     },
     revalidate: 60,
   };
