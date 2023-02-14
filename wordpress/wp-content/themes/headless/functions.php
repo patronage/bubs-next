@@ -21,6 +21,15 @@ $headless_webhooks_post_types = ['page', 'post'];
 $headless_webhooks_redirects_redirection = true;
 $headless_webhooks_redirects_yoast = false;
 
+// stellate config
+$stellate_production_enabled = true;
+$stellate_staging_enabled = false;
+$stellate_staging_service_name = "";
+$stellate_staging_token = "";
+$stellate_development_enabled = false;
+$stellate_development_service_name = "";
+$stellate_development_token = "";
+
 // Determine the hosting environment we're in
 if ( defined('WP_ENV') && WP_ENV == "development" ) {
   define('WP_HOST', 'localhost');
@@ -71,7 +80,8 @@ if (strpos($uri, 'sitemap.xml') == false) {
 }
 
 include_once 'setup/helpers/role-super-editor.php';
-include_once 'setup/helpers/webhooks.php';
+include_once 'setup/helpers/stellate.php';
+// include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
 
