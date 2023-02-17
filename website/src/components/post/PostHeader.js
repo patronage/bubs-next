@@ -10,7 +10,6 @@ export function PostHeader({
   date,
   author,
   categories,
-  tags,
   slug,
 }) {
   // prepeare date
@@ -48,7 +47,7 @@ export function PostHeader({
       {titleLink ? (
         <h1>
           <Link href="/posts/[postslug]" as={`/posts/${slug}`}>
-            <a>{widont(title)}</a>
+            {widont(title)}
           </Link>
         </h1>
       ) : (

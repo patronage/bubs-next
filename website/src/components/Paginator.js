@@ -17,7 +17,7 @@ const Paginator = ({ index, postsPerPage, totalPosts }) => {
             <strong>{page}</strong>
           ) : (
             <Link href={`/posts/page/${page}`}>
-              <a>{page}</a>
+              {page}
             </Link>
           )}
         </div>
