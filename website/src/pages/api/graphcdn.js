@@ -16,7 +16,7 @@ const GRAPHCDN_PURGE_API_URL = process.env.GRAPHCDN_PURGE_API_URL;
 const GRAPHCDN_PURGE_API_TOKEN = process.env.GRAPHCDN_PURGE_API_TOKEN;
 
 async function purgeAllPosts() {
-  const response = await fetch(GRAPHCDN_PURGE_API_URL, {
+  const responseRaw = await fetch(GRAPHCDN_PURGE_API_URL, {
     method: 'POST', // Always POST purge mutations
     body: JSON.stringify({ query: 'mutation { _purgeAll }' }),
     headers: {
@@ -25,7 +25,15 @@ async function purgeAllPosts() {
     },
   });
 
-  return await response.json();
+  const responseText = await responseRaw.text();
+
+  try {
+    return JSON.parse(responseText);
+  } catch (error) {
+    throw Error(
+      'Failed to process purge response - is a GRAPHCDN_PURGE_API_TOKEN env set?',
+    );
+  }
 }
 
 export default async function handler(req, res) {
