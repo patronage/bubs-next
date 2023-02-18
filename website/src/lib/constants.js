@@ -5,9 +5,13 @@
  *
  *  Required in config:
  *    * WORDPRESS_DOMAIN
+ *
+ *  Reccomended to use the public variations since some client-side requests need to be made
  */
 
-export const WORDPRESS_DOMAIN = process.env.WORDPRESS_DOMAIN;
+export const WORDPRESS_DOMAIN =
+  process.env.WORDPRESS_DOMAIN ||
+  process.env.NEXT_PUBLIC_WORDPRESS_DOMAIN;
 
 export const WORDPRESS_URL = WORDPRESS_DOMAIN
   ? WORDPRESS_DOMAIN.includes('localhost')
@@ -17,6 +21,7 @@ export const WORDPRESS_URL = WORDPRESS_DOMAIN
 
 export const WORDPRESS_API_URL =
   process.env.WORDPRESS_API_URL ||
+  process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
   (WORDPRESS_URL && WORDPRESS_URL + '/graphql') ||
   'https://bubsnext.wpengine.com/graphql';
 
