@@ -6,6 +6,7 @@ import checkRedirects from 'lib/checkRedirects';
 import { isStaticFile } from 'lib/utils';
 import {
   getContent,
+  getNodeType,
   getGlobalProps,
   getAllContentWithSlug,
 } from 'lib/wordpress';
@@ -86,6 +87,16 @@ export async function getStaticProps({
     redirect?.statusCode
   ) {
     return { redirect: redirect };
+  }
+
+  // Check nodeType before assuming it's a contentNode. We 404 on nonsupported types, but you could handle.
+  const { nodeByUri } = await getNodeType(slug);
+  if (!nodeByUri?.isContentNode) {
+    return {
+      notFound: true,
+      revalidate: 60,
+      props: {},
+    };
   }
 
   const data = await getContent(slug, preview, previewData);
