@@ -7,10 +7,9 @@
 // Load WP Config files
 //
 
-$site_name = '';
-$headless_domain = ''; // leave blank;
-$staging_wp_host = 'bubsnexts.wpengine.com';
-$local_domain = 'http://localhost:3000';
+// Customize these variables per site
+$staging_wp_host = 'bubsnext.wpengine.com';
+$dashboard_cleanup = false; // Optionally will hide all but our custom widget
 $docs_link = ''; // set to a path if you have a site/document for editor instructions
 
 // webhook config
@@ -24,7 +23,7 @@ $headless_webhooks_redirects_yoast = false;
 // Determine the hosting environment we're in
 if ( defined('WP_ENV') && WP_ENV == "development" ) {
   define('WP_HOST', 'localhost');
-  $headless_domain = $local_domain;
+  $headless_domain = $local_domain || "http://localhost:3000";
 } else {
   $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
 
