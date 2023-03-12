@@ -1,14 +1,6 @@
 {
   "name": "bubs-next",
   "main": "index.js",
-  "version": "1.2.0",
-  "license": "MIT",
-  "scripts": {
-    "release:pre": "standard-version --prerelease",
-    "release": "standard-version --infile docs/CHANGELOG.md --no-verify",
-    "release:dry": "standard-version --dry-run --infile docs/CHANGELOG.md --no-verify"
-  },
-  "devDependencies": {
-    "standard-version": "^9.5.0"
-  }
+  "version": "1.3.0",
+  "license": "MIT"
 }
