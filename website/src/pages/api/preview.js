@@ -1,15 +1,25 @@
 import { authorize } from 'lib/auth';
+import { getSettings } from 'lib/getSettings';
 import { getContentTypes, getPreviewContent } from 'lib/wordpress';
 
 const COOKIE_MAX_AGE = 86400;
 
 export default async function preview(req, res) {
+  const SETTINGS = getSettings({ ...req, ...res });
+
   let accessToken;
   const { code, id, preview_id, path, slug } = req.query;
 
   // Get Auth Token
   if (code) {
-    const result = await authorize(decodeURIComponent(code));
+    // console.log(
+    //   `fetching authorize token at ${SETTINGS.CONFIG.wordpress_url}`,
+    // );
+    const result = await authorize(
+      decodeURIComponent(code),
+      SETTINGS.CONFIG.wordpress_url,
+    );
+    // console.log(`authorize response ${result}`);
     accessToken = result.access_token;
   } else if (req.previewData.token) {
     accessToken = req.previewData.token;
@@ -40,6 +50,7 @@ export default async function preview(req, res) {
 
   // Fetch WordPress to check if the provided `id` exists
   const post = await getPreviewContent(
+    SETTINGS.PROJECT,
     preview_id || id,
     'DATABASE_ID',
     accessToken,
@@ -51,7 +62,10 @@ export default async function preview(req, res) {
   }
 
   // Get the content types to help build preview URLs
-  const contentTypesArray = await getContentTypes(accessToken);
+  const contentTypesArray = await getContentTypes(
+    SETTINGS.PROJECT,
+    accessToken,
+  );
   const contentTypes = {};
 
   for (const contentType of contentTypesArray) {
