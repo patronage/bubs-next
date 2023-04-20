@@ -15,12 +15,12 @@ import _merge from 'lodash/merge';
  *
  * @return  {object}           [PROJECT, CONFIG, THEME objects]
  */
-export function getSettings({ req, res, host, project }) {
+export function getSettings({ req, host, project }) {
   const multisite = process.env.MULTISITE || false;
 
   if (multisite) {
-    const launchHost = req.headers['x-launch-host'];
-    const launchProject = req.headers['x-launch-project'];
+    const launchHost = host || req?.headers['x-launch-host'];
+    const launchProject = project || req?.headers['x-launch-project'];
 
     return multisiteSettings({
       host: launchHost,

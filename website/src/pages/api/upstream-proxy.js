@@ -4,7 +4,7 @@ import { trimTrailingSlash } from 'lib/utils';
 import _replace from 'lodash/replace';
 
 export default async function proxy(req, res) {
-  const SETTINGS = getSettings({ ...req, ...res });
+  const SETTINGS = getSettings({ ...req });
 
   const WORDPRESS_URL = SETTINGS.CONFIG.wordpress_url;
   const PUBLIC_URL = trimTrailingSlash(

@@ -2,7 +2,7 @@ import { getSettings } from 'lib/getSettings';
 import { trimTrailingSlash } from 'lib/utils';
 
 export default function handler(req, res) {
-  const SETTINGS = getSettings({ ...req, ...res });
+  const SETTINGS = getSettings({ ...req });
 
   const publicUrl = trimTrailingSlash(
     `https://${SETTINGS.CONFIG.site_domain}`,

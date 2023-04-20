@@ -28,7 +28,7 @@ async function purgeAllPosts(url, token) {
 }
 
 export default async function handler(req, res) {
-  const SETTINGS = getSettings({ ...req, ...res });
+  const SETTINGS = getSettings({ ...req });
 
   // Only allow POST requests
   if (req.method !== 'POST') {

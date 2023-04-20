@@ -5,7 +5,7 @@ import { getContentTypes, getPreviewContent } from 'lib/wordpress';
 const COOKIE_MAX_AGE = 86400;
 
 export default async function preview(req, res) {
-  const SETTINGS = getSettings({ ...req, ...res });
+  const SETTINGS = getSettings({ ...req });
 
   let accessToken;
   const { code, id, preview_id, path, slug } = req.query;
