@@ -1,11 +1,11 @@
 import { authorize } from 'lib/auth';
-import { getContentTypes, getPreviewContent } from 'lib/wordpress';
+import { getPreviewContent } from 'lib/wordpress';
 
 const COOKIE_MAX_AGE = 86400;
 
 export default async function preview(req, res) {
   let accessToken;
-  const { code, id, preview_id, path, slug } = req.query;
+  const { code, id, path, slug } = req.query;
 
   // Get Auth Token
   if (code) {
@@ -40,7 +40,7 @@ export default async function preview(req, res) {
 
   // Fetch WordPress to check if the provided `id` exists
   const post = await getPreviewContent(
-    preview_id || id,
+    id,
     'DATABASE_ID',
     accessToken,
   );
@@ -50,20 +50,14 @@ export default async function preview(req, res) {
     return res.status(401).json({ message: 'Post not found' });
   }
 
-  // Get the content types to help build preview URLs
-  const contentTypesArray = await getContentTypes(accessToken);
-  const contentTypes = {};
-
-  for (const contentType of contentTypesArray) {
-    contentTypes[contentType.name] = contentType.restBase;
-  }
+  const postId = post?.previewRevisionDatabaseId || post?.databaseId;
 
   // Enable Preview Mode by setting the cookies
   res.setPreviewData(
     {
       post: {
         uri: post.uri,
-        id: post.databaseId,
+        id: postId,
         status: post.status,
         type: post.contentType.node.name,
       },
@@ -74,24 +68,9 @@ export default async function preview(req, res) {
     },
   );
 
-  let Location = post.uri;
-  const typePath = contentTypes[post.contentType.node.name];
-
-  // Draft posts need a little help pointing towards the correct Next.js page template
-  if (
-    post.status === 'draft' &&
-    post.contentType.node.name !== 'page'
-  ) {
-    Location = `/${typePath}/${post.databaseId}`;
-  } else if (post.status === 'draft') {
-    Location = `/${post.databaseId}`;
-  } else if (preview_id && post.contentType.node.name !== 'page') {
-    Location = `/${typePath}/${preview_id}`;
-  } else if (preview_id || slug || path) {
-    Location = `/${preview_id || slug || path}`;
-  }
+  const location = `/${postId}/`;
 
   // Redirect to the path from the fetched post
-  res.writeHead(307, { Location });
+  res.writeHead(307, { location });
   return res.end();
 }

@@ -33,46 +33,23 @@ function headless_redirect(){
   // if so, redirect to preview path
   if ( is_preview() ) {
     if ( current_user_can( 'edit_posts' ) ) {
-      $revisions = wp_get_post_revisions(
-        $id,
-        [
-          'posts_per_page' => 1,
-          'fields'         => 'ids',
-          'check_enabled'  => false,
-        ]
-      );
 
       $auth_code = wpe_headless_generate_authentication_code(
         wp_get_current_user()
       );
 
-      $preview_id = is_array( $revisions ) && ! empty( $revisions ) ? array_values( $revisions )[0] : null;
+      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&id=' . $id;
 
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&id=' . $id . '&preview_id=' . $preview_id;
       return $redirect;
     }
   }
 
   // else do standard redirect tree
   if ($slug) {
-    if ( current_user_can( 'edit_posts' ) ) {
-      $auth_code = wpe_headless_generate_authentication_code(
-        wp_get_current_user()
-      );
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&slug=' . $slug . '&id=' . $id;
-    } else {
-      $redirect = $headless_domain . $slug;
-    }
+    $redirect = $headless_domain . $slug;
   } else {
     $path = $_SERVER['REQUEST_URI'];
-    if ( current_user_can( 'edit_posts' ) ) {
-      $auth_code = wpe_headless_generate_authentication_code(
-        wp_get_current_user()
-      );
-      $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&path=' . $path . '&id=' . $id;
-    } else {
-      $redirect = $headless_domain . $path;
-    }
+    $redirect = $headless_domain . $path;
   }
 
   return $redirect;
