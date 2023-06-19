@@ -3,13 +3,11 @@ if (function_exists('is_wpe')) {
     function reset_passwords() {
         global $wpdb;
 
-        $results = $wpdb->get_results('SELECT ID FROM '.$wpdb->prefix.'users');
-        if ($results)
-        {
-            foreach ($results AS $user)
-            {
+        $results = $wpdb->get_results('SELECT ID FROM ' . $wpdb->prefix . 'users');
+        if ($results) {
+            foreach ($results as $user) {
                 $password = wp_generate_password();
-                wp_set_password( $password, $user->ID );
+                wp_set_password($password, $user->ID);
             }
         }
     }
