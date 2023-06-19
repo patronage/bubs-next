@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 import { WORDPRESS_API_URL } from 'lib/constants';
+import { trimLeadingSlash } from 'lib/utils';
 import { queryContent } from './graphql/queryContent';
 import { queryGlobals } from './graphql/queryGlobals';
 import { queryPosts } from './graphql/queryPosts';
@@ -37,32 +38,6 @@ async function fetchAPI(query, { variables } = {}, token) {
 }
 
 /**
- * Get post types and paths for preview mode redirects.
- */
-export async function getContentTypes(token) {
-  const query = /* GraphQL */ `
-    query ContentTypes {
-      contentTypes {
-        nodes {
-          name
-          restBase
-        }
-      }
-    }
-  `;
-
-  const data = await fetchAPI(
-    query,
-    {
-      variables: { preview: true },
-    },
-    token,
-  );
-
-  return data?.contentTypes?.nodes;
-}
-
-/**
  * To assist with Preview Mode, this will grab status for content by DB id
  * (needed for revisions, unpublished content)
  */
@@ -77,6 +52,7 @@ export async function getPreviewContent(
         uri
         status
         databaseId
+        previewRevisionDatabaseId
         contentType {
           node {
             name
@@ -156,45 +132,34 @@ export async function getNodeType(slug) {
 /**
  * Get fields for single page regardless of post type.
  */
-export async function getContent(slug, preview, previewData) {
+export async function getContent(
+  slug,
+  preview,
+  previewData,
+  options = {},
+) {
   let draft = false;
   if (preview) {
-    // Get the content types to help build preview URLs
-    const contentTypesArray = await getContentTypes(
-      previewData?.token,
-    );
-    const contentTypes = {};
+    // This is based on Next.js wordpress example: https://github.com/vercel/next.js/blob/canary/examples/cms-wordpress/lib/api.ts#L105-L112
+    // If the preview is for a draft or a revision, we need to query by ID.
+    // We check to see if the preview data is for the same post as the slug
+    // and if it is, we set `slug` to the ID of the post and the `uriType` to `DATABASE_ID`.
+    const postPreview = previewData?.post;
+    const trimSlug = trimLeadingSlash(slug);
+    const isId = Number.isInteger(Number(trimSlug));
+    const isSamePost = isId && Number(trimSlug) === postPreview?.id;
+    const isDraft = isSamePost && postPreview?.status === 'draft';
+    const isRevision =
+      isSamePost && postPreview?.status === 'publish';
 
-    for (const contentType of contentTypesArray) {
-      contentTypes[contentType.restBase] = contentType.name;
-    }
-
-    // Because static pages can't support query strings and those
-    // make preview mode much easier across published statuses and post types
-    // this coerces any numeric slug in preview mode to an ID and assumes post type
-    const segments = slug.split('/');
-    const lastSegment = segments[segments.length - 1];
-    const secondLastSegment =
-      segments.length > 2 ? segments[segments.length - 2] : null;
-    // Get post type URL segment
-    const postType = contentTypes[secondLastSegment];
-
-    // wordpress requires a different slug structure for various post types
-    if (slug !== '/' && !isNaN(Number(lastSegment))) {
-      draft = true;
-      if (postType === 'post') {
-        slug = `/?p=${lastSegment}`;
-      } else if (secondLastSegment) {
-        slug = `/?id=${lastSegment}&post_type=${postType}`;
-      } else {
-        slug = `/?page_id=${lastSegment}`;
-      }
-    } else if (slug !== '/') {
-      slug += '?preview=true';
+    if ((isDraft || isRevision) && postPreview?.id) {
+      draft = isDraft;
+      slug = postPreview.id;
+      options.uriType = 'DATABASE_ID';
     }
   }
 
-  let query = queryContent(draft);
+  let query = queryContent(draft, options);
 
   const data = await fetchAPI(
     query,
