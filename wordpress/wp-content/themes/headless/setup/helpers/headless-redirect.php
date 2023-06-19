@@ -30,6 +30,33 @@ function headless_redirect() {
     // if so, redirect to preview path
     if (is_preview()) {
         if (current_user_can('edit_posts')) {
+            $auth_code = wpe_headless_generate_authentication_code(wp_get_current_user());
+
+            $redirect = $headless_domain . '/api/preview/?code=' . rawurlencode($auth_code) . '&id=' . $id;
+
+            return $redirect;
+        }
+    }
+
+    // else do standard redirect tree
+    if ($slug) {
+        $redirect = $headless_domain . $slug;
+    } else {
+        $path = $_SERVER['REQUEST_URI'];
+        $redirect = $headless_domain . $path;
+    }
+
+    // if a 404 quickly fail and send to headless domain to handle
+    // if we don't, WP will return info on a post we don't want (e.g. the most recent post)
+    if (is_404()) {
+        $redirect = $headless_domain . $path;
+        return $redirect;
+    }
+
+    // check if preview and user has edit ability.
+    // if so, redirect to preview path
+    if (is_preview()) {
+        if (current_user_can('edit_posts')) {
             $revisions = wp_get_post_revisions($id, [
                 'posts_per_page' => 1,
                 'fields' => 'ids',
