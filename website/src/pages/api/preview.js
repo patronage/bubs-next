@@ -49,11 +49,12 @@ export default async function preview(req, res) {
   }
 
   // Fetch WordPress to check if the provided `id` exists
-  const post = await getPreviewContent(
+  const post = await getPreviewContent({
+    project: SETTINGS.PROJECT,
     id,
-    'DATABASE_ID',
-    accessToken,
-  );
+    idType: 'DATABASE_ID',
+    token: accessToken,
+  });
 
   // If the post doesn't exist prevent preview mode from being enabled
   if (!post) {
