@@ -21,36 +21,32 @@ $headless_webhooks_redirects_redirection = true;
 $headless_webhooks_redirects_yoast = false;
 
 // Determine the hosting environment we're in
-if ( defined('WP_ENV') && WP_ENV == "development" ) {
-  define('WP_HOST', 'localhost');
-  $headless_domain = $local_domain || "http://localhost:3000";
+if (defined('WP_ENV') && WP_ENV == 'development') {
+    define('WP_HOST', 'localhost');
+    $headless_domain = $local_domain || 'http://localhost:3000';
 } else {
-  $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
+    $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
 
-  if ( strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false ) {
-    define('WP_HOST', 'staging');
-  } else {
-    define('WP_HOST', 'production');
-  }
+    if (strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false) {
+        define('WP_HOST', 'staging');
+    } else {
+        define('WP_HOST', 'production');
+    }
 }
 
 // Theme Options
-function bubs_theme_options($wp_customize)
-{
-  include_once 'setup/theme-options/headless.php';
-  $wp_customize->remove_section('custom_css');
+function bubs_theme_options($wp_customize) {
+    include_once 'setup/theme-options/headless.php';
+    $wp_customize->remove_section('custom_css');
 }
 
 add_action('customize_register', 'bubs_theme_options');
 
-
 // Post Types
 //include_once 'setup/post-types/press.php';
 
-
 // Taxonomies
 //include_once 'setup/taxonomies/issue-areas.php';
-
 
 // WP Helper Functions
 
@@ -66,7 +62,7 @@ include_once 'setup/helpers/menus.php';
 // Only load permalinks rewriting file if not on a sitemap
 $uri = $_SERVER['REQUEST_URI'];
 if (strpos($uri, 'sitemap.xml') == false) {
-  include_once 'setup/helpers/permalinks.php';
+    include_once 'setup/helpers/permalinks.php';
 }
 
 include_once 'setup/helpers/role-super-editor.php';

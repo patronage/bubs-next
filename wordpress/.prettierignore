@@ -1,0 +1,9 @@
+node_modules
+public
+.next
+.cache
+wp-content/themes/timber/dev/css/**
+composer
+wp-content/plugins
+**/assets/vendor
+**/acf-json

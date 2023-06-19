@@ -75,13 +75,13 @@ const Flex = ({ sections }) => {
     // uncomment if you need to debug graphql, but don't commit
     // console.log(section);
 
-    if (section.fieldGroupName.includes('Blockquote')) {
+    if (section.fieldGroupName?.includes('Blockquote')) {
       componentName = 'blockquote';
       component = <FlexBlockquote {...section} />;
-    } else if (section.fieldGroupName.includes('WysiwygContent')) {
+    } else if (section.fieldGroupName?.includes('WysiwygContent')) {
       componentName = 'wysiwyg';
       component = <FlexWysiwyg {...section} />;
-    } else if (section.fieldGroupName.includes('Hero')) {
+    } else if (section.fieldGroupName?.includes('Hero')) {
       componentName = 'hero';
       component = <FlexHero {...section} />;
     }

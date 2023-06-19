@@ -7,12 +7,12 @@ $custom_scheme = '';
 $site_prefix = '';
 
 if (WP_HOST === 'localhost') {
-  // on Local
-  $custom_scheme = 'ectoplasm';
-  $site_prefix = 'LOCAL: ';
+    // on Local
+    $custom_scheme = 'ectoplasm';
+    $site_prefix = 'LOCAL: ';
 } elseif (WP_HOST === 'staging') {
-  $custom_scheme = 'sunrise';
-  $site_prefix = 'STAGING: ';
+    $custom_scheme = 'sunrise';
+    $site_prefix = 'STAGING: ';
 }
 
 if ($custom_scheme) {
