@@ -8,7 +8,7 @@
 //
 
 // Customize these variables per site
-$staging_wp_host = 'bubsnext.wpengine.com';
+$staging_wp_host = 'bubsnexts.wpengine.com';
 $dashboard_cleanup = false; // Optionally will hide all but our custom widget
 $docs_link = ''; // set to a path if you have a site/document for editor instructions
 
