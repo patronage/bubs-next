@@ -136,7 +136,7 @@ export async function getContent(
   slug,
   preview,
   previewData,
-  options,
+  options = {},
 ) {
   let draft = false;
   if (preview) {
