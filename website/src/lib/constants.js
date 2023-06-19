@@ -25,19 +25,6 @@ export const WORDPRESS_API_URL =
   (WORDPRESS_URL && WORDPRESS_URL + '/graphql') ||
   'https://bubsnext.wpengine.com/graphql';
 
-/** SEO Tags */
-// TODO: these should go into the theme section below
-// TODo: should these go into a separate file so they're editable
-export const META = {
-  titleAppend: '| Patronage',
-  url: 'https://bubs.patronage.org',
-  twitterHandle: '@patronageorg',
-  siteName: 'Bubs by Patronage',
-  proxyWordPressImages: true,
-  icon32: '',
-  iconApple: '/apple-touch-icon.png',
-};
-
 // TODO: Should these be camelCase?
 export const CONFIG = {
   site_domain: 'bubs.patronage.org',
@@ -61,11 +48,11 @@ export const THEME = {
   internalDomains: [],
   meta: {
     icon32: '',
-    iconApple: '',
-    titleAppend: '',
-    url: '',
-    twitterHandle: '',
-    siteName: '',
+    iconApple: '/apple-touch-icon.png',
+    titleAppend: '| Patronage',
+    url: 'https://bubs.patronage.org',
+    twitterHandle: '@patronageorg',
+    siteName: 'Bubs by Patronage',
     proxyWordPressImages: true,
   },
   i18n: {
@@ -149,5 +136,4 @@ export const THEME = {
     showTags: false,
     showCategories: false,
   },
-  cssVariables: [],
 };

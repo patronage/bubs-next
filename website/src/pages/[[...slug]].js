@@ -61,6 +61,7 @@ export async function getStaticProps({
   previewData,
 }) {
   const SETTINGS = getSettings({});
+
   let slug = '/';
 
   if (params.slug?.length) {
@@ -126,6 +127,8 @@ export async function getStaticProps({
       globals: {
         ...globals,
         pageOptions: data.contentNode?.acfPageOptions || null,
+        THEME: SETTINGS.THEME,
+        CONFIG: SETTINGS.CONFIG,
       },
       preview: preview || false,
       post: data.contentNode,
