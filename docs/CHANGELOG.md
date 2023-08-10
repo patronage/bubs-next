@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/patronage/bubs-next/compare/v1.3.0...v1.4.0) (2023-08-10)
+
+
+### Features
+
+* multisite compatible getSettings and API functions ([#275](https://github.com/patronage/bubs-next/issues/275)) ([5a4c3e1](https://github.com/patronage/bubs-next/commit/5a4c3e1ee6d3fb6339bc908fcc817a6ab190d794))
+
+
+### Bug Fixes
+
+* don't error if flex section isn't in graphql ([#277](https://github.com/patronage/bubs-next/issues/277)) ([3e148f2](https://github.com/patronage/bubs-next/commit/3e148f276d1a1c6032c420d090020fc59df16e98))
+* proper staging host in theme ([58911bf](https://github.com/patronage/bubs-next/commit/58911bf9c6b3011cea0dd1f96a40969ad7db4f9b))
+
 ## [1.3.0](https://github.com/patronage/bubs-next/compare/v1.2.0...v1.3.0) (2023-03-12)
 
 
