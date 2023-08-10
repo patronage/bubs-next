@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import PostBody from 'components/post/PostBody';
+import PostBody from 'components/PostBody';
 import styles from './FlexWysiwyg.module.scss';
 
 const FlexWysiwyg = (props) => {

@@ -1,6 +1,6 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
-import PostBody from 'components/post/PostBody';
+import PostBody from 'components/PostBody';
 import { GlobalsProvider } from 'contexts/GlobalsContext';
 import checkRedirects from 'lib/checkRedirects';
 import { getSettings } from 'lib/getSettings';
