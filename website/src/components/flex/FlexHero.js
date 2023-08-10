@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import styles from './FlexHero.module.scss';
 
 const FlexHero = (props) => {
