@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import GlobalsContext from 'contexts/GlobalsContext';
-import { META } from 'lib/constants';
 import formatMenu from 'lib/formatMenu';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
@@ -9,6 +8,7 @@ import styles from './Header.module.scss';
 
 export default function Header() {
   const globals = useContext(GlobalsContext);
+  const THEME = globals.THEME;
   const [navOpen, setNavOpen] = useState(false);
 
   function handleHamburgerClick() {
@@ -104,10 +104,10 @@ export default function Header() {
       <div className="container">
         <div className="row align-items-center justify-content-between">
           <div className="col">
-            {META.siteName && (
+            {THEME.meta.siteName && (
               <div className={styles.logo}>
                 <Link href="/" prefetch={false}>
-                  {META.siteName}
+                  {THEME.meta.siteName}
                 </Link>
               </div>
             )}

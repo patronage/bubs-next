@@ -1,11 +1,21 @@
 import fetch from 'isomorphic-unfetch';
-import { WORDPRESS_API_URL } from 'lib/constants';
+import { getSettings } from 'lib/getSettings';
 import { trimLeadingSlash } from 'lib/utils';
 import { queryContent } from './graphql/queryContent';
 import { queryGlobals } from './graphql/queryGlobals';
 import { queryPosts } from './graphql/queryPosts';
 
-async function fetchAPI(query, { variables } = {}, token) {
+async function fetchAPI({
+  project = '',
+  query = {},
+  variables = {},
+  token,
+}) {
+  const SETTINGS = getSettings({ project });
+  let wordpress_api_url =
+    process.env.NEXT_PUBLIC_WORDPRESS_API_URL ||
+    process.env.WORDPRESS_API_URL ||
+    SETTINGS.CONFIG.wordpress_api_url;
   const headers = { 'Content-Type': 'application/json' };
 
   if (variables?.preview && token) {
@@ -19,7 +29,7 @@ async function fetchAPI(query, { variables } = {}, token) {
   // console.log('-------');
   // console.log('variables', variables);
   // console.log('query', typeof query, query);
-  const res = await fetch(WORDPRESS_API_URL, {
+  const res = await fetch(wordpress_api_url, {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -41,11 +51,12 @@ async function fetchAPI(query, { variables } = {}, token) {
  * To assist with Preview Mode, this will grab status for content by DB id
  * (needed for revisions, unpublished content)
  */
-export async function getPreviewContent(
+export async function getPreviewContent({
+  project,
   id,
   idType = 'DATABASE_ID',
   token,
-) {
+}) {
   const query = /* GraphQL */ `
     query PreviewContent($id: ID!, $idType: ContentNodeIdTypeEnum!) {
       contentNode(id: $id, idType: $idType) {
@@ -63,13 +74,12 @@ export async function getPreviewContent(
     }
   `;
 
-  const data = await fetchAPI(
+  const data = await fetchAPI({
+    project,
     query,
-    {
-      variables: { id, idType, preview: true },
-    },
+    variables: { id, idType, preview: true },
     token,
-  );
+  });
 
   return data.contentNode;
 }
@@ -81,7 +91,10 @@ export async function getPreviewContent(
  * If a contentType is passed, the allQuery graphql is modified to query for
  * only that post type instead of getting posts from any CPT
  */
-export async function getAllContentWithSlug(contentType) {
+export async function getAllContentWithSlug({
+  project,
+  contentType,
+}) {
   const query = /* GraphQL */ `
     ${
       contentType
@@ -101,7 +114,9 @@ export async function getAllContentWithSlug(contentType) {
     }
   `;
 
-  const data = await fetchAPI(query, {
+  const data = await fetchAPI({
+    project,
+    query,
     variables: {
       contentType,
     },
@@ -114,7 +129,7 @@ export async function getAllContentWithSlug(contentType) {
  * @param {*} slug pathname from URL
  * @returns
  */
-export async function getNodeType(slug) {
+export async function getNodeType({ project, slug }) {
   const query = /* GraphQL */ `
     query getNodeType($slug: String!) {
       nodeByUri(uri: $slug) {
@@ -124,7 +139,11 @@ export async function getNodeType(slug) {
     }
   `;
 
-  const data = await fetchAPI(query, { variables: { slug } });
+  const data = await fetchAPI({
+    project,
+    query,
+    variables: { slug },
+  });
 
   return data;
 }
@@ -132,12 +151,13 @@ export async function getNodeType(slug) {
 /**
  * Get fields for single page regardless of post type.
  */
-export async function getContent(
+export async function getContent({
+  project,
   slug,
   preview,
   previewData,
   options = {},
-) {
+}) {
   let draft = false;
   if (preview) {
     // This is based on Next.js wordpress example: https://github.com/vercel/next.js/blob/canary/examples/cms-wordpress/lib/api.ts#L105-L112
@@ -161,13 +181,12 @@ export async function getContent(
 
   let query = queryContent(draft, options);
 
-  const data = await fetchAPI(
+  const data = await fetchAPI({
+    project,
     query,
-    {
-      variables: { slug, preview: !!preview },
-    },
-    previewData?.token,
-  );
+    variables: { slug, preview: !!preview },
+    token: previewData?.token,
+  });
 
   return data;
 }
@@ -177,6 +196,7 @@ export async function getContent(
  */
 
 export async function getPosts({
+  project,
   ids,
   first = 12,
   after = null,
@@ -190,6 +210,8 @@ export async function getPosts({
   let query = queryPosts(taxonomyType, taxonomyTerms);
 
   const data = await fetchAPI(query, {
+    project,
+    query,
     variables: {
       contentTypes,
       first,
@@ -208,7 +230,7 @@ export async function getPosts({
 
 /** All Taxonomy Terms */
 
-export async function getCategories() {
+export async function getCategories({ project }) {
   let query = /* GraphQL */ `
     query AllCategories {
       categories {
@@ -222,15 +244,15 @@ export async function getCategories() {
     }
   `;
 
-  const data = await fetchAPI(query);
+  const data = await fetchAPI({ project, query });
   return data.categories;
 }
 
 /**
  * Global Props
  * */
-export async function getGlobalProps() {
+export async function getGlobalProps({ project }) {
   let query = queryGlobals;
-  const data = await fetchAPI(query);
+  const data = await fetchAPI({ project, query });
   return data;
 }

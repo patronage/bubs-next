@@ -12,16 +12,15 @@
 
 import fetch from 'isomorphic-unfetch';
 
-const GRAPHCDN_PURGE_API_URL = process.env.GRAPHCDN_PURGE_API_URL;
-const GRAPHCDN_PURGE_API_TOKEN = process.env.GRAPHCDN_PURGE_API_TOKEN;
+import { getSettings } from 'lib/getSettings';
 
-async function purgeAllPosts() {
-  const response = await fetch(GRAPHCDN_PURGE_API_URL, {
+async function purgeAllPosts(url, token) {
+  const response = await fetch(url, {
     method: 'POST', // Always POST purge mutations
     body: JSON.stringify({ query: 'mutation { _purgeAll }' }),
     headers: {
       'Content-Type': 'application/json',
-      'graphcdn-token': GRAPHCDN_PURGE_API_TOKEN,
+      'graphcdn-token': token,
     },
   });
 
@@ -29,6 +28,8 @@ async function purgeAllPosts() {
 }
 
 export default async function handler(req, res) {
+  const SETTINGS = getSettings({ ...req });
+
   // Only allow POST requests
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -36,7 +37,10 @@ export default async function handler(req, res) {
   }
 
   // Verify env variable presense
-  if (!GRAPHCDN_PURGE_API_URL || !GRAPHCDN_PURGE_API_TOKEN) {
+  if (
+    !SETTINGS.CONFIG.graphcdn_purge_api_url ||
+    !SETTINGS.CONFIG.graphcdn_purge_api_token
+  ) {
     return res
       .status(500)
       .end('Purge Failed, Graph CDN API endpoint not defined');
@@ -45,7 +49,10 @@ export default async function handler(req, res) {
   // @TODO: Process the incoming body.post_id and create a targetted purge request
 
   try {
-    const response = await purgeAllPosts();
+    const response = await purgeAllPosts(
+      SETTINGS.CONFIG.graphcdn_purge_api_url,
+      SETTINGS.CONFIG.graphcdn_purge_api_token,
+    );
 
     // eslint-disable-next-line no-console
     console.log('CDN data', response.data);

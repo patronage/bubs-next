@@ -25,13 +25,33 @@ export const WORDPRESS_API_URL =
   (WORDPRESS_URL && WORDPRESS_URL + '/graphql') ||
   'https://bubsnext.wpengine.com/graphql';
 
-/** SEO Tags */
-export const META = {
-  titleAppend: '| Patronage',
-  url: 'https://bubs.patronage.org',
-  twitterHandle: '@patronageorg',
-  siteName: 'Bubs by Patronage',
-  proxyWordPressImages: true,
-  icon32: '',
-  iconApple: '/apple-touch-icon.png',
+// TODO: Should these be camelCase?/
+export const CONFIG = {
+  site_domain: 'bubs.patronage.org',
+  wordpress_domain: WORDPRESS_DOMAIN,
+  wordpress_url: WORDPRESS_URL,
+  wordpress_api_url: WORDPRESS_API_URL,
+  graphcdn_purge_api_url: process.env.GRAPHCDN_PURGE_API_URL || '',
+  graphcdn_purge_api_token:
+    process.env.GRAPHCDN_PURGE_API_TOKEN || '',
+};
+
+// Theme defaults, these get merged with the project config
+export const THEME = {
+  meta: {
+    icon32: '',
+    iconApple: '/apple-touch-icon.png',
+    titleAppend: '| Patronage',
+    url: 'https://bubs.patronage.org',
+    twitterHandle: '@patronageorg',
+    siteName: 'Bubs by Patronage',
+    proxyWordPressImages: true,
+  },
+  i18n: {
+    enabled: false,
+  },
+  integrations: {
+    googleAnalyticsID: '',
+    googleTagManagerID: '',
+  },
 };

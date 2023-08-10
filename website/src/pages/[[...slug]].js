@@ -3,6 +3,7 @@ import LayoutDefault from 'components/layouts/LayoutDefault';
 import PostBody from 'components/post/PostBody';
 import { GlobalsProvider } from 'contexts/GlobalsContext';
 import checkRedirects from 'lib/checkRedirects';
+import { getSettings } from 'lib/getSettings';
 import { isStaticFile } from 'lib/utils';
 import {
   getContent,
@@ -59,6 +60,8 @@ export async function getStaticProps({
   preview = false,
   previewData,
 }) {
+  const SETTINGS = getSettings({});
+
   let slug = '/';
 
   if (params.slug?.length) {
@@ -73,7 +76,7 @@ export async function getStaticProps({
     };
   }
 
-  const globals = await getGlobalProps();
+  const globals = await getGlobalProps({ project: SETTINGS.PROJECT });
 
   // Check for redirects first
   const redirect = checkRedirects(
@@ -91,7 +94,10 @@ export async function getStaticProps({
 
   if (!preview) {
     // Check nodeType before assuming it's a contentNode. We 404 on nonsupported types, but you could handle.
-    const { nodeByUri } = await getNodeType(slug);
+    const { nodeByUri } = await getNodeType({
+      project: SETTINGS.PROJECT,
+      slug,
+    });
     if (!nodeByUri?.isContentNode) {
       return {
         notFound: true,
@@ -101,7 +107,12 @@ export async function getStaticProps({
     }
   }
 
-  const data = await getContent(slug, preview, previewData);
+  const data = await getContent({
+    project: SETTINGS.PROJECT,
+    slug,
+    preview,
+    previewData,
+  });
 
   if (!preview && !data?.contentNode?.slug) {
     return {
@@ -116,6 +127,8 @@ export async function getStaticProps({
       globals: {
         ...globals,
         pageOptions: data.contentNode?.acfPageOptions || null,
+        THEME: SETTINGS.THEME,
+        CONFIG: SETTINGS.CONFIG,
       },
       preview: preview || false,
       post: data.contentNode,
@@ -125,7 +138,10 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  const { contentNodes } = await getAllContentWithSlug();
+  const SETTINGS = getSettings({});
+  const { contentNodes } = await getAllContentWithSlug({
+    project: SETTINGS.PROJECT,
+  });
 
   return {
     paths: contentNodes?.nodes.map(({ uri }) => uri) || [],
