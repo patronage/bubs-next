@@ -4,6 +4,44 @@
   "license": "MIT",
   "description": "WordPress boilerplate for pairing with Next.js",
   "homepage": "https://www.patronage.org",
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "vendor-dir": "wp-content/plugins/composer-libs",
+    "allow-plugins": {
+      "ffraenz/private-composer-installer": true,
+      "composer/installers": true
+    },
+    "platform": {
+      "php": "7.4.21"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=7.3",
+    "composer/installers": "^1.8",
+    "advanced-custom-fields/advanced-custom-fields-pro": "6.0.7",
+    "wpackagist-plugin/acf-repeater-flexible-content-collapser": "1.2.6",
+    "wpackagist-plugin/duplicate-post": "4.5",
+    "wpackagist-plugin/enable-media-replace": "4.0.2",
+    "wpackagist-plugin/filter-page-by-template": "3.1",
+    "wpackagist-plugin/google-apps-login": "3.4.5",
+    "wpackagist-plugin/post-type-archive-links": "1.3.1",
+    "wpackagist-plugin/post-type-switcher": "3.2.1",
+    "wpackagist-plugin/redirection": "5.3.9",
+    "wpackagist-plugin/safe-svg": "2.0.3",
+    "wpackagist-plugin/simple-history": "3.4.0",
+    "wpackagist-plugin/so-clean-up-wp-seo": "3.14.13",
+    "wpackagist-plugin/term-management-tools": "2.0.1",
+    "wpackagist-plugin/wordpress-seo": "20.1",
+    "wpackagist-plugin/wp-graphql": "1.13.8",
+    "wpackagist-plugin/wp-stateless": "3.2.2",
+    "wp-graphql/wp-graphql-acf": "0.6.1",
+    "wp-graphql/wp-graphql-tax-query": "0.1.0",
+    "ashhitch/wp-graphql-yoast-seo": "4.22.0",
+    "ashhitch/wp-graphql-redirection": "^0.0.3"
+  },
   "repositories": [
     {
       "type": "composer",
@@ -47,43 +85,6 @@
       }
     }
   ],
-  "require": {
-    "php": ">=7.3",
-    "composer/installers": "^1.8",
-    "advanced-custom-fields/advanced-custom-fields-pro": "6.0.7",
-    "wpackagist-plugin/acf-repeater-flexible-content-collapser": "1.2.6",
-    "wpackagist-plugin/classic-editor": "1.6.2",
-    "wpackagist-plugin/duplicate-post": "4.5",
-    "wpackagist-plugin/enable-media-replace": "4.0.2",
-    "wpackagist-plugin/filter-page-by-template": "3.1",
-    "wpackagist-plugin/google-apps-login": "3.4.5",
-    "wpackagist-plugin/gutenberg-ramp": "1.1.0",
-    "wpackagist-plugin/post-type-archive-links": "1.3.1",
-    "wpackagist-plugin/post-type-switcher": "3.2.1",
-    "wpackagist-plugin/redirection": "5.3.9",
-    "wpackagist-plugin/safe-svg": "2.0.3",
-    "wpackagist-plugin/simple-history": "3.4.0",
-    "wpackagist-plugin/so-clean-up-wp-seo": "3.14.13",
-    "wpackagist-plugin/term-management-tools": "2.0.1",
-    "wpackagist-plugin/wordpress-seo": "20.1",
-    "wpackagist-plugin/wp-graphql": "1.13.8",
-    "wpackagist-plugin/wp-stateless": "3.2.2",
-    "wp-graphql/wp-graphql-acf": "0.6.1",
-    "wp-graphql/wp-graphql-tax-query": "0.1.0",
-    "ashhitch/wp-graphql-yoast-seo": "4.22.0",
-    "ashhitch/wp-graphql-redirection": "^0.0.3"
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "vendor-dir": "wp-content/plugins/composer-libs",
-    "allow-plugins": {
-      "ffraenz/private-composer-installer": true,
-      "composer/installers": true
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "extra": {
     "installer-paths": {
       "composer/wp-content/mu-plugins/{$name}/": [
