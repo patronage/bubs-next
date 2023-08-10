@@ -25,8 +25,11 @@ const FlexHero = (props) => {
             width={props.heroImage.mediaDetails.width}
             height={props.heroImage.mediaDetails.height}
             priority={props.index === 0 || props.index === 1}
-            layout="responsive"
-          />
+            sizes="100vw"
+            style={{
+              width: '100%',
+              height: 'auto'
+            }} />
         </div>
       )}
     </section>
