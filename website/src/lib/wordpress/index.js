@@ -85,46 +85,6 @@ export async function getPreviewContent({
 }
 
 /**
- * get all paths. used for static generation
- * @param {*} contentType slug of post type
- *
- * If a contentType is passed, the allQuery graphql is modified to query for
- * only that post type instead of getting posts from any CPT
- */
-export async function getAllContentWithSlug({
-  project,
-  contentType,
-}) {
-  const query = /* GraphQL */ `
-    ${
-      contentType
-        ? 'query AllContent($contentType: ContentTypeEnum!) '
-        : 'query AllContent'
-    } {
-      ${
-        contentType
-          ? 'contentNodes(where: {contentTypes: [$contentType]})'
-          : 'contentNodes'
-      } {
-        nodes {
-          uri
-          slug
-        }
-      }
-    }
-  `;
-
-  const data = await fetchAPI({
-    project,
-    query,
-    variables: {
-      contentType,
-    },
-  });
-  return data?.contentNodes;
-}
-
-/**
  * Determine if the given pathname is a contentnode before attempting to query for it
  * @param {*} slug pathname from URL
  * @returns
@@ -226,26 +186,6 @@ export async function getPosts({
   });
 
   return data;
-}
-
-/** All Taxonomy Terms */
-
-export async function getCategories({ project }) {
-  let query = /* GraphQL */ `
-    query AllCategories {
-      categories {
-        edges {
-          node {
-            name
-            slug
-          }
-        }
-      }
-    }
-  `;
-
-  const data = await fetchAPI({ project, query });
-  return data.categories;
 }
 
 /**
