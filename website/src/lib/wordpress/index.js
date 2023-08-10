@@ -91,7 +91,10 @@ export async function getPreviewContent({
  * If a contentType is passed, the allQuery graphql is modified to query for
  * only that post type instead of getting posts from any CPT
  */
-export async function getAllContentWithSlug(contentType) {
+export async function getAllContentWithSlug({
+  project,
+  contentType,
+}) {
   const query = /* GraphQL */ `
     ${
       contentType
@@ -111,7 +114,9 @@ export async function getAllContentWithSlug(contentType) {
     }
   `;
 
-  const data = await fetchAPI(query, {
+  const data = await fetchAPI({
+    project,
+    query,
     variables: {
       contentType,
     },
