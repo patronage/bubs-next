@@ -26,8 +26,6 @@ yarn-error.log
 
 ## no sql, except for our local scaffolding (nothing sensitive in there)
 _data/*
-!_data/local.sql
-!_data/empty.sql
 
 #### WordPress Core
 # comment out if you want to track wordpress in source
