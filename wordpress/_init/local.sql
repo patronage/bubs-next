@@ -1,6 +1,6 @@
 ## Update site url
-UPDATE `wp_options` SET `option_value` = 'http://wordpress.bubstimber.orb.local' WHERE `option_name` = 'siteurl';
-UPDATE `wp_options` SET `option_value` = 'http://wordpress.bubstimber.orb.local' WHERE `option_name` = 'home';
+UPDATE `wp_options` SET `option_value` = 'http://wordpress.bubsnext.orb.local' WHERE `option_name` = 'siteurl';
+UPDATE `wp_options` SET `option_value` = 'http://wordpress.bubsnext.orb.local' WHERE `option_name` = 'home';
 
 -- UPDATE `wp_options` SET `option_value` = 'http://localhost:8000' WHERE `option_name` = 'siteurl';
 -- UPDATE `wp_options` SET `option_value` = 'http://localhost:8000' WHERE `option_name` = 'home';
