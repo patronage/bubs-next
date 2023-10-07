@@ -15,6 +15,7 @@ wp-content/themes/timber/dev/
 wp-config-local.php
 /wp-content/mu-plugins/local-plugins.php
 /gulpconfig.json
+docker-compose.local.yml
 
 *.sublime*
 .sass-cache
