@@ -11,6 +11,7 @@ bower.json
 composer.json
 composer.lock
 docker-compose.yml
+docker-compose.local.yml
 gulpfile.js
 package.json
 README.md

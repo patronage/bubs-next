@@ -1,0 +1,22 @@
+# copy this to the root of your project if you wan to customize the docker-compose.yml file defaults
+# common usage are to change the ports or to add environment variables
+# make sure when you run docker, you incorporate -- see .vscode/tasks.json for an example
+
+# version: '3.3'
+
+# services:
+#   db:
+#     ports:
+#       - '3307:3306'
+
+#   wordpress:
+#     ports:
+#       - '8000:80'
+#     environment:
+#       WORDPRESS_CONFIG_EXTRA: |
+#         define('WP_ENV', 'development');
+#         define('WP_LOCAL_DEV', true);
+#         define('WP_THEME', 'timber');
+#         define('WP_DEBUG_LOG', true );
+#         define('WP_DEBUG_DISPLAY', false);
+#         @ini_set('display_errors', 0);

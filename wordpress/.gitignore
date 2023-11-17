@@ -15,6 +15,7 @@ wp-content/themes/timber/dev/
 wp-config-local.php
 /wp-content/mu-plugins/local-plugins.php
 /gulpconfig.json
+docker-compose.local.yml
 
 *.sublime*
 .sass-cache
@@ -26,8 +27,6 @@ yarn-error.log
 
 ## no sql, except for our local scaffolding (nothing sensitive in there)
 _data/*
-!_data/local.sql
-!_data/empty.sql
 
 #### WordPress Core
 # comment out if you want to track wordpress in source

@@ -14,7 +14,8 @@ export const WORDPRESS_DOMAIN =
   process.env.NEXT_PUBLIC_WORDPRESS_DOMAIN;
 
 export const WORDPRESS_URL = WORDPRESS_DOMAIN
-  ? WORDPRESS_DOMAIN.includes('localhost')
+  ? WORDPRESS_DOMAIN.includes('localhost') ||
+    WORDPRESS_DOMAIN.includes('.local')
     ? 'http://' + WORDPRESS_DOMAIN
     : 'https://' + WORDPRESS_DOMAIN
   : '';
