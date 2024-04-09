@@ -54,7 +54,7 @@ include_once 'setup/helpers/acf-options.php';
 include_once 'setup/helpers/admin.php';
 include_once 'setup/helpers/admin-env.php';
 include_once 'setup/helpers/auth.php';
-include_once 'setup/helpers/dashboard-preview.php';
+include_once 'setup/helpers/dashboard-customize.php';
 include_once 'setup/helpers/gutenberg-disable.php';
 include_once 'setup/helpers/headless-redirect.php';
 include_once 'setup/helpers/images.php';
