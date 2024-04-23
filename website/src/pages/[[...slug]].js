@@ -1,9 +1,11 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
+import PagePassword from 'components/PagePassword';
 import PostBody from 'components/PostBody';
 import { GlobalsProvider } from 'contexts/GlobalsContext';
 import checkRedirects from 'lib/checkRedirects';
 import { getSettings } from 'lib/getSettings';
+import { useResettingState } from 'lib/resettingState';
 import { isStaticFile } from 'lib/utils';
 import {
   getContent,
@@ -12,9 +14,36 @@ import {
   getAllContentWithSlug,
 } from 'lib/wordpress';
 
-export default function Page({ post, preview, globals }) {
+export default function Page(props) {
+  const initialPost = props.post;
+  const [post, setPost] = useResettingState(initialPost);
+
+  const preview = props.preview;
+  const globals = {
+    ...props.globals,
+    pageOptions: post?.acfPageOptions || null,
+  };
   const flexSections = post?.template?.acfFlex?.flexContent || null;
   const template = post?.template?.templateName || null;
+
+  if (post?.isRestricted) {
+    return (
+      <GlobalsProvider globals={globals}>
+        <LayoutDefault
+          postId={post?.databaseId}
+          isRevision={post?.isPreview}
+          seo={post?.seo}
+          preview={preview}
+          title={post?.title}
+        >
+          <PagePassword
+            setPost={setPost}
+            badPassword={post?.badPassword}
+          />
+        </LayoutDefault>
+      </GlobalsProvider>
+    );
+  }
 
   if (template === 'Flex') {
     return (
@@ -126,7 +155,6 @@ export async function getStaticProps({
     props: {
       globals: {
         ...globals,
-        pageOptions: data.contentNode?.acfPageOptions || null,
         THEME: SETTINGS.THEME,
         CONFIG: SETTINGS.CONFIG,
       },
