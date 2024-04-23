@@ -14,6 +14,7 @@ export function queryContent(draft, options) {
         id
         databaseId
         isPreview
+        isRestricted
         link
         slug
         uri

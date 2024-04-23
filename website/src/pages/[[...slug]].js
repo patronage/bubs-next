@@ -1,9 +1,11 @@
 import Flex from 'components/flex/Flex';
 import LayoutDefault from 'components/layouts/LayoutDefault';
+import PagePassword from 'components/PagePassword';
 import PostBody from 'components/PostBody';
 import { GlobalsProvider } from 'contexts/GlobalsContext';
 import checkRedirects from 'lib/checkRedirects';
 import { getSettings } from 'lib/getSettings';
+import { useResettingState } from 'lib/resettingState';
 import { isStaticFile } from 'lib/utils';
 import {
   getContent,
@@ -12,9 +14,34 @@ import {
   getAllContentWithSlug,
 } from 'lib/wordpress';
 
-export default function Page({ post, preview, globals }) {
-  const flexSections = post?.template?.acfFlex?.flexContent || null;
-  const template = post?.template?.templateName || null;
+export default function Page(props) {
+  const initialPost = props.post;
+  const preview = props.preview;
+  const globals = props.globals;
+  const flexSections =
+    props.post?.template?.acfFlex?.flexContent || null;
+  const template = props.post?.template?.templateName || null;
+
+  const [post, setPost] = useResettingState(initialPost);
+
+  if (post?.isRestricted) {
+    return (
+      <GlobalsProvider globals={globals}>
+        <LayoutDefault
+          postId={post?.databaseId}
+          isRevision={post?.isPreview}
+          seo={post?.seo}
+          preview={preview}
+          title={post?.title}
+        >
+          <PagePassword
+            setPost={setPost}
+            badPassword={post?.badPassword}
+          />
+        </LayoutDefault>
+      </GlobalsProvider>
+    );
+  }
 
   if (template === 'Flex') {
     return (

@@ -10,6 +10,7 @@ async function fetchAPI({
   query = {},
   variables = {},
   token,
+  password,
 }) {
   const SETTINGS = getSettings({ project });
   let wordpress_api_url =
@@ -21,6 +22,13 @@ async function fetchAPI({
   if (variables?.preview && token) {
     headers['Authorization'] = `Bearer ${token}`;
     // for authenticated requests, hit origin and bypass CDN caching
+    // https://docs.graphcdn.io/docs/bypass-headers
+    headers['x-preview-token'] = '1';
+  }
+
+  if (password) {
+    headers['x-wp-post-password'] = password;
+    // for password requests, hit origin and bypass CDN caching
     // https://docs.graphcdn.io/docs/bypass-headers
     headers['x-preview-token'] = '1';
   }
@@ -186,6 +194,7 @@ export async function getContent({
     query,
     variables: { slug, preview: !!preview },
     token: previewData?.token,
+    password: options?.password,
   });
 
   return data;
