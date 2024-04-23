@@ -13,14 +13,6 @@ $staging_wp_host = 'bubsnexts.wpengine.com';
 $local_domain = 'http://localhost:3000';
 $docs_link = ''; // set to a path if you have a site/document for editor instructions
 
-// webhook config
-$headless_webhooks_password_protected = true;
-$headless_webhooks_graphcdn_purge_api = 'http://host.docker.internal:3000/api/graphcdn/'; // Docker to host computer endpoint
-$headless_webhooks_acf_options = ['acf-options-theme-settings'];
-$headless_webhooks_post_types = ['page', 'post'];
-$headless_webhooks_redirects_redirection = true;
-$headless_webhooks_redirects_yoast = false;
-
 // stellate config
 $stellate_production_enabled = true;
 $stellate_staging_enabled = false;
