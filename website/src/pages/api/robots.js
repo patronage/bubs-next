@@ -1,13 +1,19 @@
-import { META } from 'lib/constants';
+import { getSettings } from 'lib/getSettings';
 import { trimTrailingSlash } from 'lib/utils';
 
 export default function handler(req, res) {
+  const SETTINGS = getSettings({ ...req });
+
+  const publicUrl = trimTrailingSlash(
+    `https://${SETTINGS.CONFIG.site_domain}`,
+  );
+  const sitemap = publicUrl + '/sitemap_index.xml';
+  // let sitemap = trimTrailingSlash(META.url) + '/sitemap_index.xml';
+
   if (
     process.env.VERCEL_ENV === 'production' &&
     !process.env.NOINDEX
   ) {
-    let sitemap = trimTrailingSlash(META.url) + '/sitemap_index.xml';
-
     res.write(`Sitemap: ${sitemap}`);
     res.write('\n');
     res.write('User-agent: *');

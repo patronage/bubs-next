@@ -2,6 +2,17 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+// Logic mirrored from lib/constants.js
+const WORDPRESS_DOMAIN =
+  process.env.WORDPRESS_DOMAIN ||
+  process.env.NEXT_PUBLIC_WORDPRESS_DOMAIN;
+
+const WORDPRESS_URL = WORDPRESS_DOMAIN
+  ? WORDPRESS_DOMAIN.includes('localhost')
+    ? 'http://' + WORDPRESS_DOMAIN
+    : 'https://' + WORDPRESS_DOMAIN
+  : '';
+
 module.exports = withBundleAnalyzer({
   // Match Wordpress
   trailingSlash: true,
@@ -51,7 +62,7 @@ module.exports = withBundleAnalyzer({
       },
       {
         source: '/wp-content/uploads/:path*',
-        destination: `https://${process.env.WORDPRESS_DOMAIN}/wp-content/uploads/:path*`,
+        destination: `${WORDPRESS_URL}/wp-content/uploads/:path*`,
       },
     ];
   },

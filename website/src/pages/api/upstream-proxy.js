@@ -1,14 +1,21 @@
 import fetch from 'isomorphic-unfetch';
-import { WORDPRESS_URL, META } from 'lib/constants';
+import { getSettings } from 'lib/getSettings';
 import { trimTrailingSlash } from 'lib/utils';
 import _replace from 'lodash/replace';
 
-// Global regex search allows replacing all URLs
-const HOSTNAME_REGEX = new RegExp(WORDPRESS_URL, 'g');
-
 export default async function proxy(req, res) {
+  const SETTINGS = getSettings({ ...req });
+
+  const WORDPRESS_URL = SETTINGS.CONFIG.wordpress_url;
+  const PUBLIC_URL = trimTrailingSlash(
+    `https://${SETTINGS.CONFIG.site_domain}`,
+  );
+
   let content;
   let contentType;
+
+  // Global regex search allows replacing all URLs
+  const HOSTNAME_REGEX = new RegExp(WORDPRESS_URL, 'g');
 
   const upstreamRes = await fetch(`${WORDPRESS_URL}${req.url}`, {
     redirect: 'manual',
@@ -41,11 +48,7 @@ export default async function proxy(req, res) {
 
   // Pathnames where URLs within need to be replaced
   if (req.url.includes('sitemap') || req.url.includes('/feed/')) {
-    content = _replace(
-      content,
-      HOSTNAME_REGEX,
-      trimTrailingSlash(META.url),
-    );
+    content = _replace(content, HOSTNAME_REGEX, PUBLIC_URL);
   }
 
   if (req.url.includes('sitemap')) {

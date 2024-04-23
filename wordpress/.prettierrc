@@ -1,0 +1,16 @@
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 90,
+  "phpVersion": "7.4",
+  "braceStyle": "1tbs",
+  "overrides": [
+    {
+      "files": "*.php",
+      "options": {
+        "printWidth": 120
+      }
+    }
+  ]
+}

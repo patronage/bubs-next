@@ -39,7 +39,7 @@ function db_import() {
     echo "DB container '$DB_CONTAINER' detected; proceeding with import";
   fi
 
-  sql=`ls -Art _data/* | tail -n 1`
+  sql=$(ls -Art _data/* | grep -v "local.sql" | tail -n 1)
   echo $sql
   ext=${sql##*.}
 

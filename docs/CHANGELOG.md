@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/patronage/bubs-next/compare/v1.3.0...v1.4.0) (2023-08-10)
+
+
+### Features
+
+* multisite compatible getSettings and API functions ([#275](https://github.com/patronage/bubs-next/issues/275)) ([5a4c3e1](https://github.com/patronage/bubs-next/commit/5a4c3e1ee6d3fb6339bc908fcc817a6ab190d794))
+
+
+### Bug Fixes
+
+* don't error if flex section isn't in graphql ([#277](https://github.com/patronage/bubs-next/issues/277)) ([3e148f2](https://github.com/patronage/bubs-next/commit/3e148f276d1a1c6032c420d090020fc59df16e98))
+* proper staging host in theme ([58911bf](https://github.com/patronage/bubs-next/commit/58911bf9c6b3011cea0dd1f96a40969ad7db4f9b))
+
+## [1.3.0](https://github.com/patronage/bubs-next/compare/v1.2.0...v1.3.0) (2023-03-12)
+
+
+### Features
+
+* NPM/Yarn Dependency Pinning ([#259](https://github.com/patronage/bubs-next/issues/259)) ([d7fe603](https://github.com/patronage/bubs-next/commit/d7fe60329073b06b553495e2a6b8ba434d051661))
+* super editor role that allows for safe permissions in headless wp ([#233](https://github.com/patronage/bubs-next/issues/233)) ([b4ca258](https://github.com/patronage/bubs-next/commit/b4ca258236578a9e5745c7e9272c050831bd3e3d))
+
+
+### Bug Fixes
+
+* nodeByUri/graphcdn fix ([#256](https://github.com/patronage/bubs-next/issues/256)) ([6a31a78](https://github.com/patronage/bubs-next/commit/6a31a7886b2504feea38cd36dfa86508e7774d0b)), closes [#229](https://github.com/patronage/bubs-next/issues/229)
+* upstream dashbaord customizations so title is preserved ([#272](https://github.com/patronage/bubs-next/issues/272)) ([022501f](https://github.com/patronage/bubs-next/commit/022501f73cdf39ba70ff677e13000ff5bb4ad8c1))
+* use public versions of wp env vars ([#253](https://github.com/patronage/bubs-next/issues/253)) ([728b95d](https://github.com/patronage/bubs-next/commit/728b95dadd7fd8e5ab816f364668a70e26c44441))
+
 ## [1.2.0](https://github.com/patronage/bubs-next/compare/v1.1.0...v1.2.0) (2022-07-01)
 
 

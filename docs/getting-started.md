@@ -38,4 +38,4 @@ If you want adjust ACF fields, add post types, or do other WordPress configurati
 
 This section includes some details on starting WordPress, but you'll also want to see the [WP docs](wordpress.md) for more details on making version updates, customizing ACF and themes, and more.
 
-The `WordPress Dev` task will start docker and will be available at [http://localhost:8000/wp-login.php](http://localhost:8000/wp-login.php). You can only have one docker container running on that port at a time, so you'll need to shut down other
+The `WordPress Dev` task will start docker and will be available at (http://wordpress.bubsnext.orb.local/wp-login.php)[http://localhost:8000/wp-login.php]. or (http://localhost:8000/wp-login.php)[http://localhost:8000/wp-login.php] depending on your setup.

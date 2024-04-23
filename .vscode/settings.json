@@ -6,10 +6,8 @@
   "stylelint.validate": ["css", "scss"],
   // Turn on auto-fixing for project defined linters.
   "editor.codeActionsOnSave": {
-    // For ESLint
-    "source.fixAll.eslint": true,
-    // For Stylelint
-    "source.fixAll.stylelint": true
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
   "eslint.workingDirectories": ["website"]
 }

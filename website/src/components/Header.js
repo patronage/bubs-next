@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import GlobalsContext from 'contexts/GlobalsContext';
-import { META } from 'lib/constants';
 import formatMenu from 'lib/formatMenu';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
@@ -9,13 +8,14 @@ import styles from './Header.module.scss';
 
 export default function Header() {
   const globals = useContext(GlobalsContext);
+  const THEME = globals.THEME;
   const [navOpen, setNavOpen] = useState(false);
 
-  function handleHamburgerClick(event) {
+  function handleHamburgerClick() {
     setNavOpen(!navOpen);
   }
 
-  function handleClose(event) {
+  function handleClose() {
     setNavOpen(false);
   }
 
@@ -51,13 +51,18 @@ export default function Header() {
                   <ul className="list-unstyled">
                     {headerNav.map((item, i) => (
                       <li key={i}>
-                        <Link href={item.path} prefetch={false}>
-                          <a
-                            className={cx(['text-nowrap'])}
-                            onClick={handleClose}
-                          >
-                            {item.label}
-                          </a>
+                        <Link
+                          href={item.path}
+                          prefetch={false}
+                          className={cx([
+                            item.cssClasses,
+                            item.cssClasses?.map((className) => {
+                              return styles[className];
+                            }),
+                          ])}
+                          onClick={handleClose}
+                        >
+                          {item.label}
                         </Link>
                       </li>
                     ))}
@@ -76,7 +81,18 @@ export default function Header() {
       <ul className={cx([styles.nav, 'list-inline'])}>
         {headerNav.map((item, i) => (
           <li className="list-inline-item" key={i}>
-            <a href={item.path}>{item.label}</a>
+            <Link
+              className={cx([
+                item.cssClasses,
+                item.cssClasses?.map((className) => {
+                  return styles[className];
+                }),
+              ])}
+              href={item.path}
+              prefetch={false}
+            >
+              {item.label}
+            </Link>
           </li>
         ))}
       </ul>
@@ -88,10 +104,10 @@ export default function Header() {
       <div className="container">
         <div className="row align-items-center justify-content-between">
           <div className="col">
-            {META.siteName && (
+            {THEME.meta.siteName && (
               <div className={styles.logo}>
-                <Link href="/" passHref>
-                  {META.siteName}
+                <Link href="/" prefetch={false}>
+                  {THEME.meta.siteName}
                 </Link>
               </div>
             )}

@@ -33,9 +33,9 @@ _On WP Engine, these values aren't version controlled so you'll need to SFTP or 
 
 2. Save `HEADLESS_API_SECRET` to Vercel as an environment variable, this is needed to authenticate API calls to WordPress to securely generate the logged in user's access token to activate preview mode. `HEADLESS_AUTH_SECRET` only lives inside WordPress to encrypt the access token, DO NOT copy/use this value outside of the setting in `wp-config.php`.
 
-3. Set `WORDPRESS_DOMAIN` to the root URL of the Wordpress instance (without /graphql)
+3. Set `NEXT_PUBLIC_WORDPRESS_DOMAIN` to the root URL of the Wordpress instance (without /graphql)
 
-4. Open `wordpress/wp-content/headless/functions.php` and edit the values for `$preview_domain` for production.
+4. To tie together your WordPress with your frontend, you need to set one variable in WordPress. Inside of WordPress, go to Appearance > Customization section in the theme. Under the "Headless" options heading, you can set the URL for your front-end homepage.
 
 5. Preview mode should now work. You can test by logging into Wordpress admin, creating a post (but don't publish!) and then click "Preview". If it all works, you should be able to view your post with a black bar on the top of the page indicating preview mode is enabled.
 
@@ -45,6 +45,6 @@ By default, we tend to configure preview branches to use production graphql, so 
 
 Sometimes we want a staging WordPress where we can test changes there.
 
-Vercel supports per branch env variables, which allows us to setup a combination of WP backend and Next front-end for a specific branch. You'll want to set the `WORDPRESS_DOMAIN` and `WORDPRESS_API_URL` variables to point to your staging WordPress. The `HEADLESS_AUTH_SECRET` and `HEADLESS_API_SECRET` can be the same values on both production and staging.
+Vercel supports per branch env variables, which allows us to setup a combination of WP backend and Next front-end for a specific branch. We typically have preview instances point to production WP by default so that front-end only branches will work. When you need to point to a different WordPress endpoing, you can update the the `NEXT_PUBLIC_WORDPRESS_DOMAIN` and `NEXT_PUBLIC_WORDPRESS_API_URL` ENV variables. The `HEADLESS_AUTH_SECRET` and `HEADLESS_API_SECRET` can be the same values on both production and staging.
 
-To tie together your staging WordPress with your preview frontend, you need to set one variable in WordPress. Inside of WordPress, go to Appearance > Customization section in the theme. Under the "Headless" options heading, you can set the URL for your preview instance.
+Similar to your production setup, then update Appearance > Customization section in the theme to point to your preview instance homepage.

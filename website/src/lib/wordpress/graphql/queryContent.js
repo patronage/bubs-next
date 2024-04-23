@@ -4,10 +4,12 @@ import { flexWysiwygContent } from './flexWysiwygContent';
 import pageOptions from './fragmentPageOptions';
 import seo from './fragmentSeo';
 
-export function queryContent(draft) {
+export function queryContent(draft, options) {
   const query = /* GraphQL */ `
     query GetContent($slug: ID!, $preview: Boolean) {
-      contentNode(id: $slug, idType: URI, asPreview: $preview) {
+      contentNode(id: $slug, idType: ${
+        options?.uriType ?? 'URI'
+      }, asPreview: $preview) {
         __typename
         id
         databaseId

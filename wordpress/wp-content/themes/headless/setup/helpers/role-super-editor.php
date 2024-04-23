@@ -3,11 +3,11 @@
 /* Create Super Editor User Role */
 function bubs_role_super_editor() {
     // Sometimes caching causes havoc, so we remove then re-add
-    remove_role( 'super_editor' );
+    remove_role('super_editor');
 
     // We want to start with administrator as a base
-    $administrator = get_role( 'administrator' );
-    $super_editor = clone( $administrator );
+    $administrator = get_role('administrator');
+    $super_editor = clone $administrator;
     $super_editor->name = 'Super Editor';
 
     // And then remove the capabilities that we don't want (like edit_themes, plugins, etc.)
@@ -30,8 +30,8 @@ function bubs_role_super_editor() {
 
     add_role(
         'super_editor', //  System name of the role.
-        __( 'Super Editor'  ), // Display name of the role.
-        $super_editor->capabilities // Array of capabilities.
+        __('Super Editor'), // Display name of the role.
+        $super_editor->capabilities, // Array of capabilities.
     );
 }
 

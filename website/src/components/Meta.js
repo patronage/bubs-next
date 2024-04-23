@@ -1,5 +1,4 @@
 import GlobalsContext from 'contexts/GlobalsContext';
-import { META, WORDPRESS_URL } from 'lib/constants';
 import { trimTrailingSlash } from 'lib/utils';
 import { NextSeo } from 'next-seo';
 import Head from 'next/head';
@@ -7,29 +6,33 @@ import { useContext } from 'react';
 
 export default function Meta({ title, description, image, seo }) {
   const globals = useContext(GlobalsContext);
+  const THEME = globals.THEME;
+  const CONFIG = globals.CONFIG;
 
   // make sure image is absolute
   function imagePath(imageUrl) {
     // if enabled rewrite WordPress image paths to local (origin often has noindex tags)
-    if (META.proxyWordPressImages && WORDPRESS_URL) {
-      let newUrl = imageUrl.replace(WORDPRESS_URL, '');
+    if (THEME.meta.proxyWordPressImages && CONFIG.wordpress_url) {
+      let newUrl = imageUrl.replace(CONFIG.wordpress_url, '');
       imageUrl = newUrl;
     }
     // if root relative, make absolute so that twitter doesn't complain
     if (
       imageUrl.indexOf('http://') === -1 &&
       imageUrl.indexOf('https://') === -1 &&
-      META.url &&
+      THEME.meta.url &&
       imageUrl.startsWith('/')
     ) {
-      imageUrl = trimTrailingSlash(META.url) + imageUrl;
+      imageUrl = trimTrailingSlash(THEME.meta.url) + imageUrl;
     }
 
     return imageUrl;
   }
 
   // if passing in a title string, append default append if defined in META.
-  let generatedTitle = title ? `${title} ${META.titleAppend}` : '';
+  let generatedTitle = title
+    ? `${title} ${THEME.meta.titleAppend}`
+    : '';
 
   // populate SEO settings with either our SEO values if present, otherwise passed in specifics
   let seoSettings = {
@@ -79,13 +82,13 @@ export default function Meta({ title, description, image, seo }) {
         />
         <meta charSet="utf-8" key="meta_charset" />
         {/* favicons */}
-        {META.icon32 && (
-          <link rel="icon" href={META.icon32} sizes="32x32" />
+        {THEME.meta.icon32 && (
+          <link rel="icon" href={THEME.meta.icon32} sizes="32x32" />
         )}
-        {META.iconApple && (
+        {THEME.meta.iconApple && (
           <link
             rel="apple-touch-icon"
-            href={META.iconApple}
+            href={THEME.meta.iconApple}
             sizes="180x180"
           />
         )}
