@@ -70,8 +70,8 @@ function vercel_revalidate($urls)
 
   $paths = [];
 
-  if (!defined('VERCEL_REVALIDATE_SECRET')) {
-    error_log('VERCEL_REVALIDATE_SECRET not defined');
+  if (!defined('REVALIDATE_SECRET')) {
+    error_log('REVALIDATE_SECRET not defined');
     return;
   }
 
@@ -88,7 +88,7 @@ function vercel_revalidate($urls)
 
   $body = array(
     'paths' => $paths,
-    'secret' => VERCEL_REVALIDATE_SECRET
+    'secret' => REVALIDATE_SECRET
   );
 
   $args = array(
