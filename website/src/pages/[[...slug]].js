@@ -16,13 +16,15 @@ import {
 
 export default function Page(props) {
   const initialPost = props.post;
-  const preview = props.preview;
-  const globals = props.globals;
-  const flexSections =
-    props.post?.template?.acfFlex?.flexContent || null;
-  const template = props.post?.template?.templateName || null;
-
   const [post, setPost] = useResettingState(initialPost);
+
+  const preview = props.preview;
+  const globals = {
+    ...props.globals,
+    pageOptions: post?.acfPageOptions || null,
+  };
+  const flexSections = post?.template?.acfFlex?.flexContent || null;
+  const template = post?.template?.templateName || null;
 
   if (post?.isRestricted) {
     return (
@@ -153,7 +155,6 @@ export async function getStaticProps({
     props: {
       globals: {
         ...globals,
-        pageOptions: data.contentNode?.acfPageOptions || null,
         THEME: SETTINGS.THEME,
         CONFIG: SETTINGS.CONFIG,
       },

@@ -9,6 +9,7 @@
 
 // Customize these variables per site
 $staging_wp_host = 'bubsnexts.wpengine.com';
+$local_domain = 'http://localhost:3000';
 $dashboard_cleanup = false; // Optionally will hide all but our custom widget
 $docs_link = ''; // set to a path if you have a site/document for editor instructions
 
@@ -23,7 +24,7 @@ $headless_webhooks_redirects_yoast = false;
 // Determine the hosting environment we're in
 if (defined('WP_ENV') && WP_ENV == 'development') {
     define('WP_HOST', 'localhost');
-    $headless_domain = $local_domain || 'http://localhost:3000';
+    $headless_domain = $local_domain;
 } else {
     $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
 
@@ -69,6 +70,7 @@ if (strpos($uri, 'sitemap.xml') == false) {
 include_once 'setup/helpers/role-super-editor.php';
 include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/wpgraphql.php';
+include_once 'setup/helpers/wpgraphql-page-password.php';
 include_once 'setup/helpers/wysiwyg.php';
 
 // Security Settings

@@ -27,6 +27,7 @@ module.exports = withBundleAnalyzer({
       '127.0.0.1',
       'bubsnext.wpengine.com',
       'bubs.patronage.org',
+      'wordpress.bubsnext.orb.local',
     ],
   },
 

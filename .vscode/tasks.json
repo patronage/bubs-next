@@ -6,17 +6,17 @@
     {
       "label": "Next Dev",
       "type": "shell",
-      "command": "cd website && yarn dev"
+      "command": ". ~/.nvm/nvm.sh && nvm use 18 && cd website && yarn dev"
     },
     {
       "label": "Next Build",
       "type": "shell",
-      "command": "cd website && yarn build"
+      "command": ". ~/.nvm/nvm.sh && nvm use 18 && cd website && yarn build"
     },
     {
       "label": "Next Yarn Install",
       "type": "shell",
-      "command": "cd website && yarn install"
+      "command": ". ~/.nvm/nvm.sh && nvm use 18 && cd website && yarn install"
     },
     {
       "label": "Wordpress ACF Fix",
