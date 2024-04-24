@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   db:
-    image: mariadb:10.7
+    image: mariadb
     volumes:
       - db_data:/var/lib/mysql
     restart: 'no'
@@ -15,7 +15,7 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:6.2.2
+    image: wordpress:6.5.2
     volumes:
       - ./wp-content:/var/www/html/wp-content
       - ./.htaccess:/var/www/html/.htaccess
