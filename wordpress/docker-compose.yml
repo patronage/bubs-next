@@ -29,6 +29,7 @@ services:
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENV', 'development');
+        define('HEADLESS_REVALIDATE_SECRET', 'bubs-next-vercel-revalidate-secret-key');
         define('HEADLESS_AUTH_SECRET', 'bubs-next-wp-auth-secret-key');
         define('HEADLESS_API_SECRET', 'bubs-next-headless-secret-key');
         define('WP_LOCAL_DEV', true);
