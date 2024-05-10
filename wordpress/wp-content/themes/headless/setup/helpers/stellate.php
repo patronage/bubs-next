@@ -1,12 +1,10 @@
 <?php
-// Disable a plugin based on environment. We don't want to purge cache during local/staging development.
+// Disable a plugin based on environment. We don't want to purge cache during local/staging development
+// unless needed for specific testing, in which case we can enable it using global variables in functions.php
 // Also allows for listening to graphcdn_purge event to perform additional invalidation
 
 // add_action('admin_init', 'disable_stellate_plugin');
 
-// TODO: we want want our staging/dev environments hitting production, so we need to override the service name and token
-// $stellate_staging_service_name = "";
-// $stellate_staging_token = "";
 
 function disable_stellate_plugin()
 {
@@ -43,14 +41,24 @@ function disable_stellate_plugin()
   }
 }
 
-function purge_redirection()
-{
-  stellate_add_purge_entity('purged_types', 'RedirectionRedirects');
+global $stellate_purge_redirection;
+global $stellate_purge_acf_options;
+
+if ($stellate_purge_redirection) {
+  function purge_redirection()
+  {
+    stellate_add_purge_entity('purged_types', 'RedirectionRedirects');
+  }
+  add_action('redirection_redirect_updated', 'purge_redirection');
+  add_action('redirection_redirect_deleted', 'purge_redirection');
 }
 
-function purge_acf_options()
-{
-  stellate_add_purge_entity('purged_types', 'AcfOptionsThemeSettings');
+if ($stellate_purge_acf_options) {
+  function purge_acf_options()
+  {
+    stellate_add_purge_entity('purged_types', 'AcfOptionsThemeSettings');
+  }
+  add_action('acf/options_page/save', 'purge_acf_options');
 }
 
 add_action('redirection_redirect_updated', 'purge_redirection');
@@ -70,8 +78,8 @@ function vercel_revalidate($urls)
 
   $paths = [];
 
-  if (!defined('REVALIDATE_SECRET')) {
-    error_log('REVALIDATE_SECRET not defined');
+  if (!defined('HEADLESS_REVALIDATE_SECRET')) {
+    error_log('HEADLESS_REVALIDATE_SECRET not defined');
     return;
   }
 
@@ -80,7 +88,9 @@ function vercel_revalidate($urls)
       $parsed = parse_url($url);
       $url = $parsed['path'];
     }
-    $url = rtrim($url, '/'); // Remove trailing slash
+    if ($url !== '/') {
+      $url = rtrim($url, '/'); // Remove trailing slash
+    }
     array_push($paths, $url);
   }
 
@@ -88,7 +98,7 @@ function vercel_revalidate($urls)
 
   $body = array(
     'paths' => $paths,
-    'secret' => REVALIDATE_SECRET
+    'secret' => HEADLESS_REVALIDATE_SECRET
   );
 
   $args = array(

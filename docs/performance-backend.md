@@ -37,7 +37,11 @@ We're using the Stellate Wordpress plugin to purge the Stellate cache on publish
 
 The stellate plugin provides a callback function with any post ids and types that we're invalidated and we use this function to get the paths of any pages that were cleared from the Stellate cache and send a request to the `/api/revalidate` endpoint to also call Vercel's On-Demand Revalidation on the affected paths.
 
-In order to call the `/api/revalidate` endpoint, we need to set the `REVALIDATE_SECRET` environment variable in Vercel and in the `wp-config.php` file in our WordPress install. This should be a secure, random string that will be used to authenticate the request.
+In order to call the `/api/revalidate` endpoint, we need to set the `HEADLESS_REVALIDATE_SECRET` environment variable in Vercel and in the `wp-config.php` file in our WordPress install. This should be a secure, random string that will be used to authenticate the request.
+
+If everything is working correctly, then after you make a change in WordPress, you should see a WPStellateIntegration purging request inside of the stellate admin.
+
+Then on the Vercel logs, you should see a 200 request on calls to /api/revalidate/
 
 ## Debugging Graph CDN cache
 

@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   const { secret, paths } = req.body;
 
   // Check for secret to confirm this is a valid request
-  if (secret !== process.env.REVALIDATE_SECRET) {
+  if (secret !== process.env.HEADLESS_REVALIDATE_SECRET) {
     return void res.status(401).json({ message: 'Invalid token' });
   }
 

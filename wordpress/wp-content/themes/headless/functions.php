@@ -20,11 +20,13 @@ $stellate_staging_token = "";
 $stellate_development_enabled = false;
 $stellate_development_service_name = "";
 $stellate_development_token = "";
+$stellate_purge_redirection = true;
+$stellate_purge_acf_options = true;
 
 // Determine the hosting environment we're in
 if (defined('WP_ENV') && WP_ENV == 'development') {
     define('WP_HOST', 'localhost');
-    $headless_domain = $local_domain || 'http://localhost:3000';
+    $headless_domain = 'http://localhost:3000';
 } else {
     $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
 
@@ -69,7 +71,6 @@ if (strpos($uri, 'sitemap.xml') == false) {
 
 include_once 'setup/helpers/role-super-editor.php';
 include_once 'setup/helpers/stellate.php';
-// include_once 'setup/helpers/webhooks.php';
 include_once 'setup/helpers/wpgraphql.php';
 include_once 'setup/helpers/wysiwyg.php';
 
