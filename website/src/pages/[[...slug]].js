@@ -122,6 +122,11 @@ export async function getStaticProps({
     };
   }
 
+  // Remove redirects from globals before returning to page to reduce page size
+  if (globals && globals.redirection) {
+    delete globals.redirection;
+  }
+
   return {
     props: {
       globals: {
