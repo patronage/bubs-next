@@ -31,30 +31,20 @@ To enable in production, change the same env variable via Vercel's ENV settings.
 
 To bypass the CDN for authenticated requests, set a bypass header for `x-preview-token`.
 
-## Purging on publish with webhooks
+## Purging on publish with Stellate and Vercel On-Demand Revalidation
 
-Inside of `helpers/webhookds.php` we've written a small script that processes these WP events:
+We're using the Stellate Wordpress plugin to purge the Stellate cache on publish. It's a simple plugin that hooks into the `save_post` action in WordPress and purges the Stellate cache on a per-post basis. We also add custom hooks to purge the redirect cache using the Redirection Wordpress plugin and to purge our ACF Theme Settings when updated.
 
-- Post create/update/delete
-- Page create/update/delete
-- Menu changes
-- Updates to our default theme options.
-- Updated to redirects for either Redirection or Yoast Premium.
+The stellate plugin provides a callback function with any post ids and types that we're invalidated and we use this function to get the paths of any pages that were cleared from the Stellate cache and send a request to the `/api/revalidate` endpoint to also call Vercel's On-Demand Revalidation on the affected paths.
 
-There are configuration variables at the top of `functions.php`, prefixed with `$headless_webhooks_` where you can customize for your instance. One common customization is to add any custom post types you might have to the array of `$headless_webhooks_post_types`
+In order to call the `/api/revalidate` endpoint, we need to set the `HEADLESS_REVALIDATE_SECRET` environment variable in Vercel and in the `wp-config.php` file in our WordPress install. This should be a secure, random string that will be used to authenticate the request.
 
-When these events happen, a webhook will ping an API route in Next that sends a purge request to the Graph CDN. By default it's a simple `purgeAll` call, which is good enough on most sites that infrequently publish. For larger sites you might want to selectively purge content with some custom logic.
+If everything is working correctly, then after you make a change in WordPress, you should see a WPStellateIntegration purging request inside of the stellate admin.
 
-To activate purging on publish, you'll need to get an API key and save it to a `GRAPHCDN_PURGE_API_TOKEN` and also set `GRAPHCDN_PURGE_API_URL` in Vercel ENV variables.
+Then on the Vercel logs, you should see a 200 request on calls to /api/revalidate/
 
 ## Debugging Graph CDN cache
 
 Inside of the Graph CDN interface is a helpful "API playground" where you can inspect and test cache statuses.
 
 You can try for example running a query, confirming successful `HIT` cache status, then update content in WordPress. When you rerun the query from the playground the status should change to `MISS`
-
-## Future
-
-Something we're keeping our eye on is the ability to invalidate the vercel edge cache via the same webhook we use to invalidate GraphCDN. This will allow us to lengthen the amount of time Vercel uses before revalidating.
-
-[https://nextjs.org/blog/next-9-5#stable-incremental-static-regeneration](https://nextjs.org/blog/next-9-5#stable-incremental-static-regeneration)
