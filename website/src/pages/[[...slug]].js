@@ -89,7 +89,10 @@ export async function getStaticProps({
     redirect?.destination &&
     redirect?.statusCode
   ) {
-    return { redirect: redirect };
+    return {
+      redirect: redirect,
+      revalidate: 15,
+    };
   }
 
   if (!preview) {
@@ -102,7 +105,6 @@ export async function getStaticProps({
       return {
         notFound: true,
         revalidate: 60,
-        props: {},
       };
     }
   }
@@ -118,7 +120,6 @@ export async function getStaticProps({
     return {
       notFound: true,
       revalidate: 60,
-      props: {},
     };
   }
 
