@@ -22,6 +22,7 @@ services:
     restart: 'no'
 
     environment:
+      PORT: ${PORT:-3000}
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: somewordpress
@@ -32,6 +33,8 @@ services:
         define('HEADLESS_REVALIDATE_SECRET', 'bubs-next-vercel-revalidate-secret-key');
         define('HEADLESS_AUTH_SECRET', 'bubs-next-wp-auth-secret-key');
         define('HEADLESS_API_SECRET', 'bubs-next-headless-secret-key');
+        define('WP_STELLATE_ENABLED', false);
+        define('WP_STELLATE_CONFIG', 'staging');
         define('WP_LOCAL_DEV', true);
         define('WP_THEME', 'timber');
         define('WP_DEBUG_LOG', true );
