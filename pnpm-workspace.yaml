@@ -1,0 +1,5 @@
+packages:
+  # - "wordpress" # Include all directories inside the 'packages' directory
+  - "!wordpress/plugins"
+  - "!wordpress/mu-plugins"
+  - "website"

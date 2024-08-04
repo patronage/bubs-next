@@ -15,32 +15,32 @@ $docs_link = ''; // set to a path if you have a site/document for editor instruc
 // stellate config
 $stellate_production_enabled = true;
 $stellate_staging_enabled = false;
-$stellate_staging_service_name = "";
-$stellate_staging_token = "";
+$stellate_staging_service_name = '';
+$stellate_staging_token = '';
 $stellate_development_enabled = false;
-$stellate_development_service_name = "";
-$stellate_development_token = "";
+$stellate_development_service_name = '';
+$stellate_development_token = '';
 $stellate_purge_redirection = true;
 $stellate_purge_acf_options = true;
 
 // Determine the hosting environment we're in
 if (defined('WP_ENV') && WP_ENV == 'development') {
-    define('WP_HOST', 'localhost');
-    $headless_domain = 'http://localhost:3000';
+  define('WP_HOST', 'localhost');
+  $headless_domain = 'http://localhost:3000';
 } else {
-    $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
+  $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
 
-    if (strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false) {
-        define('WP_HOST', 'staging');
-    } else {
-        define('WP_HOST', 'production');
-    }
+  if (strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false) {
+    define('WP_HOST', 'staging');
+  } else {
+    define('WP_HOST', 'production');
+  }
 }
 
 // Theme Options
 function bubs_theme_options($wp_customize) {
-    include_once 'setup/theme-options/headless.php';
-    $wp_customize->remove_section('custom_css');
+  include_once 'setup/theme-options/headless.php';
+  $wp_customize->remove_section('custom_css');
 }
 
 add_action('customize_register', 'bubs_theme_options');
@@ -66,7 +66,7 @@ include_once 'setup/helpers/menus.php';
 // Only load permalinks rewriting file if not on a sitemap
 $uri = $_SERVER['REQUEST_URI'];
 if (strpos($uri, 'sitemap.xml') == false) {
-    include_once 'setup/helpers/permalinks.php';
+  include_once 'setup/helpers/permalinks.php';
 }
 
 include_once 'setup/helpers/role-super-editor.php';

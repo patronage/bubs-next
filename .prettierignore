@@ -1,0 +1,14 @@
+# website
+website/node_modules
+website/public
+website/.next
+website/.cache
+website/__generated__
+
+# wordpress
+wordpress/node_modules
+wordpress/composer
+wordpress/wp-content/plugins
+wordpress/wp-content/mu-plugins
+wordpress/**/assets/vendor
+wordpress/**/acf-json
