@@ -1,0 +1,9 @@
+{
+  "name": "launch-root-project",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.22.2",
+    "prettier": "3.3.3"
+  }
+}

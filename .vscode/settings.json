@@ -2,15 +2,19 @@
   // Global default is to use VS Code prettier plugin
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+
+  // https://github.com/prettier/plugin-php?tab=readme-ov-file#visual-studio-code
+  "prettier.documentSelectors": [
+    "**/*.{js,jsx,ts,tsx,vue,html,css,scss,less,json,md,mdx,graphql,yaml,yml,php}"
+  ],
+
   // As of version 14, stylelint needs to be told to validate SCSS
   "stylelint.validate": ["css", "scss"],
+
   // Turn on auto-fixing for project defined linters.
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.fixAll.stylelint": "explicit"
   },
-  "eslint.workingDirectories": ["website"],
-  "[php]": {
-    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-  }
+  "eslint.workingDirectories": ["website"]
 }
