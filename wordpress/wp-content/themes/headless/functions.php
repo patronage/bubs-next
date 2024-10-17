@@ -9,17 +9,19 @@
 
 // Customize these variables per site
 $staging_wp_host = 'bubsnexts.wpengine.com';
+$development_wp_host = 'bubsnextd.wpengine.com';
 $dashboard_cleanup = false; // Optionally will hide all but our custom widget
 $docs_link = ''; // set to a path if you have a site/document for editor instructions
 
 // stellate config
+$stellate_logging_enabled = false; // for debugging
 $stellate_production_enabled = true;
 $stellate_staging_enabled = false;
 $stellate_staging_service_name = "";
-$stellate_staging_token = "";
+$stellate_staging_purging_token = "";
 $stellate_development_enabled = false;
 $stellate_development_service_name = "";
-$stellate_development_token = "";
+$stellate_development_purging_token = "";
 $stellate_purge_redirection = true;
 $stellate_purge_acf_options = true;
 
@@ -27,11 +29,14 @@ $stellate_purge_acf_options = true;
 if (defined('WP_ENV') && WP_ENV == 'development') {
     define('WP_HOST', 'localhost');
     $headless_domain = 'http://localhost:3000';
-} else {
+} elseif (function_exists('is_wpe')) {
     $headless_domain = rtrim(get_theme_mod('headless_preview_url'), '/');
 
-    if (strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false) {
-        define('WP_HOST', 'staging');
+    if (
+        strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false ||
+        strpos($_SERVER['HTTP_HOST'], $development_wp_host) !== false
+    ) {
+        define('WP_HOST', strpos($_SERVER['HTTP_HOST'], $staging_wp_host) !== false ? 'staging' : 'development');
     } else {
         define('WP_HOST', 'production');
     }

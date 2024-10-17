@@ -1,7 +1,7 @@
 import GlobalsContext from 'contexts/GlobalsContext';
 import { trimTrailingSlash } from 'lib/utils';
-import { NextSeo } from 'next-seo';
 import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { useContext } from 'react';
 
 export default function Meta({ title, description, image, seo }) {

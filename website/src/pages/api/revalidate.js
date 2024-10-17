@@ -10,12 +10,14 @@ export default async function handler(req, res) {
   }
 
   if (!paths || paths.length === 0) {
+    // eslint-disable-next-line no-console
     console.log('No paths provided for revalidation');
     return void res.json({ revalidated: false });
   }
 
   try {
     await Promise.all(paths.map((path) => res.revalidate(path)));
+    // eslint-disable-next-line no-console
     console.log('Paths successfully revalidated:', paths);
     return void res.json({ revalidated: true });
   } catch (err) {
