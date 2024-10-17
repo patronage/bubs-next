@@ -13,7 +13,6 @@ const fragmentMenu = /* GraphQL */ `
 const redirectsRedirection = /* GraphQL */ `
   redirection {
     redirects {
-    id
       origin
       target
       type

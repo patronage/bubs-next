@@ -15,6 +15,7 @@ $docs_link = ''; // set to a path if you have a site/document for editor instruc
 
 // stellate config
 $stellate_logging_enabled = false; // for debugging
+$stellate_production_enabled = true;
 $stellate_staging_enabled = false;
 $stellate_staging_service_name = "";
 $stellate_staging_purging_token = "";
